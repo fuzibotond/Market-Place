@@ -9,18 +9,21 @@
         <item name="android:textColor">
             #EEEEEE
         </item></style>
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="strokeColor">@color/teal_primary</item>
-        <item name="boxStrokeColor">@color/teal_primary</item>
-        <item name="colorPrimary">@color/teal_primary</item>
-        <item name="colorPrimaryDark">@color/teal_primary</item>
-        <item name="colorAccent">@color/teal_primary</item>
-        <item name="hintTextColor">@color/teal_primary</item>
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">12sp</item>
     </style>
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeErrorColor">@color/text_input_box_stroke_error</item>
         <item name="boxStrokeColor">@color/text_input_box_stroke_color</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="hintTextColor">@color/teal_primary</item>
+        <item name="android:textColorHint">@color/wrapedWhite</item>
+        <item name="errorEnabled">true</item>
+        <item name="errorIconDrawable">@drawable/ic_error_mark</item>
+        <item name="errorIconTint">@color/text_input_box_stroke_error</item>
+        <item name="errorTextAppearance">@style/error_appearance</item>
+
 
     </style>
     <style name="new_to_3rea">

@@ -1,12 +1,14 @@
-package com.example.market_place.fragments
+package com.example.market_place.fragments.authorization
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -39,9 +41,14 @@ class LoginFragment : Fragment() {
         settingListeners()
         return binding.root
     }
-
+   //TODO: Make stroke list red
     private fun settingListeners() {
-        binding.btnSignUp.setOnClickListener {
+        binding.emailInput.doOnTextChanged { text, start, before, count ->
+            if (!text!!.isEmpty() && text!!.length<5 ){
+                binding.emailInput.error = "Too short username!"
+            }
+        }
+        binding.btnLogIn.setOnClickListener {
             loginViewModel.user.value.let {
                 if (it != null) {
                     it.username = binding.emailInput.text.toString()
@@ -55,6 +62,12 @@ class LoginFragment : Fragment() {
             }
 
         }
+       binding.btnSignUp.setOnClickListener {
+           findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+       }
+       binding.forgotPasswordClick.setOnClickListener {
+           findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+       }
     }
 
     private fun initialize() {
@@ -63,5 +76,5 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_listFragment)
         }
     }
-
+    internal fun String.toIntColor() = Integer.parseInt(this.replaceFirst("#", ""), 16)
 }
