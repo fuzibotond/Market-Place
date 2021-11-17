@@ -38,23 +38,23 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingLeft="3.77dp">
-            <View
-                android:id="@+id/azaar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/azaar"
-                />
-<!--            <TextView-->
+<!--            <View-->
+<!--                android:id="@+id/azaar"-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
-<!--                android:text="azaar"-->
-<!--                android:textColor="#00B5C0"-->
-<!--                android:textFontWeight="600"-->
-<!--                android:textSize="25sp"/>-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:background="@drawable/azaar"-->
+<!--                />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="azaar"
+                android:textColor="#00B5C0"
+                android:textFontWeight="600"
+                android:textSize="25sp"/>
         </LinearLayout>
     </LinearLayout>
 
