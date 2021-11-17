@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#212121"
-        tools:context=".LoginFragment"
+        tools:context=".fragments.LoginFragment"
         android:padding="10dp"
         >
 
