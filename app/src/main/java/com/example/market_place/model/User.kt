@@ -2,6 +2,7 @@ package com.example.market_place.model
 
 
 import com.squareup.moshi.JsonClass
+import java.sql.Timestamp
 
 //import com.google.gson.annotations.SerializedName
 
@@ -22,6 +23,7 @@ data class LoginResponse (
     var creation_time: Long,
     var refresh_time: Long
 )
+
 @JsonClass(generateAdapter = true)
 data class RegisterRequest(
     var first_name: String,
@@ -31,11 +33,25 @@ data class RegisterRequest(
     var password: String,
     var phone_number: String,
 )
+
 @JsonClass(generateAdapter = true)
 data class RegisterResponse(
     var code: Int,
     var message:String,
     var creation_time:Long
+)
+
+@JsonClass(generateAdapter = true)
+data class ResetPasswordRequest(
+    var username:String,
+    var email: String
+)
+
+@JsonClass(generateAdapter = true)
+data class ResetPasswordResponse(
+    var code: Int,
+    var message: String,
+    var timestamp: Long
 )
 // GSon converter
 //data class LoginRequest (
