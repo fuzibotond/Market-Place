@@ -1,8 +1,10 @@
 package com.example.market_place.fragments.authorization
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.market_place.AuthorizedActivity
 import com.example.market_place.R
 import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.LoginViewModel
@@ -73,7 +76,11 @@ class LoginFragment : Fragment() {
     private fun initialize() {
         loginViewModel.token.observe(viewLifecycleOwner){
             Log.d("xxx", "navigate to list")
-            findNavController().navigate(R.id.action_loginFragment_to_listFragment)
+            val intent = Intent(context, AuthorizedActivity::class.java).apply {
+                putExtra(EXTRA_MESSAGE, "You are logged in!${loginViewModel.user.value!!.username}")
+            }
+            //findNavController().navigate(R.id.action_loginFragment_to_listFragment)
+            startActivity(intent)
         }
     }
     internal fun String.toIntColor() = Integer.parseInt(this.replaceFirst("#", ""), 16)

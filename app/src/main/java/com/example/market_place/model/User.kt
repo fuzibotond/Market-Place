@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 //import com.google.gson.annotations.SerializedName
 
-data class User(var username: String="", var password: String="", val email: String="", var phone_number: String="")
+data class User(var username: String="", var first_name: String="", var last_name: String="", var password: String="", var email: String="", var phone_number: String="")
 
 @JsonClass(generateAdapter = true)
 data class LoginRequest (
@@ -22,8 +22,21 @@ data class LoginResponse (
     var creation_time: Long,
     var refresh_time: Long
 )
-
-
+@JsonClass(generateAdapter = true)
+data class RegisterRequest(
+    var first_name: String,
+    var last_name: String,
+    var username: String,
+    var email: String,
+    var password: String,
+    var phone_number: String,
+)
+@JsonClass(generateAdapter = true)
+data class RegisterResponse(
+    var code: Int,
+    var message:String,
+    var creation_time:Long
+)
 // GSon converter
 //data class LoginRequest (
 //    @SerializedName("username")
