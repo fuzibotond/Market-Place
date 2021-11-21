@@ -14,5 +14,6 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="email_me">Email me</string>
     <string name="instruction4password">We will send you an email with instructions on how to reset your password.</string>
-    <string name="telefon_number">Telefon number</string>
+    <string name="phone_number">Phone number</string>
+    <string name="Ro">+40</string>
 </resources>

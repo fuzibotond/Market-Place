@@ -38,7 +38,7 @@
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/email"
-            app:helperText="*Required"
+            android:textColor="@color/wrapedWhite"
             app:helperTextTextColor="@color/red"
             app:endIconMode="custom"
             android:paddingLeft="20dp"
@@ -58,15 +58,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-
+            android:id="@+id/password_input_layout"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/password"
-            app:helperText="*Required"
             app:helperTextTextColor="@color/red"
+            android:textColor="@color/wrapedWhite"
             app:endIconMode="password_toggle"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"

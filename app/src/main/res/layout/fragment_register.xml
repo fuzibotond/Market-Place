@@ -44,9 +44,10 @@
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/first_name"
-            app:helperText="*Required"
             app:helperTextTextColor="@color/red"
             app:endIconMode="clear_text"
+            app:endIconDrawable="@drawable/ic_baseline_cancel_24"
+            app:endIconTint="@color/wrapedWhite"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:strokeWidth="4"
@@ -63,19 +64,22 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/last_name_input_layout"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/last_name"
-            app:helperText="*Required"
             app:helperTextTextColor="@color/red"
+            app:endIconDrawable="@drawable/ic_baseline_cancel_24"
+            app:endIconTint="@color/wrapedWhite"
             app:endIconMode="clear_text"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:strokeWidth="4"
             android:strokeColor="#00B5C0"
+
 
             >
             <com.google.android.material.textfield.TextInputEditText
@@ -88,13 +92,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_input_layout"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/email"
-            app:helperText="*Required"
             app:helperTextTextColor="@color/red"
             app:endIconMode="clear_text"
             android:paddingLeft="20dp"
@@ -113,14 +117,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-
+            android:id="@+id/password_input_layout"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="@string/password"
-            app:helperText="*Required"
             app:helperTextTextColor="@color/red"
             app:endIconMode="password_toggle"
             app:endIconTint="@color/wrapedWhite"
@@ -145,18 +148,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-
+            android:id="@+id/phone_number_input_layout"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="@string/telefon_number"
-            app:helperText="*Required"
+            android:hint="@string/phone_number"
             app:helperTextTextColor="@color/red"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-
+            app:startIconDrawable="@drawable/ic_baseline_local_phone_24"
+            app:startIconTint="@color/wrapedWhite"
+            app:prefixText="@string/Ro"
+            app:prefixTextColor="@color/wrapedWhite"
+            app:counterEnabled="true"
+            app:counterMaxLength="9"
+            app:counterTextColor="@color/wrapedWhite"
             >
 
 

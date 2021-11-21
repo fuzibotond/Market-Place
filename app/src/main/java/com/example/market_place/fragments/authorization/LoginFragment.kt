@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.example.market_place.viewmodels.LoginViewModel
 import com.example.market_place.viewmodels.LoginViewModelFactory
 import com.example.market_place.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 class LoginFragment : Fragment() {
     private lateinit var loginViewModel: LoginViewModel
@@ -46,11 +48,52 @@ class LoginFragment : Fragment() {
     }
    //TODO: Make stroke list red
     private fun settingListeners() {
+//        val EMAIL_PATTERN:String = "^[0-9a-z\\.-]+@([0-9a-z-]+\\.)+[a-z]{4,5}\$"
+//        val patternForEmail = Pattern.compile(EMAIL_PATTERN)
         binding.emailInput.doOnTextChanged { text, start, before, count ->
-            if (!text!!.isEmpty() && text!!.length<5 ){
-                binding.emailInput.error = "Too short username!"
+//            val emailTocheck = (text!!.reversed()).takeWhile { it=='.' }
+//            if (Patterns.EMAIL_ADDRESS.matcher(emailTocheck.toString()).matches() ){
+//                Log.d("email", emailTocheck.toString());
+//                binding.emailInputLayout.helperText = "Not an email type!"
+//                binding.emailInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+//                binding.emailInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+//            }
+            if (text!!.toString().isEmpty()){
+                binding.emailInputLayout.helperText = "This field is required!"
+                binding.emailInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.emailInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                binding.emailInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_error_mark)
+            }
+            else{
+                binding.emailInputLayout.helperText = ""
+                binding.emailInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.emailInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.emailInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_circle_check)
             }
         }
+       val PASSWORD_PATTERN:String = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"
+       val pattern = Pattern.compile(PASSWORD_PATTERN)
+
+       binding.passwordInput.doOnTextChanged { text, start, before, count ->
+           if (!text!!.toString().isEmpty()){
+               binding.passwordInputLayout.helperText = "This field is required"
+               binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+               binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+           }
+           if ( !pattern.matcher(text).matches()){
+               binding.passwordInputLayout.helperText = "Too weak password!"
+               binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+               binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+           }
+           else{
+               binding.passwordInputLayout.setHelperTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
+               binding.passwordInputLayout.helperText = "Strong password!"
+               binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+               binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+           }
+       }
         binding.btnLogIn.setOnClickListener {
             loginViewModel.user.value.let {
                 if (it != null) {
