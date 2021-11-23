@@ -38,11 +38,8 @@
         <item name="strokeColor">@color/white</item>
     </style>
 
-    <style name="modifiedAppBar" parent="Widget.MaterialComponents.AppBarLayout.PrimarySurface">
-        <item name="android:backgroundTint">@color/darkGrey</item>
 
-    </style>
-    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <style name="TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">28sp</item>
 
     </style>
@@ -50,6 +47,11 @@
         <item name="itemBackground">@color/darkGrey</item>
         <item name="itemFillColor">@color/bottom_menu_item_color</item>
     </style>
+    <style name="FragmentAppBarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="titleTextColor">@color/wrapedWhite</item>
 
-
+    </style>
+    <style name="BtnOrderNow">
+        <item name="android:capitalize">none</item>
+    </style>
 </resources>

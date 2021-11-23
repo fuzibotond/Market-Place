@@ -57,7 +57,7 @@ class ForgotPasswordFragment : Fragment() {
                 findNavController().navigate(R.id.action_forgotPasswordFragment_to_loginFragment)
             }
         }
-        binding.newTo3rea.setOnClickListener {
+        binding.newTo3reaForgotPass.setOnClickListener {
             findNavController().navigate(R.id.action_forgotPasswordFragment_to_registerFragment)
         }
 

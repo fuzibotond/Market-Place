@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Market_place">
+
         <activity
             android:name=".AuthorizedActivity"
             android:exported="true" />

@@ -14,4 +14,13 @@
         <!-- Customize your theme here. -->
         <item name="boxStrokeErrorColor">@color/text_input_box_stroke_error</item>
     </style>
+
+    <style name="Theme.Market_place.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Market_place.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Market_place.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

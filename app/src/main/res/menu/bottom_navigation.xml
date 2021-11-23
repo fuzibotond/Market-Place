@@ -8,12 +8,12 @@
         android:iconTint="@color/wrapedWhite"/>
     <item
         android:id="@+id/nav_favourites"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Home"
+        android:icon="@drawable/ic_my_market"
+        android:title="My market"
         android:iconTint="@color/wrapedWhite"/>
     <item
         android:id="@+id/nav_search"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Home"
+        android:icon="@drawable/ic_my_fares"
+        android:title="My fares"
         android:iconTint="@color/wrapedWhite"/>
 </menu>

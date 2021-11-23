@@ -7,9 +7,9 @@ import android.util.Log
 import androidx.navigation.findNavController
 
 class AuthorizedActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authorized)
+        setContentView(R.layout.authorized_activity)
         val message = intent.getStringExtra(EXTRA_MESSAGE)
         if (message != null) {
             Log.d("xxx", message)
