@@ -38,5 +38,18 @@
         <item name="strokeColor">@color/white</item>
     </style>
 
+    <style name="modifiedAppBar" parent="Widget.MaterialComponents.AppBarLayout.PrimarySurface">
+        <item name="android:backgroundTint">@color/darkGrey</item>
+
+    </style>
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">28sp</item>
+
+    </style>
+    <style name="bottomMenuBar">
+        <item name="itemBackground">@color/darkGrey</item>
+        <item name="itemFillColor">@color/bottom_menu_item_color</item>
+    </style>
+
 
 </resources>

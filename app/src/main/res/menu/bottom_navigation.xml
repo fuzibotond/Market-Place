@@ -2,15 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_home"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Home" />
+        android:id="@+id/timeline"
+        android:icon="@drawable/b_icon"
+        android:title="Timeline"
+        android:iconTint="@color/wrapedWhite"/>
     <item
         android:id="@+id/nav_favourites"
         android:icon="@mipmap/ic_launcher"
-        android:title="Home" />
+        android:title="Home"
+        android:iconTint="@color/wrapedWhite"/>
     <item
         android:id="@+id/nav_search"
         android:icon="@mipmap/ic_launcher"
-        android:title="Home" />
+        android:title="Home"
+        android:iconTint="@color/wrapedWhite"/>
 </menu>

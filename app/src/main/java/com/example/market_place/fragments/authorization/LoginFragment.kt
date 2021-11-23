@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.market_place.AuthorizedActivity
+import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.R
 import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.LoginViewModel
@@ -34,6 +35,7 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val factory = LoginViewModelFactory(this.requireContext(), Repository())
         loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
+
     }
 
     override fun onCreateView(
@@ -94,7 +96,9 @@ class LoginFragment : Fragment() {
                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
            }
        }
+
         binding.btnLogIn.setOnClickListener {
+
             loginViewModel.user.value.let {
                 if (it != null) {
                     it.username = binding.emailInput.text.toString()
