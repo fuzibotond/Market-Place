@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/timeline"
+        android:id="@+id/marketPlaceFragment"
         android:icon="@drawable/b_icon"
-        android:title="Timeline"
-        android:iconTint="@color/wrapedWhite"/>
+        android:title="@string/timeline" />
     <item
-        android:id="@+id/nav_favourites"
+        android:id="@+id/myMarketFragment"
         android:icon="@drawable/ic_my_market"
-        android:title="My market"
-        android:iconTint="@color/wrapedWhite"/>
+        android:title="@string/my_market" />
     <item
-        android:id="@+id/nav_search"
+        android:id="@+id/myFaresFragment"
         android:icon="@drawable/ic_my_fares"
-        android:title="My fares"
-        android:iconTint="@color/wrapedWhite"/>
+        android:title="@string/my_fares" />
 </menu>
