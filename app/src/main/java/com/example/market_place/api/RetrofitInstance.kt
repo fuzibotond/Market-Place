@@ -1,8 +1,7 @@
 package com.example.market_place.api
 
 import android.util.Log
-import com.example.eloadas8retrofit.utils.Constants
-import com.example.eloadas8retrofit.utils.Constants.BASE_URL
+import com.example.market_place.utils.Constants.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 

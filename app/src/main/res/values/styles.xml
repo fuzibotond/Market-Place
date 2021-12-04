@@ -23,8 +23,19 @@
         <item name="errorIconDrawable">@drawable/ic_error_mark</item>
         <item name="errorIconTint">@color/text_input_box_stroke_error</item>
         <item name="errorTextAppearance">@style/error_appearance</item>
-
-
+    </style>
+    <style name="TextInputLayoutStyleForContact" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeErrorColor">@color/text_input_box_stroke_error</item>
+        <item name="boxStrokeColor">@color/text_input_box_stroke_color</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="hintTextColor">@color/teal_primary</item>
+        <item name="android:textColorHint">@color/wrapedWhite</item>
+        <item name="errorEnabled">true</item>
+        <item name="errorIconDrawable">@drawable/ic_error_mark</item>
+        <item name="errorIconTint">@color/text_input_box_stroke_error</item>
+        <item name="errorTextAppearance">@style/error_appearance</item>
+        <item name="endIconDrawable">@drawable/ic_circle_check</item>
+        <item name="endIconTint">@color/text_input_box_stroke_color</item>
     </style>
     <style name="new_to_3rea">
         <item name="android:textSize">
@@ -53,5 +64,14 @@
     </style>
     <style name="BtnOrderNow">
         <item name="android:capitalize">none</item>
+    </style>
+    <style name="mySpinner" >
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textAlignment">center</item>
+        <item name="tooltipStyle">@style/FragmentAppBarTitle</item>
+    </style>
+    <style name="spinnerItemStyle">
+        <item name="android:gravity">center</item>
     </style>
 </resources>

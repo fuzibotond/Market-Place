@@ -7,15 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.market_place.R
 import com.example.market_place.databinding.FragmentForgotPasswordBinding
-import com.example.market_place.databinding.FragmentLoginBinding
 import com.example.market_place.repository.Repository
-import com.example.market_place.viewmodels.LoginViewModel
-import com.example.market_place.viewmodels.LoginViewModelFactory
 import com.example.market_place.viewmodels.ResetPasswordViewModel
 import com.example.market_place.viewmodels.ResetPasswordViewModelFactory
 import kotlinx.coroutines.launch
@@ -54,17 +52,23 @@ class ForgotPasswordFragment : Fragment() {
                 resetPasswordViewModel.resetPassword()
             }
             if (resetPasswordViewModel.result.value?.code == 200){
+                Toast.makeText(requireActivity(), resetPasswordViewModel.result.value?.message, Toast.LENGTH_SHORT)
                 findNavController().navigate(R.id.action_forgotPasswordFragment_to_loginFragment)
+
             }
         }
         binding.newTo3reaForgotPass.setOnClickListener {
-            findNavController().navigate(R.id.action_forgotPasswordFragment_to_registerFragment)
+            findNavController().navigate(R.id.action_forgotPasswordFragment_to_loginFragment)
         }
 
     }
 
     private fun initialize() {
         resetPasswordViewModel.result.observe(viewLifecycleOwner){
+            if (resetPasswordViewModel.result.value?.code == 200){
+                Toast.makeText(requireActivity(), resetPasswordViewModel.result.value?.message, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_forgotPasswordFragment_to_loginFragment)
+            }
             Log.d("xxx", "Status: ${resetPasswordViewModel.result.value?.code} - ${resetPasswordViewModel.result.value?.message}")
         }
     }

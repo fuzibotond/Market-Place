@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".fragments.market.AddProductToMyMarketFragment"
+    android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:weightSum="20"
+        android:orientation="vertical"
+        android:background="@color/wrapedWhite">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_weight="0.1"
+            android:id="@+id/profile_app_bar"
+            style="@style/FragmentAppBarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkGrey"
+            android:backgroundTint="@color/darkGrey"
+            app:menu="@menu/cancel_menu"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
+            app:title="Create your fare"
+            >
+
+        </com.google.android.material.appbar.MaterialToolbar>
+        <LinearLayout
+            android:layout_weight="6"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/teal_secondary"
+            android:gravity="center"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="13.9"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:orientation="vertical"
+            android:weightSum="20"
+            >
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left"
+                android:padding="10dp"
+                >
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/inactive"
+                    android:textColor="@color/teal_primary"
+                    android:textSize="18dp"/>
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="2"
+                android:id="@+id/title_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/title"
+                app:helperTextTextColor="@color/red"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:counterTextColor="@color/wrapedWhite"
+                >
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/title_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    app:boxStrokeColor="@color/teal_primary"
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:paddingRight="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/price_per_amount_input_layout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="@string/price_amount"
+                    app:helperTextTextColor="@color/red"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:counterTextColor="@color/wrapedWhite"
+                    >
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/price_per_amount_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLength="40"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        app:boxStrokeColor="@color/teal_primary"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_weight="3"
+                    android:id="@+id/currency_input_layout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="EUR"
+
+                    app:helperTextTextColor="@color/red"
+                    app:endIconTint="@color/wrapedWhite"
+                    app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                    >
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/currency_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLength="3"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        app:boxStrokeColor="@color/teal_primary"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:paddingRight="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/available_amount_input_layout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="@string/available_amount"
+                    app:helperTextTextColor="@color/red"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
+                    app:counterTextColor="@color/wrapedWhite"
+                    >
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/available_amount_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLength="40"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        app:boxStrokeColor="@color/teal_primary"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_weight="3"
+                    android:id="@+id/unit_input_layout"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="KG"
+
+                    app:helperTextTextColor="@color/red"
+                    app:endIconTint="@color/wrapedWhite"
+                    app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_24"
+                    >
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/unit_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLength="3"
+                        android:selectAllOnFocus="true"
+                        android:singleLine="true"
+                        app:boxStrokeColor="@color/teal_primary"
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="2"
+                android:id="@+id/short_description_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/short_description"
+                app:helperTextTextColor="@color/red"
+                app:counterEnabled="true"
+                app:counterMaxLength="150"
+                app:counterTextColor="@color/wrapedWhite"
+                >
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/short_description_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="150"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    app:boxStrokeColor="@color/teal_primary"
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_weight="2"
+                android:id="@+id/textview_contaxt_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_details"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="1"
+                android:id="@+id/contact_name_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Contact name"
+                app:helperTextTextColor="@color/red"
+                app:counterEnabled="true"
+                app:counterMaxLength="9"
+                app:counterTextColor="@color/wrapedWhite"
+                app:endIconDrawable="@drawable/ic_circle_check"
+                app:endIconTint="@color/teal_primary"
+                >
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contact_name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    app:boxStrokeColor="@color/teal_primary"
+                    android:drawableEnd="@drawable/ic_circle_check"
+                    android:drawableTint="@color/teal_primary"
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="2"
+                android:id="@+id/contact_email_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Contact email"
+                app:helperTextTextColor="@color/red"
+                app:counterEnabled="true"
+                app:counterMaxLength="9"
+                app:counterTextColor="@color/wrapedWhite"
+                >
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contact_email_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    app:boxStrokeColor="@color/teal_primary"
+                    android:drawableEnd="@drawable/ic_circle_check"
+                    android:drawableTint="@color/teal_primary"
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="2"
+                android:id="@+id/phone_number_input_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/phone_number"
+                app:helperTextTextColor="@color/red"
+                app:startIconDrawable="@drawable/ic_baseline_local_phone_24"
+                app:startIconTint="@color/wrapedWhite"
+                app:prefixText="@string/Ro"
+                app:prefixTextColor="@color/wrapedWhite"
+                app:counterEnabled="true"
+                app:counterMaxLength="9"
+                app:counterTextColor="@color/wrapedWhite"
+                >
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    app:boxStrokeColor="@color/teal_primary"
+                    android:drawableEnd="@drawable/ic_circle_check"
+                    android:drawableTint="@color/teal_primary"
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:layout_weight="4">
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/product_map"
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+        <Button
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/preview_my_fair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cornerRadius="26dp"
+            android:textColor="@color/wrapedWhite"
+            android:text="@string/preview_my_fair"
+            android:backgroundTint="@color/black"
+            >
+        </Button>
+        <Button
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/launch_my_fair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cornerRadius="26dp"
+            android:textColor="@color/wrapedWhite"
+            android:text="@string/launch_my_fair"
+            android:backgroundTint="@color/black"
+            >
+        </Button>
+
+
+    </LinearLayout>
+</ScrollView>

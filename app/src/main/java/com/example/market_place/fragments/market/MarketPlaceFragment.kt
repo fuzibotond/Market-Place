@@ -2,52 +2,97 @@ package com.example.market_place.fragments.market
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.SpinnerAdapter
-import androidx.lifecycle.MutableLiveData
+import android.widget.*
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.market_place.AuthorizedActivity
+import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.R
 import com.example.market_place.adapter.DataAdapter
 import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.ListViewModel
 import com.example.market_place.viewmodels.ListViewModelFactory
+import com.example.market_place.databinding.FragmentMarketPlaceBinding
+import com.example.market_place.viewmodels.SharedViewModel
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
     DataAdapter.OnItemLongClickListener {
-
+    val sharedViewModel:SharedViewModel by activityViewModels()
     lateinit var viewLayout: View
     lateinit var adapter:DataAdapter
     lateinit var listViewModel:ListViewModel
     lateinit var recycler_view:RecyclerView
     lateinit var spinner:Spinner
+    private var _binding: FragmentMarketPlaceBinding? = null
+    private val binding get() = _binding!!
+    val itemList: ArrayList<Product> = arrayListOf()
+    val itemCategoryNameList: ArrayList<String> = arrayListOf("Time", "Seller","Price")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewLayout = inflater.inflate(R.layout.fragment_market_place, container, false)
-        val itemList: ArrayList<Product> = arrayListOf()
+        _binding = FragmentMarketPlaceBinding.inflate(inflater, container, false)
+        fillList()
+        settingListeners()
+        return binding.root
+    }
+
+    private fun settingListeners() {
+        binding.switcher.setOnCheckedChangeListener { button, b ->
+            if (b){
+                itemList.sortBy { it.creation_time }
+                itemList.forEach { Log.d("price", it.creation_time.toString()) }
+            }else{
+                itemList.shuffle()
+            }
+            adapter.notifyDataSetChanged()
+        }
+
+        adapter = DataAdapter(itemList,this.requireContext(),this, this)
+
+        recycler_view = binding.recyclerView
+        recycler_view.adapter = adapter
+        recycler_view.layoutManager = LinearLayoutManager(this.context)
+
+
+    }
+
+    private fun fillList() {
         listViewModel.products.observe(viewLifecycleOwner){
             listViewModel.products.value?.forEach{
                 itemList.add(it)
                 Log.d("list", itemList.size.toString())
             }
             adapter.setData(itemList)
+            binding.countItem.text = itemList.size.toString()+ " " + "Fairs"
+            binding.dateOfList.text = Calendar.getInstance().time.toString()
             adapter.notifyDataSetChanged()
+
         }
-        spinner = viewLayout.findViewById<Spinner>(R.id.seller_spinner)
-        spinner?.adapter = activity?.let { ArrayAdapter(it.applicationContext, R.layout.support_simple_spinner_dropdown_item,itemList ) } as SpinnerAdapter
+
+        spinner = binding.sellerSpinner
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            spinner?.tooltipText = itemCategoryNameList.get(0)
+//
+//        }
+        spinner?.gravity = Gravity.CENTER
+        spinner?.adapter = activity?.let { ArrayAdapter(it.applicationContext, R.layout.support_simple_spinner_dropdown_item,itemCategoryNameList ) } as SpinnerAdapter
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("erreur")
+                Toast.makeText(requireActivity(), "You not selected any category", Toast.LENGTH_SHORT).show()
             }
 
             override fun onItemSelected(
@@ -56,21 +101,23 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
                 position: Int,
                 id: Long
             ) {
+
                 val type = parent?.getItemAtPosition(position).toString()
-                itemList.removeAll{true}
-//                itemList.addAll(listt)
+                if (type == "Time"){
+                    itemList.sortBy { it.creation_time }
+                }
+                if (type == "Seller"){
+                    itemList.sortBy { it.username }
+                }
+                if (type == "Price"){
+
+                    itemList.sortBy { it.price_per_unit.toInt() }
+                }
                 adapter.notifyDataSetChanged()
 
             }
         }
 
-
-        adapter = DataAdapter(itemList,this.requireActivity(),this, this)
-
-        recycler_view = viewLayout.findViewById(R.id.recycler_view)
-        recycler_view.adapter = adapter
-        recycler_view.layoutManager = LinearLayoutManager(this.context)
-        return viewLayout
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,10 +127,14 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        sharedViewModel.saveDetailsProduct(itemList.get(position))
+        Log.d("xxx", "Marketplace:${sharedViewModel.getProduct()}")
+
+        findNavController().navigate(R.id.action_marketPlaceFragment_to_productDetailsFragment)
     }
 
     override fun onItemLongClick(position: Int) {
-        TODO("Not yet implemented")
+        Log.d("xxx", "Marketplace")
+        findNavController().navigate(R.id.action_marketPlaceFragment_to_productDetailsFragment)
     }
 }

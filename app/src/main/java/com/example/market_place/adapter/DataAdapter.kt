@@ -6,13 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.persistableBundleOf
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
 import com.example.market_place.fragments.market.MarketPlaceFragment
+import com.example.market_place.fragments.market.MyMarketFragment
 import com.example.market_place.model.Product
 
 
@@ -35,6 +39,7 @@ class DataAdapter(
     // 1. user defined ViewHolder type - Embedded class!
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener, View.OnLongClickListener {
+        val btnOrderNow:Button = itemView.findViewById(R.id.btn_order_now)
         val textView_name: TextView = itemView.findViewById(R.id.item_name)
         val textView_price: TextView = itemView.findViewById(R.id.price_and_currency)
         val textView_seller: TextView = itemView.findViewById(R.id.profile_name)
@@ -45,9 +50,13 @@ class DataAdapter(
 
             itemView.setOnClickListener(this)
             itemView.setOnLongClickListener(this)
+            btnOrderNow.setOnClickListener {
+                Toast.makeText(context,"Orederd ${list.get(adapterPosition).title}",Toast.LENGTH_SHORT).show()
+            }
         }
         override fun onClick(p0: View?) {
             val currentPosition = this.adapterPosition
+            Log.d("xxx", "dataadapter")
             listener.onItemClick(currentPosition)
 
         }
@@ -57,6 +66,7 @@ class DataAdapter(
             listener2.onItemLongClick(currentPosition)
             return true
         }
+
     }
 
     // 2. Called only a few times = number of items on screen + a few more ones
@@ -71,7 +81,7 @@ class DataAdapter(
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val currentItem = list[position]
         holder.textView_name.text = currentItem.title
-        holder.textView_price.text = currentItem.price_per_unit
+        holder.textView_price.text = currentItem.price_per_unit+" "+currentItem.price_type+"/"+currentItem.amount_type
         holder.textView_seller.text = currentItem.username
         val images = currentItem.images
         if( images != null && images.size > 0) {

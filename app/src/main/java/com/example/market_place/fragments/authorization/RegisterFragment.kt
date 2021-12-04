@@ -12,11 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.market_place.R
-import com.example.market_place.databinding.FragmentLoginBinding
 import com.example.market_place.databinding.FragmentRegisterBinding
 import com.example.market_place.repository.Repository
-import com.example.market_place.viewmodels.LoginViewModel
-import com.example.market_place.viewmodels.LoginViewModelFactory
 import com.example.market_place.viewmodels.RegisterViewModel
 import com.example.market_place.viewmodels.RegisterViewModelFactory
 import kotlinx.coroutines.launch

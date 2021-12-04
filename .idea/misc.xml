@@ -3,19 +3,53 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable-anydpi/ic_circle_check.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable-anydpi/ic_error_mark.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable-anydpi/profile_icon.xml" value="0.24322916666666666" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/circle_shape.xml" value="0.23072916666666668" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_avatar_svgrepo_com.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_baseline_local_phone_24.xml" value="0.2994791666666667" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_bazaar.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_bazaar_logo_coloured.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_my_fares.xml" value="0.2994791666666667" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_my_market.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/ic_shape.xml" value="0.3885416666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/my_fares_stroke.xml" value="0.3885416666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/my_spinner.xml" value="0.18385416666666668" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/stroke_color.xml" value="0.3885416666666667" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/activity_authorized_market.xml" value="0.209375" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/authorized_activity.xml" value="0.1" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/authorized_activity.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/content_authorized_market.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_add_product_to_my_market.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_forgot_password.xml" value="0.1" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_list.xml" value="0.1" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_login.xml" value="0.19961977186311788" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_market_place.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_my_fares.xml" value="0.2609375" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_my_market.xml" value="0.2609375" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_ongoing_orders.xml" value="0.2" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_ongoing_sales.xml" value="0.325" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_product_details.xml" value="0.22" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_profile.xml" value="0.2609375" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_profile_details.xml" value="0.2609375" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_register.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/image_viewer_for_slider.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/item_layout.xml" value="0.2404255319148936" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/my_fares_item_layout.xml" value="0.3723958333333333" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/my_market_item_layout.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/menu/app_bar_menu.xml" value="0.27395833333333336" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/menu/bottom_navigation.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/menu/cancel.xml" value="0.2609375" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/menu/only_avatar_menu.xml" value="0.2609375" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/mipmap-anydpi-v26/add_pictures_to_product.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/mipmap-anydpi-v26/add_pictures_to_product_round.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2994791666666667" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2994791666666667" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place/app/src/main/res/drawable-anydpi/searrh_icon.xml" value="0.16875" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place/app/src/main/res/drawable/azaar.xml" value="0.22552083333333334" />

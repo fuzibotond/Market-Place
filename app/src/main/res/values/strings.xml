@@ -29,4 +29,23 @@
     <string name="timeline">Timeline</string>
     <string name="my_market">My market</string>
     <string name="my_fares">My fares</string>
+    <string name="profile">Profile</string>
+    <string name="publish">Publish</string>
+    <string name="username">Username</string>
+    <string name="send_a_chat_message">Send a chat message</string>
+    <string name="active">active</string>
+    <string name="contact_details">Contact details</string>
+    <string name="inactive">inactive</string>
+    <string name="title">Title</string>
+    <string name="price_amount">Price/amount</string>
+    <string name="available_amount">Available amount</string>
+    <string name="short_description">Short description</string>
+    <string name="launch_my_fair">Launch my fair</string>
+    <string name="preview_my_fair">Preview my fair</string>
+    <string name="total_items">Total items</string>
+    <string name="price_item">Price/item</string>
+    <string name="solid_items">Solid items</string>
+    <string name="review">Review</string>
+    <string name="ongoing_sales">Ongoing Sales</string>
+    <string name="sold_items">Sold items</string>
 </resources>

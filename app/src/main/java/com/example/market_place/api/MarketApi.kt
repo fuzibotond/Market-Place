@@ -1,6 +1,6 @@
 package com.example.market_place.api
 
-import com.example.eloadas8retrofit.utils.Constants
+import com.example.market_place.utils.Constants
 import com.example.market_place.model.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -17,4 +17,14 @@ interface MarketApi {
 
     @GET(Constants.GET_PRODUCT_URL)
     suspend fun getProducts(@Header("token") token: String): ProductResponse
+
+    @GET(Constants.GET_USER_INFO)
+    suspend fun getUserInfo(@Header("username") username: String): UserInfoResponse
+
+    @POST(Constants.UPDATE_USER_DATA)
+    suspend fun updateUserData(@Header("token") token: String, @Body request: UpdateUserDataRequest): UpdateUserDataResponse
+
+    @GET(Constants.GET_REFRESH_TOKEN)
+    suspend fun getRefreshToken(@Header("token") token: String): RefreshTokenResponse
+
 }

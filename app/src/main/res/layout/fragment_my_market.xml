@@ -1,14 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyMarketFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/wrapedWhite"
+    >
+    <LinearLayout
+        android:id="@+id/my_market_top_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/teal_primary">
 
-</FrameLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_weight="0.1"
+            android:id="@+id/my_market_profile_app_bar"
+            style="@style/FragmentAppBarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkGrey"
+            android:backgroundTint="@color/darkGrey"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
+            app:title="My market"
+            >
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/my_market_sum_and_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_market_top_app_bar"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/my_market_count_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="15dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/my_market_date_of_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="15dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_market_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_market_sum_and_date"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        tools:ignore="NotSibling"
+        tools:itemCount="10"
+        tools:listitem="@layout/my_market_item_layout">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/btn_add_new_product"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:backgroundTint="@color/teal_primary"
+        app:cornerRadius="70dp"
+        app:icon="@drawable/ic_baseline_add_24"
+        />
+</RelativeLayout>
