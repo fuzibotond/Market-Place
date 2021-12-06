@@ -27,4 +27,6 @@ interface MarketApi {
     @GET(Constants.GET_REFRESH_TOKEN)
     suspend fun getRefreshToken(@Header("token") token: String): RefreshTokenResponse
 
+    @POST(Constants.UPDATE_USER_DATA)
+    suspend fun addProduct(@Header("token") token: String, @Body request: AddProductRequest ): Product
 }

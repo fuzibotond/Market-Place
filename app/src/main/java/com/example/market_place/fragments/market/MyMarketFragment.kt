@@ -26,7 +26,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     DataAdapter.OnItemLongClickListener {
     private var _binding: FragmentMyMarketBinding? = null
     private val binding get() = _binding!!
-    val itemList: ArrayList<Product> = arrayListOf()
+    var itemList: ArrayList<Product> = arrayListOf()
     lateinit var adapter: DataAdapter
     lateinit var listViewModel: ListViewModel
     lateinit var recycler_view: RecyclerView
@@ -34,8 +34,6 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = ListViewModelFactory( Repository())
-        listViewModel = ViewModelProvider(this, factory).get(ListViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -51,14 +49,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     private fun initialize() {
-        listViewModel.products.observe(viewLifecycleOwner){
-            listViewModel.products.value?.forEach{
-                itemList.add(it)
-            }
-            adapter.setData(itemList)
-            adapter.notifyDataSetChanged()
-
-        }
+        sharedViewModel.getAllMyproducts()?.forEach { itemList.add(it) }
         adapter = DataAdapter(itemList,this.requireContext(),this, this)
 
         recycler_view = binding.myMarketRecyclerView

@@ -34,7 +34,7 @@ class ProductDetailsFragment : Fragment() {
 
     private fun settingListener() {
         binding.productDetailsEdit.setOnClickListener {
-            findNavController().navigate(R.id.action_productDetailsFragment_to_addProductToMyMarketFragment)
+            findNavController().navigate(R.id.action_productDetailsFragment_to_marketPlaceFragment)
         }
     }
 
