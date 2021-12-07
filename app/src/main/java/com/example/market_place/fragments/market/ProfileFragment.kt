@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
                 updateUserInfoViewModel.user.value?.phone_number = binding.phoneNumberInput.text.toString()
                 updateUserInfoViewModel.user.value?.email = binding.emailInput.text.toString()
                 updateUserInfoViewModel.user.value?.username = binding.usernameInput.text.toString()
-                Toast.makeText(this.requireActivity(), "Profile data published succesfully! Dear ${MarketPlaceApplication.user!!.username}",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireActivity(), "Profile data published succesfully! Dear ${MarketPlaceApplication.username}",Toast.LENGTH_SHORT).show()
             }
             lifecycleScope.launch {
                 updateUserInfoViewModel.updateUserData()

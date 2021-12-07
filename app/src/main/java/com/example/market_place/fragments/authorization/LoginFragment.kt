@@ -54,6 +54,11 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
+
     private fun loadData() {
         val sharedPreferences:SharedPreferences = requireContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val savedToken = sharedPreferences.getString("TOKEN_KEY", null)
@@ -61,24 +66,18 @@ class LoginFragment : Fragment() {
         val savedCreationTime = sharedPreferences.getLong("CREATION_TIME_KEY", 0)
         val savedRefreshTime = sharedPreferences.getLong("REFRESH_TIME_KEY", 0)
 
-
-        if (savedToken != null) {
-            if (savedCreationTime+savedRefreshTime > System.currentTimeMillis()){
-                Log.d("xxx", savedToken)
+        if (savedCreationTime+savedRefreshTime > System.currentTimeMillis()){
+            if (savedToken != null) {
                 MarketPlaceApplication.token = savedToken
+            }
                 loginViewModel.token.value = savedToken
-            }else{
+        }else{
                 sharedPreferences.edit().clear().commit()
                 Toast.makeText(requireContext(), "Your session has been expired! You need to log in again...", Toast.LENGTH_SHORT).show()
-            }
-
         }
         if (savedUsername != null) {
-            Log.d("xxx", savedUsername)
-
-            MarketPlaceApplication.user?.username = savedUsername
+            MarketPlaceApplication.username = savedUsername
         }
-
     }
 
     private fun settingListeners() {
@@ -165,12 +164,12 @@ class LoginFragment : Fragment() {
         Log.d("xxx", loginViewModel.creation_time.value.toString())
         editor.apply{
             putString("TOKEN_KEY", MarketPlaceApplication.token)
-            putString("USERNAME_KEY", MarketPlaceApplication.user?.username)
+            putString("USERNAME_KEY", MarketPlaceApplication.username)
             loginViewModel.creation_time.value?.let { putLong("CREATION_TIME_KEY", it) }
             loginViewModel.refresh_time.value?.let { putLong("REFRESH_TIME_KEY", it) }
 
         }.apply()
-        Toast.makeText(this.requireContext(), "Saved ${ MarketPlaceApplication.user?.username}s data!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this.requireContext(), "Saved ${ MarketPlaceApplication.username}s data!", Toast.LENGTH_SHORT).show()
     }
     internal fun String.toIntColor() = Integer.parseInt(this.replaceFirst("#", ""), 16)
 }

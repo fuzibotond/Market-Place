@@ -30,7 +30,12 @@ class Repository {
     suspend fun getRefreshToken(token: String): RefreshTokenResponse {
         return RetrofitInstance.api.getRefreshToken(token)
     }
-    suspend fun addProduct(token:String, request: AddProductRequest): Product {
+
+    suspend fun addProduct(token:String, request: AddProductRequest): AddProductResponse {
         return RetrofitInstance.api.addProduct(token, request)
+    }
+
+    suspend fun removeProduct(product_id:String): RemoveProductResponse {
+        return RetrofitInstance.api.removeProduct(product_id)
     }
 }

@@ -38,9 +38,9 @@ class ProfileDetailsFragment : Fragment() {
 
     private fun initialize() {
         userInfoViewModel.getUserInfo()
-        binding.profileEmailTextview.setText( MarketPlaceApplication.user?.email)
-        binding.profilePhoneNumberTextview.text = MarketPlaceApplication.user?.phone_number
-        binding.profileUsernameTextview.text = MarketPlaceApplication.user?.username
+        binding.profileEmailTextview.setText( MarketPlaceApplication.user_email)
+        binding.profilePhoneNumberTextview.text = MarketPlaceApplication.user_phone_number
+        binding.profileUsernameTextview.text = MarketPlaceApplication.username
     }
 
 }

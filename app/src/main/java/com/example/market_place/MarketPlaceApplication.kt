@@ -10,6 +10,8 @@ class MarketPlaceApplication: Application(){
         var token: String =""
         var creation_time:Long=0
         var refresh_time:Long=0
-        var user: User? = null
+        var username: String=""
+        var user_phone_number: String=""
+        var user_email: String=""
     }
 }

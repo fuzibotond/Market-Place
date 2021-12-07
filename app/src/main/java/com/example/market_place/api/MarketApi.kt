@@ -2,6 +2,7 @@ package com.example.market_place.api
 
 import com.example.market_place.utils.Constants
 import com.example.market_place.model.*
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -27,6 +28,9 @@ interface MarketApi {
     @GET(Constants.GET_REFRESH_TOKEN)
     suspend fun getRefreshToken(@Header("token") token: String): RefreshTokenResponse
 
-    @POST(Constants.UPDATE_USER_DATA)
-    suspend fun addProduct(@Header("token") token: String, @Body request: AddProductRequest ): Product
+    @POST(Constants.ADD_PRODUCT)
+    suspend fun addProduct(@Header("token") token: String, @Body request: AddProductRequest ): AddProductResponse
+
+    @POST(Constants.REMOVE_PRODUCT)
+    suspend fun removeProduct( @Field("product_id") product_id:String ): RemoveProductResponse
 }

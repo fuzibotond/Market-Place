@@ -49,6 +49,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     private fun initialize() {
+        Log.d("xxx", sharedViewModel.getAllMyproducts().toString())
         sharedViewModel.getAllMyproducts()?.forEach { itemList.add(it) }
         adapter = DataAdapter(itemList,this.requireContext(),this, this)
 

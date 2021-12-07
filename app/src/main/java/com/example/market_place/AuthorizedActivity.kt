@@ -91,25 +91,11 @@ class AuthorizedActivity : AppCompatActivity() {
             findNavController(R.id.authorized_nav_host_fragment).navigate(R.id.profileFragment)
         }
 
-
-
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d("asd", "token: ${sharedPreferences.getString("token","defaultName")}")
-    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.authorized_nav_host_fragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-    override fun onPause() {
-        super.onPause()
 
-        val authEditor: SharedPreferences.Editor  = sharedPreferences.edit()
-        authEditor.apply()
-        authEditor.commit()
-
-    }
 }

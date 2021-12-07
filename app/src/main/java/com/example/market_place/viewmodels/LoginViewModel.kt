@@ -44,7 +44,7 @@ class LoginViewModel(val context: Context, val repository: Repository) : ViewMod
             val result = repository.login(request)
             MarketPlaceApplication.token = result.token
             user.value?.username = result.username
-            MarketPlaceApplication.user = user.value
+            MarketPlaceApplication.username = user.value!!.username
             token.value = result.token
             creation_time.value = result.creation_time
             refresh_time.value = result.refresh_time

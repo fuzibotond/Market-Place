@@ -25,13 +25,4 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    override fun onResume() {
-        super.onResume()
-        val sh:SharedPreferences = getSharedPreferences("MarketSharedPreferences", MODE_PRIVATE)
-//        MarketPlaceApplication.token = sh.getString("token","").toString()
-        val sharedPreferences:SharedPreferences = getSharedPreferences("MarketSharedPreferences",
-            MODE_PRIVATE)
-        Log.d("asd", "token: ${sharedPreferences.getString("token","")}")
-    }
-
 }

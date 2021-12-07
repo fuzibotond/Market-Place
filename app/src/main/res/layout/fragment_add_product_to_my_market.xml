@@ -33,11 +33,6 @@
             android:background="@color/teal_secondary"
             android:gravity="center"
             >
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" />
         </LinearLayout>
         <LinearLayout
             android:layout_weight="14"

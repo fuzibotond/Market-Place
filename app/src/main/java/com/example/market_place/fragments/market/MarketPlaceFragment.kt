@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.graphics.createBitmap
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -50,6 +51,10 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
     private fun settingListeners() {
         binding.switcher.setOnCheckedChangeListener { button, b ->
             if (b){
@@ -74,7 +79,11 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
         listViewModel.products.observe(viewLifecycleOwner){
             listViewModel.products.value?.forEach{
                 itemList.add(it)
-                Log.d("list", itemList.size.toString())
+                Log.d("xxx", "${it.username} We are on ! Saveing my market items...${MarketPlaceApplication.username}")
+                if (it.username == MarketPlaceApplication.username){
+                    sharedViewModel.addProducttoMyMarket(it)
+
+                }
             }
             adapter.setData(itemList)
             binding.countItem.text = itemList.size.toString()+ " " + "Fairs"

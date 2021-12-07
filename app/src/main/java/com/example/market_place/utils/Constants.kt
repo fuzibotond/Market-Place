@@ -12,4 +12,5 @@ object Constants {
     const val UPDATE_USER_DATA = "user/update"
     const val GET_REFRESH_TOKEN = "user/refresh"
     const val ADD_PRODUCT="products/add"
+    const val REMOVE_PRODUCT="products/remove"
 }

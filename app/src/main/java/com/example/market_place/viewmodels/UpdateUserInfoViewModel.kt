@@ -31,8 +31,8 @@ class UpdateUserInfoViewModel(val context: Context, val repository: Repository) 
             user.value?.is_activated = result.updatedData.is_activated
             user.value?.creation_time = result.updatedData.creation_time
             Log.d("xxx", "Update user data - code: ${result.updatedData}")
-            MarketPlaceApplication.user = user.value
-            Log.d("xxx", "MyApplication update user data - code: ${result.code} token:  ${MarketPlaceApplication.user}")
+            MarketPlaceApplication.username = user.value!!.username
+            Log.d("xxx", "MyApplication update user data - code: ${result.code} token:  ${MarketPlaceApplication.username}")
         } catch (e: Exception) {
             Log.d("xxx", "LoginViewModel - exception: ${e.toString()}")
         }
