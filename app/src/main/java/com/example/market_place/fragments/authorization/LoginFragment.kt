@@ -65,7 +65,6 @@ class LoginFragment : Fragment() {
         val savedUsername = sharedPreferences.getString("USERNAME_KEY", null)
         val savedCreationTime = sharedPreferences.getLong("CREATION_TIME_KEY", 0)
         val savedRefreshTime = sharedPreferences.getLong("REFRESH_TIME_KEY", 0)
-
         if (savedCreationTime+savedRefreshTime > System.currentTimeMillis()){
             if (savedToken != null) {
                 MarketPlaceApplication.token = savedToken
@@ -78,6 +77,7 @@ class LoginFragment : Fragment() {
         if (savedUsername != null) {
             MarketPlaceApplication.username = savedUsername
         }
+
     }
 
     private fun settingListeners() {
@@ -145,6 +145,7 @@ class LoginFragment : Fragment() {
     private fun initialize() {
         loginViewModel.refresh_time.observe(viewLifecycleOwner){
             saveUserData()
+//            Log.d("xxx", "save")
         }
 
         loginViewModel.token.observe(viewLifecycleOwner){

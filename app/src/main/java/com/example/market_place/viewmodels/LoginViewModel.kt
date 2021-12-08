@@ -38,8 +38,8 @@ class LoginViewModel(val context: Context, val repository: Repository) : ViewMod
 
     suspend fun login() {
         val request =
-//            LoginRequest(username = user.value!!.username, password = user.value!!.password)
-            LoginRequest("vitaminos@tojas.com", "Pass12.")
+            LoginRequest(username = user.value!!.username, password = user.value!!.password)
+//            LoginRequest("vitaminos@tojas.com", "Pass12.")
         try {
             val result = repository.login(request)
             MarketPlaceApplication.token = result.token

@@ -38,4 +38,7 @@ class Repository {
     suspend fun removeProduct(product_id:String): RemoveProductResponse {
         return RetrofitInstance.api.removeProduct(product_id)
     }
+    suspend fun getOrders(token: String): OrderResponse {
+        return RetrofitInstance.api.getOrders(token)
+    }
 }

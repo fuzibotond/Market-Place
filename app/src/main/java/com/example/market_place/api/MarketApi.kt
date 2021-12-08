@@ -33,4 +33,7 @@ interface MarketApi {
 
     @POST(Constants.REMOVE_PRODUCT)
     suspend fun removeProduct( @Field("product_id") product_id:String ): RemoveProductResponse
+
+    @GET(Constants.GET_ORDERS)
+    suspend fun getOrders(@Header("token") token: String): OrderResponse
 }

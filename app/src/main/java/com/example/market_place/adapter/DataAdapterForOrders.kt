@@ -10,20 +10,24 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.persistableBundleOf
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
+import com.example.market_place.fragments.market.MarketPlaceFragment
+import com.example.market_place.fragments.market.MyMarketFragment
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
 
 
-class DataAdapter(
-    private var list: ArrayList<Product>,
+class DataAdapterForOrders(
+    private var list: ArrayList<Order>,
     private val context: Context,
     private val listener: OnItemClickListener,
     private val listener2: OnItemLongClickListener
 ) :
-    RecyclerView.Adapter<DataAdapter.DataViewHolder>() {
+    RecyclerView.Adapter<DataAdapterForOrders.DataViewHolderForOrders>() {
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
@@ -34,7 +38,7 @@ class DataAdapter(
     }
 
     // 1. user defined ViewHolder type - Embedded class!
-    inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    inner class DataViewHolderForOrders(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener, View.OnLongClickListener {
         val btnOrderNow:Button = itemView.findViewById(R.id.btn_order_now)
         val textView_name: TextView = itemView.findViewById(R.id.item_name)
@@ -67,18 +71,26 @@ class DataAdapter(
     }
 
     // 2. Called only a few times = number of items on screen + a few more ones
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolderForOrders {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
-        return DataViewHolder(itemView)
+        return DataViewHolderForOrders(itemView)
     }
 
 
-    // 3. Called many times, when we scroll the list
-    override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
+
+
+    override fun getItemCount() = list.size
+
+    // Update the list
+    fun setData(newlist: ArrayList<Order>){
+        list = newlist
+    }
+
+    override fun onBindViewHolder(holder: DataAdapterForOrders.DataViewHolderForOrders, position: Int) {
         val currentItem = list[position]
         holder.textView_name.text = currentItem.title
-        holder.textView_price.text = currentItem.price_per_unit+" "+currentItem.price_type+"/"+currentItem.amount_type
+        holder.textView_price.text = currentItem.price_per_unit
         holder.textView_seller.text = currentItem.username
         val images = currentItem.images
         if( images != null && images.size > 0) {
@@ -92,12 +104,5 @@ class DataAdapter(
             .load(R.drawable.ic_bazaar)
             .override(200, 200)
             .into(holder.imageView);
-    }
-
-    override fun getItemCount() = list.size
-
-    // Update the list
-    fun setData(newlist: ArrayList<Product>){
-        list = newlist
     }
 }

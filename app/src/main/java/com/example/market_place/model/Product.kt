@@ -69,3 +69,19 @@ data class AddProductResponse(val creation:String,
                    val images: List<Image>,
                    val creation_time: Long
 )
+@JsonClass(generateAdapter = true)
+data class OrderResponse(val item_count: Int, val orders: List<Order>, val timestamp: Long)
+
+@JsonClass(generateAdapter = true)
+data class Order(  val owner_username: String,
+                   val order_id: String,
+                   val username: String,
+                   val messages: List<String>,
+                   val price_per_unit: String,
+                   val units: String,
+                   val description: String,
+                   val title: String,
+                   val images: List<Image>,
+                   val creation_time: Long,
+                    val status: String
+)
