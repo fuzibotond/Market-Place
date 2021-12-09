@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.adapter.DataAdapter
-import com.example.market_place.adapter.DataAdapterForOrders
+import com.example.market_place.adapter.SalesAdapter
 import com.example.market_place.databinding.FragmentOngoingOrdersBinding
 import com.example.market_place.model.Order
+import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.ListOrderViewModel
 import com.example.market_place.viewmodels.ListOrderViewModelFactory
@@ -26,9 +27,9 @@ import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 
-class OngoingOrdersFragment : Fragment(), DataAdapterForOrders.OnItemClickListener,
-    DataAdapterForOrders.OnItemLongClickListener {
-    lateinit var adapter: DataAdapterForOrders
+class OngoingOrdersFragment : Fragment(), SalesAdapter.OnItemClickListener,
+    SalesAdapter.OnItemLongClickListener {
+    lateinit var adapter: SalesAdapter
     lateinit var listOrderViewModel: ListOrderViewModel
     lateinit var recycler_view: RecyclerView
     lateinit var spinner: Spinner
@@ -49,42 +50,32 @@ class OngoingOrdersFragment : Fragment(), DataAdapterForOrders.OnItemClickListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = ListOrderViewModelFactory( Repository())
-        listOrderViewModel = ViewModelProvider(this, factory).get(ListOrderViewModel::class.java)
-        lifecycleScope.launch {
-            listOrderViewModel.getOrders()
-        }
+
     }
 
     private fun intitialze() {
 
 
-        listOrderViewModel.orders.observe(viewLifecycleOwner){
-            listOrderViewModel.orders.value?.forEach{
-                itemList.add(it)
-                Log.d("xxx", "${it.username} We are on ! Saveing my market items...${MarketPlaceApplication.username}")
-//                if (it.username == MarketPlaceApplication.username){
-//                    sharedViewModel.addProducttoMyMarket(it)
-//
-//                }
-            }
+       sharedViewModel.orders.observe(viewLifecycleOwner){
+            Log.d("xxx", "Orders: "+ sharedViewModel.orders.value)
+            sharedViewModel.orders.value!!.forEach { itemList.add(it) }
             adapter.setData(itemList)
             adapter.notifyDataSetChanged()
-
         }
-        adapter = DataAdapterForOrders(itemList,this.requireContext(),this, this)
+        adapter = SalesAdapter(itemList ,this.requireContext(),this, this)
 
-        recycler_view = binding.myFaresRecyclerView
+        recycler_view = binding.myFaresOrdersRecyclerView
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this.context)
+
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        Log.d("xxx", "Clicked")
     }
 
     override fun onItemLongClick(position: Int) {
-        TODO("Not yet implemented")
+        Log.d("xxx", "Long Clicked")
     }
 
 }

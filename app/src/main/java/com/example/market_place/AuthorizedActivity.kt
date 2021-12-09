@@ -1,76 +1,93 @@
 package com.example.market_place
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.*
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.core.view.forEach
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import com.example.market_place.viewmodels.LoginViewModel
+import com.example.market_place.viewmodels.SharedViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
+
 
 class AuthorizedActivity : AppCompatActivity() {
     private lateinit var navigationView: BottomNavigationView
     lateinit var topAppBar: MaterialToolbar
     lateinit var profileMennu:ActionMenuItemView
-    private val loginViewModel:LoginViewModel by viewModels()
     lateinit var  sharedPreferences: SharedPreferences
+    val sharedViewModel:SharedViewModel by viewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.authorized_activity)
 
-        val message = intent.getStringExtra(EXTRA_MESSAGE)
-        if (message != null) {
-            Log.d("xxx", message)
-        }
-        val navController = findNavController(R.id.authorized_nav_host_fragment)
-        sharedPreferences = getSharedPreferences("MarketSharedPreferences",
-            MODE_PRIVATE)
+
         initializeView()
         initMenu()
     }
-
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.app_bar_menu,menu)
-        return super.onCreateOptionsMenu(menu)
-
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.search -> {
-                Toast.makeText(this,"You pushed search button!", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.filter -> {
-                Toast.makeText(this,"You pushed filter button!", Toast.LENGTH_SHORT).show()
-                return true
-            }
-            R.id.profile ->{
-                findNavController(R.id.authorized_nav_host_fragment).navigate(R.id.profileFragment)
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun initializeView() {
         navigationView = findViewById(R.id.bottomNavigationView)
         topAppBar = findViewById(R.id.main_top_app_bar)
         profileMennu = findViewById(R.id.profile)
+        setSupportActionBar(topAppBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_bar_menu,menu)
+        val searchItem = menu?.findItem(R.id.search_action)
+        if(searchItem != null){
+            val searchView = searchItem.actionView as SearchView
+            searchView.queryHint = "Type for searching..."
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+
+                    //show submitted text for testing purposes.
+                    Toast.makeText(applicationContext, "Looking for $query", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null) {
+                        sharedViewModel.searchWithKeyword(newText)
+                    }
+                    return true
+                }
+
+            })
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId){
+//            R.id.search_action ->{
+//                Log.d("xxx", "search")
+//                return true
+//            }
+//            R.id.filter -> {
+//                Log.d("xxx", "filter")
+//
+//                return true
+//            }
+//            R.id.profile -> {
+//                Log.d("xxx", "search")
+//
+//                return true
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun initMenu() {
         navigationView.setOnNavigationItemSelectedListener { item ->

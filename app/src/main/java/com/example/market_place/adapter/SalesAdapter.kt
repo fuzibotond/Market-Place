@@ -6,10 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
@@ -17,13 +15,13 @@ import com.example.market_place.model.Order
 import com.example.market_place.model.Product
 
 
-class DataAdapter(
-    private var list: ArrayList<Product>,
+class SalesAdapter(
+    private var list: ArrayList<Order>,
     private val context: Context,
     private val listener: OnItemClickListener,
     private val listener2: OnItemLongClickListener
 ) :
-    RecyclerView.Adapter<DataAdapter.DataViewHolder>() {
+    RecyclerView.Adapter<SalesAdapter.DataViewHolder>() {
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
@@ -36,19 +34,34 @@ class DataAdapter(
     // 1. user defined ViewHolder type - Embedded class!
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener, View.OnLongClickListener {
-        val btnOrderNow:Button = itemView.findViewById(R.id.btn_order_now)
-        val textView_name: TextView = itemView.findViewById(R.id.item_name)
-        val textView_price: TextView = itemView.findViewById(R.id.price_and_currency)
-        val textView_seller: TextView = itemView.findViewById(R.id.profile_name)
-        val imageView: ImageView = itemView.findViewById(R.id.profile_image)
-        val profileImageView:ImageView = itemView.findViewById(R.id.profile_image)
+//        buttons
+        val btnAccept:AppCompatImageButton  = itemView.findViewById(R.id.btn_sale_accept)
+        val btnExtend:AppCompatImageButton = itemView.findViewById(R.id.btn_sale_extend)
+        val btnCancel:AppCompatImageButton  = itemView.findViewById(R.id.btn_sale_cancel)
+//        textviews
+        val textViewName: TextView = itemView.findViewById(R.id.sale_item_name)
+        val textViewPriceandCurrency: TextView = itemView.findViewById(R.id.sale_price_and_currency)
+        val textViewSeller: TextView = itemView.findViewById(R.id.sale_profile_name)
+        val textViewDateTime: TextView = itemView.findViewById(R.id.sale_date_time)
+        val textViewItemDescription: TextView = itemView.findViewById(R.id.sale_item_description)
+        val textViewAmount: TextView = itemView.findViewById(R.id.sale_amount)
+        val textViewPrice: TextView = itemView.findViewById(R.id.sale_price)
+//        imageviews
+        val imageViewProfile: ImageView = itemView.findViewById(R.id.sale_profile_image)
+        val imageView: ImageView = itemView.findViewById(R.id.sale_profile_image)
+        val spinnerIncomingOrder: Spinner = itemView.findViewById(R.id.sale_incoming_orders)
+
+
 
         init{
 
             itemView.setOnClickListener(this)
             itemView.setOnLongClickListener(this)
-            btnOrderNow.setOnClickListener {
-                Toast.makeText(context,"Orederd ${list.get(adapterPosition).title}",Toast.LENGTH_SHORT).show()
+            btnAccept.setOnClickListener {
+                Toast.makeText(context,"Orederd ${list.get(adapterPosition).title} has been accepted",Toast.LENGTH_SHORT).show()
+            }
+            btnCancel.setOnClickListener {
+                Toast.makeText(context,"Orederd ${list.get(adapterPosition).title} has been canceled",Toast.LENGTH_SHORT).show()
             }
         }
         override fun onClick(p0: View?) {
@@ -68,7 +81,7 @@ class DataAdapter(
     // 2. Called only a few times = number of items on screen + a few more ones
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.my_fares_item_layout, parent, false)
         return DataViewHolder(itemView)
     }
 
@@ -76,9 +89,9 @@ class DataAdapter(
     // 3. Called many times, when we scroll the list
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val currentItem = list[position]
-        holder.textView_name.text = currentItem.title
-        holder.textView_price.text = currentItem.price_per_unit+" "+currentItem.price_type+"/"+currentItem.amount_type
-        holder.textView_seller.text = currentItem.username
+        holder.textViewName.text = currentItem.title
+        holder.textViewPrice.text = currentItem.price_per_unit
+        holder.textViewSeller.text = currentItem.username
         val images = currentItem.images
         if( images != null && images.size > 0) {
             Log.d("xxx", "#num_images: ${images.size}")
@@ -96,7 +109,7 @@ class DataAdapter(
     override fun getItemCount() = list.size
 
     // Update the list
-    fun setData(newlist: ArrayList<Product>){
+    fun setData(newlist: ArrayList<Order>){
         list = newlist
     }
 }

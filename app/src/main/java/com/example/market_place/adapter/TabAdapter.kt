@@ -5,26 +5,30 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.market_place.fragments.market.OngoingOrdersFragment
+import com.example.market_place.fragments.market.OngoingSalesFragment
 
-class TabAdapter (val fm:FragmentManager, val behavior: Int): FragmentPagerAdapter(fm, behavior) {
+class TabAdapter ( fm:FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fm,lifecycle) {
 
-    val fragmentArrayList:ArrayList<Fragment> = arrayListOf()
-    val fragmentTitle: ArrayList<String> = arrayListOf()
 
-    override fun getCount(): Int {
-        return fragmentArrayList.size
+    override fun getItemCount(): Int {
+        return 2
     }
 
-    override fun getItem(position: Int): Fragment {
-        return fragmentArrayList.get(position)
+    override fun createFragment(position: Int): Fragment {
+       return when(position){
+            0->{
+                 OngoingSalesFragment()
+            }
+            1->{
+                 OngoingOrdersFragment()
+            }
+            else->{
+                Fragment()
+            }
+        }
     }
 
-    fun addFragment(fragment:Fragment, title:String){
-        fragmentArrayList.add(fragment)
-        fragmentTitle.add(title)
-    }
-
-    override fun getPageTitle(position: Int): CharSequence? {
-        return fragmentTitle.get(position)
-    }
 }

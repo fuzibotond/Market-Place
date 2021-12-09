@@ -14,7 +14,7 @@ class ListOrderViewModel(private val repository: Repository) : ViewModel() {
     var orders = MutableLiveData<List<Order>>()
 
     init{
-        Log.d("xxx", "ListViewModel constructor - Token: ${MarketPlaceApplication.token}")
+        Log.d("xxx", "ListOrderViewModel constructor - Token: ${MarketPlaceApplication.token}")
         getOrders()
     }
     fun getOrders() {

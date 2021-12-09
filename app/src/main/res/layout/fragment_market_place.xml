@@ -4,45 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/wrapedWhite"
-    >
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:background="@color/wrapedWhite">
+
     <LinearLayout
         android:id="@+id/top_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/teal_primary">
+        android:background="@color/teal_primary"
+        android:orientation="horizontal">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-        </com.google.android.material.switchmaterial.SwitchMaterial>
         <com.google.android.material.appbar.MaterialToolbar
+            style="@style/FragmentAppBarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:title="Latest"
-            style="@style/FragmentAppBarTitle">
+            app:title="Latest">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.switchmaterial.SwitchMaterial>
+
+
         </com.google.android.material.appbar.MaterialToolbar>
-        <LinearLayout
+
+        <Spinner
+            android:id="@+id/seller_spinner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:background="@drawable/teal_outline"
+            android:popupBackground="@drawable/teal_outline_with_white_background"
+            android:spinnerMode="dropdown"
+            tools:listitem="@layout/item_filter"
+           >
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/seller_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                android:scrollbars="none"
-                style="@style/spinnerItemStyle"
-
-                >
-            </androidx.appcompat.widget.AppCompatSpinner>
-        </LinearLayout>
+        </Spinner>
 
     </LinearLayout>
     <LinearLayout

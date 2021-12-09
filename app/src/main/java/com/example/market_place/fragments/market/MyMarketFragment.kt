@@ -7,27 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.market_place.R
 import com.example.market_place.adapter.DataAdapter
+import com.example.market_place.adapter.DataAdapterForMarketSale
 import com.example.market_place.databinding.FragmentMyMarketBinding
 import com.example.market_place.model.Product
-import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.ListViewModel
-import com.example.market_place.viewmodels.ListViewModelFactory
 import com.example.market_place.viewmodels.SharedViewModel
 import kotlin.collections.ArrayList
 
 
 class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
-    DataAdapter.OnItemLongClickListener {
+    DataAdapter.OnItemLongClickListener, DataAdapterForMarketSale.OnItemClickListener {
     private var _binding: FragmentMyMarketBinding? = null
     private val binding get() = _binding!!
     var itemList: ArrayList<Product> = arrayListOf()
-    lateinit var adapter: DataAdapter
+    lateinit var adapter: DataAdapterForMarketSale
     lateinit var listViewModel: ListViewModel
     lateinit var recycler_view: RecyclerView
     private val sharedViewModel:SharedViewModel by activityViewModels()
@@ -49,9 +47,8 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     private fun initialize() {
-        Log.d("xxx", sharedViewModel.getAllMyproducts().toString())
         sharedViewModel.getAllMyproducts()?.forEach { itemList.add(it) }
-        adapter = DataAdapter(itemList,this.requireContext(),this, this)
+        adapter = DataAdapterForMarketSale(itemList,this.requireContext(),this, this)
 
         recycler_view = binding.myMarketRecyclerView
         recycler_view.adapter = adapter

@@ -17,13 +17,13 @@ import com.example.market_place.model.Order
 import com.example.market_place.model.Product
 
 
-class DataAdapter(
-    private var list: ArrayList<Product>,
+class OrdersAdapter(
+    private var list: ArrayList<Order>,
     private val context: Context,
     private val listener: OnItemClickListener,
     private val listener2: OnItemLongClickListener
 ) :
-    RecyclerView.Adapter<DataAdapter.DataViewHolder>() {
+    RecyclerView.Adapter<OrdersAdapter.DataViewHolder>() {
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
@@ -47,9 +47,7 @@ class DataAdapter(
 
             itemView.setOnClickListener(this)
             itemView.setOnLongClickListener(this)
-            btnOrderNow.setOnClickListener {
-                Toast.makeText(context,"Orederd ${list.get(adapterPosition).title}",Toast.LENGTH_SHORT).show()
-            }
+
         }
         override fun onClick(p0: View?) {
             val currentPosition = this.adapterPosition
@@ -77,7 +75,7 @@ class DataAdapter(
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val currentItem = list[position]
         holder.textView_name.text = currentItem.title
-        holder.textView_price.text = currentItem.price_per_unit+" "+currentItem.price_type+"/"+currentItem.amount_type
+        holder.textView_price.text = currentItem.price_per_unit
         holder.textView_seller.text = currentItem.username
         val images = currentItem.images
         if( images != null && images.size > 0) {
@@ -96,7 +94,7 @@ class DataAdapter(
     override fun getItemCount() = list.size
 
     // Update the list
-    fun setData(newlist: ArrayList<Product>){
+    fun setData(newlist: ArrayList<Order>){
         list = newlist
     }
 }

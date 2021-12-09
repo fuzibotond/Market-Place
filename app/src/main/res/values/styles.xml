@@ -65,13 +65,9 @@
     <style name="BtnOrderNow">
         <item name="android:capitalize">none</item>
     </style>
-    <style name="mySpinner" >
-        <item name="android:gravity">center</item>
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:textAlignment">center</item>
-        <item name="tooltipStyle">@style/FragmentAppBarTitle</item>
-    </style>
-    <style name="spinnerItemStyle">
-        <item name="android:gravity">center</item>
+
+    <style name="mySpinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/wrapedWhite</item>
+        <item name="titleTextColor">@color/wrapedWhite</item>
     </style>
 </resources>

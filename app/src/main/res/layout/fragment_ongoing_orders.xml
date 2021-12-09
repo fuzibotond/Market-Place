@@ -62,9 +62,8 @@
     </LinearLayout>
 
 
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_fares_recycler_view"
+        android:id="@+id/my_fares_orders_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_fares_sum_and_date"

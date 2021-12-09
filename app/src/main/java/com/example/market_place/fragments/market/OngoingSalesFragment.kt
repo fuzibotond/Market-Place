@@ -7,25 +7,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.market_place.R
 import com.example.market_place.adapter.DataAdapter
+import com.example.market_place.adapter.SalesAdapter
 import com.example.market_place.databinding.FragmentMyMarketBinding
 import com.example.market_place.databinding.FragmentOngoingSalesBinding
+import com.example.market_place.model.Order
 import com.example.market_place.model.Product
+import com.example.market_place.repository.Repository
+import com.example.market_place.viewmodels.ListOrderViewModel
+import com.example.market_place.viewmodels.ListOrderViewModelFactory
 import com.example.market_place.viewmodels.ListViewModel
 import com.example.market_place.viewmodels.SharedViewModel
 
 
 class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
-    DataAdapter.OnItemLongClickListener {
+    DataAdapter.OnItemLongClickListener, SalesAdapter.OnItemClickListener,
+    SalesAdapter.OnItemLongClickListener {
     private var _binding: FragmentOngoingSalesBinding? = null
     private val binding get() = _binding!!
-    var itemList: ArrayList<Product> = arrayListOf()
-    lateinit var adapter: DataAdapter
+    var itemList: ArrayList<Order> = arrayListOf()
+    lateinit var adapter: SalesAdapter
     lateinit var recycler_view: RecyclerView
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    lateinit var listOrderViewModel:ListOrderViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,22 +44,36 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val factory = ListOrderViewModelFactory( Repository())
+        listOrderViewModel = ViewModelProvider(this, factory).get(ListOrderViewModel::class.java)
+    }
+
     private fun initialize() {
-        Log.d("xxx", sharedViewModel.getAllMyproducts().toString())
-        sharedViewModel.getAllMyproducts()?.forEach { itemList.add(it) }
-        adapter = DataAdapter(itemList,this.requireContext(),this, this)
+        listOrderViewModel.orders.observe(viewLifecycleOwner){
+            Log.d("xxx", "Orders: "+ listOrderViewModel.orders.value)
+//
+            listOrderViewModel.orders.value!!.forEach {
+                itemList.add(it)
+            }
+            sharedViewModel.saveOrders(itemList)
+            adapter.setData(itemList)
+            adapter.notifyDataSetChanged()
+        }
+        adapter = SalesAdapter(itemList ,this.requireContext(),this, this)
 
         recycler_view = binding.myFaresRecyclerView
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this.context)
+
     }
 
     override fun onItemClick(position: Int) {
-        sharedViewModel.saveDetailsProduct(itemList.get(position))
-        Log.d("xxx", "Marketplace:${sharedViewModel.getProduct()}")
+      Log.d("xxx", "Clicked")
     }
 
     override fun onItemLongClick(position: Int) {
-        TODO("Not yet implemented")
+        Log.d("xxx", "LongClicked")
     }
 }

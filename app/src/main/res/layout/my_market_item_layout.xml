@@ -22,7 +22,7 @@
             >
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/item_image"
+                android:id="@+id/my_market_item_image"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:src="@drawable/profile_icon"
@@ -32,7 +32,7 @@
                 android:layout_gravity="center"/>
 
             <TextView
-                android:id="@+id/price_and_currency"
+                android:id="@+id/my_market_price_and_currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -55,7 +55,7 @@
                 android:padding="5dp">
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/profile_image"
+                    android:id="@+id/my_market_profile_image"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:src="@drawable/profile_icon"
@@ -65,7 +65,7 @@
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/profile_name"
+                    android:id="@+id/my_market_profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -74,7 +74,7 @@
 
             </LinearLayout>
             <TextView
-                android:id="@+id/item_name"
+                android:id="@+id/my_market_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -84,12 +84,13 @@
             </TextView>
 
             <TextView
+                android:id="@+id/my_market_is_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_circle_check"
                 android:drawableTint="@color/teal_primary"
                 android:text="@string/active"
-                android:textColor="@color/teal_primary"/>
+                android:textColor="@color/teal_primary" />
         </LinearLayout>
 
     </LinearLayout>
