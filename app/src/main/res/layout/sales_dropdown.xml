@@ -9,7 +9,6 @@
     android:layout_centerHorizontal="true"
     android:layout_gravity="center"
     android:layout_marginLeft="30dp"
-    android:background="@drawable/teal_outline_with_white_background"
     android:backgroundTintMode="multiply"
     android:elevation="10dp"
     android:fadingEdge="horizontal|vertical"
@@ -17,9 +16,6 @@
     android:pointerIcon="hand"
     android:singleLine="true"
     android:textAlignment="center"
-    android:textColor="@color/wrapedWhite"
+    android:textColor="@color/add_pictures_to_product_background"
     android:textSize="18sp"
-    android:textStyle="bold"
-    app:drawableLeftCompat="@drawable/ic_baseline_arrow_drop_down_24"
-    app:icon="@drawable/ic_baseline_keyboard_arrow_down_24"
-    tools:src="@drawable/filter_icon" />
+    android:textStyle="bold" />

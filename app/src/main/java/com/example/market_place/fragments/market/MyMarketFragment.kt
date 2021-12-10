@@ -59,6 +59,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
         binding.btnAddNewProduct.setOnClickListener {
             findNavController().navigate(R.id.action_myMarketFragment_to_addProductToMyMarketFragment)
         }
+        binding.myMarketCountItem.text = sharedViewModel.getAllMyproducts()?.size.toString() + " fairs"
     }
 
     override fun onItemClick(position: Int) {

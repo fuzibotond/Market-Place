@@ -32,14 +32,13 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
         <Spinner
+            android:paddingBottom="10dp"
             android:id="@+id/seller_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
-            android:background="@drawable/teal_outline"
-            android:popupBackground="@drawable/teal_outline_with_white_background"
             android:spinnerMode="dropdown"
-            tools:listitem="@layout/item_filter"
+            android:popupBackground="@android:color/transparent"
            >
 
         </Spinner>

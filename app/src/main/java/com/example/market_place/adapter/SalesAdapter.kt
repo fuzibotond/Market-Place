@@ -13,6 +13,10 @@ import com.bumptech.glide.Glide
 import com.example.market_place.R
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
+import com.google.android.material.timepicker.TimeFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SalesAdapter(
@@ -22,6 +26,8 @@ class SalesAdapter(
     private val listener2: OnItemLongClickListener
 ) :
     RecyclerView.Adapter<SalesAdapter.DataViewHolder>() {
+    val itemCategoryNameList: ArrayList<String> = arrayListOf("Incoming order", "Accepted order","Declined order", "Delivering order", "Delivered order")
+
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
@@ -40,7 +46,7 @@ class SalesAdapter(
         val btnCancel:AppCompatImageButton  = itemView.findViewById(R.id.btn_sale_cancel)
 //        textviews
         val textViewName: TextView = itemView.findViewById(R.id.sale_item_name)
-        val textViewPriceandCurrency: TextView = itemView.findViewById(R.id.sale_price_and_currency)
+
         val textViewSeller: TextView = itemView.findViewById(R.id.sale_profile_name)
         val textViewDateTime: TextView = itemView.findViewById(R.id.sale_date_time)
         val textViewItemDescription: TextView = itemView.findViewById(R.id.sale_item_description)
@@ -58,10 +64,15 @@ class SalesAdapter(
             itemView.setOnClickListener(this)
             itemView.setOnLongClickListener(this)
             btnAccept.setOnClickListener {
+                btnCancel.visibility = View.GONE
                 Toast.makeText(context,"Orederd ${list.get(adapterPosition).title} has been accepted",Toast.LENGTH_SHORT).show()
             }
             btnCancel.setOnClickListener {
+                btnAccept.visibility = View.GONE
                 Toast.makeText(context,"Orederd ${list.get(adapterPosition).title} has been canceled",Toast.LENGTH_SHORT).show()
+            }
+            btnExtend.setOnClickListener {
+                Toast.makeText(context,"Orederd ${list.get(adapterPosition).description} has been extended",Toast.LENGTH_SHORT).show()
             }
         }
         override fun onClick(p0: View?) {
@@ -90,8 +101,13 @@ class SalesAdapter(
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val currentItem = list[position]
         holder.textViewName.text = currentItem.title
-        holder.textViewPrice.text = currentItem.price_per_unit
         holder.textViewSeller.text = currentItem.username
+        holder.textViewItemDescription.text = currentItem.description
+        holder.textViewAmount.text = currentItem.units + " Ron"
+        holder.textViewPrice.text = currentItem.price_per_unit
+        val date = Date(currentItem.creation_time)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        holder.textViewDateTime.text = format.format(date)
         val images = currentItem.images
         if( images != null && images.size > 0) {
             Log.d("xxx", "#num_images: ${images.size}")
@@ -104,6 +120,24 @@ class SalesAdapter(
             .load(R.drawable.ic_bazaar)
             .override(200, 200)
             .into(holder.imageView);
+        holder.spinnerIncomingOrder?.adapter = this.context?.let { ArrayAdapter(it.applicationContext, R.layout.sales_dropdown,itemCategoryNameList ) } as SpinnerAdapter
+        holder.spinnerIncomingOrder?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO()
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                val type = parent?.getItemAtPosition(position).toString()
+                Toast.makeText(context, "You choose ${type}", Toast.LENGTH_SHORT).show()
+
+            }
+        }
     }
 
     override fun getItemCount() = list.size

@@ -11,6 +11,7 @@ class SharedViewModel : ViewModel() {
     val myMarketProducts = mutableListOf<Product>()
     val searchingKeyword = MutableLiveData<String>()
     val orders = MutableLiveData<List<Order>>()
+    val order_item_count = MutableLiveData<Int>()
     fun saveDetailsProduct(product:Product){
         detailsProduct = product
     }
@@ -29,7 +30,9 @@ class SharedViewModel : ViewModel() {
     fun saveOrders(order: List<Order>) {
         orders.value = order
     }
-
+    fun saveOrderItemCount(order_count: Int ){
+        order_item_count.value = order_count
+    }
 
 
 }

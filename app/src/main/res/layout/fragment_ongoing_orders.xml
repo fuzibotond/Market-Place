@@ -4,35 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.market.OngoingOrdersFragment">
+    tools:context=".fragments.market.OngoingOrdersFragment"
+    android:background="@color/wrapedWhite">
 
-    <LinearLayout
-        android:id="@+id/my_fares_top_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/teal_primary">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:layout_weight="0.1"
-            android:id="@+id/my_fares_profile_app_bar"
-            style="@style/FragmentAppBarTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/darkGrey"
-            android:backgroundTint="@color/darkGrey"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
-            app:title="My fares"
-            >
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/my_fares_sum_and_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/my_fares_top_app_bar"
+
         android:orientation="horizontal"
         android:weightSum="2">
         <LinearLayout
@@ -60,20 +39,26 @@
 
 
     </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_fares_orders_recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/my_fares_sum_and_date"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        tools:ignore="NotSibling"
-        tools:itemCount="10"
-        tools:listitem="@layout/my_market_item_layout">
+        android:background="@color/wrapedWhite">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_fares_orders_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/my_fares_sum_and_date"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            tools:ignore="NotSibling"
+            tools:itemCount="10"
+            tools:listitem="@layout/my_market_item_layout">
 
 
-    </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
 </RelativeLayout>

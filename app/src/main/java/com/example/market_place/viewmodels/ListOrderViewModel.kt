@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class ListOrderViewModel(private val repository: Repository) : ViewModel() {
     var orders = MutableLiveData<List<Order>>()
-
+    var item_count = MutableLiveData<Int>()
     init{
         Log.d("xxx", "ListOrderViewModel constructor - Token: ${MarketPlaceApplication.token}")
         getOrders()
@@ -23,6 +23,7 @@ class ListOrderViewModel(private val repository: Repository) : ViewModel() {
                 val result =
                     repository.getOrders(MarketPlaceApplication.token)
                 orders.value = result.orders
+                item_count.value = result.item_count
                 Log.d("xxx", "ListOrdersViewModel - #products:  ${result.item_count}")
             }catch(e: Exception){
                 Log.d("xxx", "ListOrderViewModel exception: ${e.toString()}")
