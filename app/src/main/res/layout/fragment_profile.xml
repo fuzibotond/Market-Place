@@ -16,41 +16,12 @@
     android:weightSum="7"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/profile_app_bar"
-        style="@style/FragmentAppBarTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/darkGrey"
-        android:backgroundTint="@color/darkGrey"
-        app:menu="@menu/only_avatar_menu"
-        app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
-        app:title="Settings">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="160dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/mini_profile_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left"
-                android:foregroundGravity="left"
-                android:padding="5dp"
-                android:src="@drawable/ic_avatar_svgrepo_com">
-
-            </de.hdodenhof.circleimageview.CircleImageView>
-
-        </LinearLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/big_profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_app_bar"
+
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:padding="30dp"

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.SearchView
@@ -30,7 +31,6 @@ class AuthorizedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.authorized_activity)
 
-
         initializeView()
         initMenu()
     }
@@ -51,7 +51,9 @@ class AuthorizedActivity : AppCompatActivity() {
             searchView.queryHint = "Type for searching..."
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
-
+                    if (query != null) {
+                        sharedViewModel.searchWithKeyword(query)
+                    }
                     //show submitted text for testing purposes.
                     Toast.makeText(applicationContext, "Looking for $query", Toast.LENGTH_SHORT).show()
                     return true

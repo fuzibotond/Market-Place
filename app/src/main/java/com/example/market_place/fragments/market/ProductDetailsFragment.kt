@@ -1,5 +1,6 @@
 package com.example.market_place.fragments.market
 
+import android.app.AlertDialog
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
@@ -7,15 +8,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.R
 import com.example.market_place.databinding.FragmentMarketPlaceBinding
 import com.example.market_place.databinding.FragmentProductDetailsBinding
+import com.example.market_place.model.Product
 import com.example.market_place.viewmodels.SharedViewModel
 import com.site_valley.imagesliderexampleinkotlin.MySliderImageAdapter
 import com.smarteist.autoimageslider.SliderView
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProductDetailsFragment : Fragment() {
     private var _binding: FragmentProductDetailsBinding? = null
@@ -27,6 +34,7 @@ class ProductDetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentProductDetailsBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         initialize()
         settingListener()
         return binding.root
@@ -34,6 +42,8 @@ class ProductDetailsFragment : Fragment() {
 
     private fun settingListener() {
         binding.productDetailsEdit.setOnClickListener {
+            sharedViewModel.setStateIfUpdateable(true)
+            sharedViewModel.detailsProduct.value?.let { it1 -> sharedViewModel.keepProductToEdit(it1) }
             findNavController().navigate(R.id.action_productDetailsFragment_to_addProductToMyMarketFragment2)
         }
     }
@@ -59,7 +69,9 @@ class ProductDetailsFragment : Fragment() {
             binding.productDetailsActive.setTextColor(resources.getColorStateList(R.color.wrapedWhite))
         }
         binding.productDetailsDescription.text = currentProduct?.description
-        binding.productDetailsDate.text = currentProduct?.creation_time.toString()
+        val date = currentProduct?.let { Date(it?.creation_time) }
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        binding.productDetailsDate.text = format.format(date)
         binding.productDetailsPriceAndUnit.text = currentProduct?.price_per_unit + " " + currentProduct?.price_type+"/"+ currentProduct?.amount_type
         binding.productDetailsReview.text = "0"
         binding.productDetailsSoldItems.text = "0"
@@ -71,8 +83,28 @@ class ProductDetailsFragment : Fragment() {
         val adapter = MySliderImageAdapter()
         adapter.renewItems(images)
         imageSlider.setSliderAdapter(adapter)
-        imageSlider.isAutoCycle = true
+        imageSlider.isAutoCycle = false
         imageSlider.startAutoCycle()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.setStateIfUpdateable(false)
+    }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle("Exit!")
+                    .setMessage("Are you sure about that?")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK"){ _,_ ->
+                       findNavController().navigate(R.id.marketPlaceFragment)
+                    }
+                    .show()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }

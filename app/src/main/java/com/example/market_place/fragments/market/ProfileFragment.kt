@@ -1,11 +1,13 @@
 package com.example.market_place.fragments.market
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -41,6 +43,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         initialize()
         settingListener()
         return binding.root
@@ -57,7 +60,7 @@ class ProfileFragment : Fragment() {
             lifecycleScope.launch {
                 updateUserInfoViewModel.updateUserData()
             }
-            findNavController().navigate(R.id.action_profileFragment_to_profileDetailsFragment)
+
         }
     }
 
@@ -66,6 +69,20 @@ class ProfileFragment : Fragment() {
         binding.phoneNumberInput.hint = userInfoViewModel.user.value?.phone_number
         binding.usernameInput.hint = userInfoViewModel.user.value?.username
     }
-
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle("Back?")
+                    .setMessage("Your modifies won't be published...Are you sure about that?")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK"){ _,_ ->
+                        findNavController().navigate(R.id.marketPlaceFragment)
+                    }
+                    .show()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
 
 }

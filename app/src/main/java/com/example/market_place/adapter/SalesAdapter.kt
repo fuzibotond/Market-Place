@@ -1,6 +1,7 @@
 package com.example.market_place.adapter
 
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
 import com.example.market_place.model.Order
-import com.example.market_place.model.Product
-import com.google.android.material.timepicker.TimeFormat
+import com.example.market_place.viewmodels.SharedViewModel
+import com.example.market_place.viewmodels.UpdateAssetViewModel
+import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -23,7 +28,9 @@ class SalesAdapter(
     private var list: ArrayList<Order>,
     private val context: Context,
     private val listener: OnItemClickListener,
-    private val listener2: OnItemLongClickListener
+    private val listener2: OnItemLongClickListener,
+    private val sharedViewModel: SharedViewModel,
+    private val updateAssetViewModel: UpdateAssetViewModel
 ) :
     RecyclerView.Adapter<SalesAdapter.DataViewHolder>() {
     val itemCategoryNameList: ArrayList<String> = arrayListOf("Incoming order", "Accepted order","Declined order", "Delivering order", "Delivered order")
@@ -41,9 +48,9 @@ class SalesAdapter(
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener, View.OnLongClickListener {
 //        buttons
-        val btnAccept:AppCompatImageButton  = itemView.findViewById(R.id.btn_sale_accept)
+        val btnAccept: MaterialButton = itemView.findViewById(R.id.btn_sale_accept)
         val btnExtend:AppCompatImageButton = itemView.findViewById(R.id.btn_sale_extend)
-        val btnCancel:AppCompatImageButton  = itemView.findViewById(R.id.btn_sale_cancel)
+        val btnCancel:MaterialButton  = itemView.findViewById(R.id.btn_sale_cancel)
 //        textviews
         val textViewName: TextView = itemView.findViewById(R.id.sale_item_name)
 
@@ -63,17 +70,7 @@ class SalesAdapter(
 
             itemView.setOnClickListener(this)
             itemView.setOnLongClickListener(this)
-            btnAccept.setOnClickListener {
-                btnCancel.visibility = View.GONE
-                Toast.makeText(context,"Orederd ${list.get(adapterPosition).title} has been accepted",Toast.LENGTH_SHORT).show()
-            }
-            btnCancel.setOnClickListener {
-                btnAccept.visibility = View.GONE
-                Toast.makeText(context,"Orederd ${list.get(adapterPosition).title} has been canceled",Toast.LENGTH_SHORT).show()
-            }
-            btnExtend.setOnClickListener {
-                Toast.makeText(context,"Orederd ${list.get(adapterPosition).description} has been extended",Toast.LENGTH_SHORT).show()
-            }
+
         }
         override fun onClick(p0: View?) {
             val currentPosition = this.adapterPosition
@@ -138,6 +135,29 @@ class SalesAdapter(
 
             }
         }
+        holder.textViewSeller.setOnClickListener {
+            sharedViewModel.saveDetailedUser(currentItem.username)
+            holder.itemView.findNavController().navigate(R.id.profileDetailsFragment)
+        }
+        holder.imageViewProfile.setOnClickListener {
+            sharedViewModel.saveDetailedUser(currentItem.username)
+            holder.itemView.findNavController().navigate(R.id.profileDetailsFragment)
+        }
+        holder.btnAccept.setOnClickListener {
+            holder.btnCancel.visibility = View.GONE
+            showDefaultDialog(holder.itemView, currentItem.order_id,holder.spinnerIncomingOrder.selectedItem.toString())
+            Toast.makeText(context,"Orederd ${list.get(position).title} has been accepted",Toast.LENGTH_SHORT).show()
+
+        }
+        holder.btnCancel.setOnClickListener {
+            holder.btnAccept.visibility = View.GONE
+            showDefaultDialog(holder.itemView, currentItem.order_id,holder.spinnerIncomingOrder.selectedItem.toString())
+            Toast.makeText(context,"Orederd ${list.get(position).title} has been canceled",Toast.LENGTH_SHORT).show()
+        }
+        holder.btnExtend.setOnClickListener {
+
+            Toast.makeText(context,"Orederd ${list.get(position).description} has been extended",Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getItemCount() = list.size
@@ -145,5 +165,25 @@ class SalesAdapter(
     // Update the list
     fun setData(newlist: ArrayList<Order>){
         list = newlist
+    }
+    private fun showDefaultDialog(itemView: View, product_id: String , state:String) {
+        val alertDialog = AlertDialog.Builder(this.context)
+
+        alertDialog.apply {
+            setIcon(R.drawable.b_icon)
+            setTitle("You will modify state to ${state}")
+            setMessage("Are you shure about that")
+            setPositiveButton("Yes") { _, _ ->
+                GlobalScope.launch {
+                    updateAssetViewModel.updateOrder(product_id, state)
+                }
+            }
+            setNegativeButton("No") { _, _ ->
+
+            }
+            setNeutralButton("Cancel") { _, _ ->
+
+            }
+        }.create().show()
     }
 }

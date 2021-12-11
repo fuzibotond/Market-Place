@@ -2,6 +2,7 @@ package com.example.market_place.repository
 
 import com.example.market_place.api.RetrofitInstance
 import com.example.market_place.model.*
+import kotlinx.coroutines.processNextEventInCurrentThread
 
 class Repository {
     suspend fun login(request: LoginRequest): LoginResponse {
@@ -61,5 +62,10 @@ class Repository {
             request.owner_username
         )
     }
-
+    suspend fun updateProduct(token:String, request: UpdateProductRequest, product_id: String): UpdateProductResponse {
+        return RetrofitInstance.api.updateProduct(token, request, product_id)
+    }
+    suspend fun updateOrder(token:String, request: UpdateOrderRequest, order_id:String): UpdateOrderResponse {
+        return RetrofitInstance.api.updateOrder(token, request, order_id)
+    }
 }

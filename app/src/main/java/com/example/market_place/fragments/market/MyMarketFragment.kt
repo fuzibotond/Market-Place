@@ -1,11 +1,15 @@
 package com.example.market_place.fragments.market
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -47,6 +51,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentMyMarketBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         initialize()
         settingListeners()
 
@@ -55,7 +60,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
 
     private fun initialize() {
         sharedViewModel.myMarketProducts.value?.forEach { itemList.add(it) }
-        adapter = DataAdapterForMarketSale(itemList,this.requireContext(),this, this, addProductViewModel)
+        adapter = DataAdapterForMarketSale(itemList,this.requireContext(),this, this, addProductViewModel,sharedViewModel)
 
         recycler_view = binding.myMarketRecyclerView
         recycler_view.adapter = adapter
@@ -67,6 +72,16 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
             findNavController().navigate(R.id.action_myMarketFragment_to_addProductToMyMarketFragment)
         }
         binding.myMarketCountItem.text = sharedViewModel.myMarketProducts.value?.size.toString() + " fairs"
+        sharedViewModel.searchingKeyword.observe(viewLifecycleOwner){
+            val searchResultList = arrayListOf<Product>()
+            itemList.forEach {
+                if (it.title.contains(sharedViewModel.searchingKeyword.value!!, ignoreCase = true)){
+                    searchResultList.add(it)
+                }
+            }
+            adapter.setData(searchResultList)
+            adapter.notifyDataSetChanged()
+        }
 
     }
 
@@ -80,5 +95,14 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     override fun onItemLongClick(position: Int) {
         TODO("Not yet implemented")
     }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.marketPlaceFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
 
 }

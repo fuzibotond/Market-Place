@@ -1,5 +1,6 @@
 package com.example.market_place.fragments.market
 
+import android.app.AlertDialog
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
@@ -7,16 +8,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.R
 import com.example.market_place.databinding.FragmentMarketPlaceBinding
 import com.example.market_place.databinding.FragmentProductDetailsBinding
 import com.example.market_place.databinding.FragmentProductDetailsForCustomersBinding
+import com.example.market_place.model.Order
+import com.example.market_place.model.Product
 import com.example.market_place.viewmodels.SharedViewModel
 import com.site_valley.imagesliderexampleinkotlin.MySliderImageAdapter
 import com.smarteist.autoimageslider.SliderView
+import kotlinx.coroutines.handleCoroutineException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,14 +37,12 @@ class ProductDetailsForCustomers : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentProductDetailsForCustomersBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         initialize()
-        settingListener()
         return binding.root
     }
 
-    private fun settingListener() {
-       TODO()
-    }
+
 
     private fun initialize() {
         val currentProduct = sharedViewModel.detailsProduct.value
@@ -75,6 +79,14 @@ class ProductDetailsForCustomers : Fragment() {
         imageSlider.setSliderAdapter(adapter)
         imageSlider.isAutoCycle = false
         imageSlider.startAutoCycle()
+    }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.marketPlaceFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }

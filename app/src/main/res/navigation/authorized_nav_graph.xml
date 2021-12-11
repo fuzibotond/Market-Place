@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_marketPlaceFragment_to_productDetailsForCustomers"
             app:destination="@id/productDetailsForCustomers" />
+        <action
+            android:id="@+id/action_marketPlaceFragment_to_profileDetailsFragment"
+            app:destination="@id/profileDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myMarketFragment"
@@ -40,6 +43,9 @@
         <action
             android:id="@+id/action_myMarketFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_myMarketFragment_to_profileDetailsFragment"
+            app:destination="@id/profileDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myFaresFragment"
@@ -58,19 +64,12 @@
         <action
             android:id="@+id/action_profileFragment_to_marketPlaceFragment"
             app:destination="@id/marketPlaceFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_profileDetailsFragment"
-            app:destination="@id/profileDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileDetailsFragment"
         android:name="com.example.market_place.fragments.market.ProfileDetailsFragment"
         android:label="fragment_profile_details"
-        tools:layout="@layout/fragment_profile_details" >
-        <action
-            android:id="@+id/action_profileDetailsFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile_details" />
     <fragment
         android:id="@+id/addProductToMyMarketFragment"
         android:name="com.example.market_place.fragments.market.AddProductToMyMarketFragment"
@@ -106,6 +105,9 @@
         <action
             android:id="@+id/action_ongoingOrdersFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_ongoingOrdersFragment_to_profileDetailsFragment"
+            app:destination="@id/profileDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/ongoingSalesFragment"
@@ -115,6 +117,9 @@
         <action
             android:id="@+id/action_ongoingSalesFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_ongoingSalesFragment_to_profileDetailsFragment"
+            app:destination="@id/profileDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsForCustomers"

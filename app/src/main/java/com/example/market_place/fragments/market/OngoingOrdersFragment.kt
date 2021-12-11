@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,25 +20,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.R
 import com.example.market_place.adapter.DataAdapter
+import com.example.market_place.adapter.OrdersAdapter
 import com.example.market_place.adapter.SalesAdapter
 import com.example.market_place.databinding.FragmentOngoingOrdersBinding
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
-import com.example.market_place.viewmodels.ListOrderViewModel
-import com.example.market_place.viewmodels.ListOrderViewModelFactory
-import com.example.market_place.viewmodels.ListViewModelFactory
-import com.example.market_place.viewmodels.SharedViewModel
+import com.example.market_place.viewmodels.*
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 
-class OngoingOrdersFragment : Fragment(), SalesAdapter.OnItemClickListener,
-    SalesAdapter.OnItemLongClickListener {
-    lateinit var adapter: SalesAdapter
+class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
+    OrdersAdapter.OnItemLongClickListener {
+    lateinit var adapter: OrdersAdapter
     lateinit var listOrderViewModel: ListOrderViewModel
     lateinit var recycler_view: RecyclerView
     lateinit var spinner: Spinner
+    lateinit var updateAssetViewModel:UpdateAssetViewModel
     private var _binding: FragmentOngoingOrdersBinding? = null
     private val binding get() = _binding!!
     val itemList: ArrayList<Order> = arrayListOf()
@@ -50,12 +50,15 @@ class OngoingOrdersFragment : Fragment(), SalesAdapter.OnItemClickListener,
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentOngoingOrdersBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         intitialze()
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val factoryUpdate = UpdateAssetViewModelFactory( this.requireActivity(),Repository())
+        updateAssetViewModel = ViewModelProvider(this, factoryUpdate).get(UpdateAssetViewModel::class.java)
 
     }
 
@@ -76,9 +79,19 @@ class OngoingOrdersFragment : Fragment(), SalesAdapter.OnItemClickListener,
             }
             adapter.setData(itemList)
             adapter.notifyDataSetChanged()
-            saveItemData()
         }
-        adapter = SalesAdapter(itemList ,this.requireContext(),this, this, )
+
+        sharedViewModel.searchingKeyword.observe(viewLifecycleOwner){
+            val searchResultList = arrayListOf<Order>()
+            itemList.forEach {
+                if (it.title.contains(sharedViewModel.searchingKeyword.value!!, ignoreCase = true)){
+                    searchResultList.add(it)
+                }
+            }
+            adapter.setData(searchResultList)
+            adapter.notifyDataSetChanged()
+        }
+        adapter = OrdersAdapter(itemList ,this.requireContext(),this, this,sharedViewModel,updateAssetViewModel )
 
         recycler_view = binding.myFaresOrdersRecyclerView
         recycler_view.adapter = adapter
@@ -87,11 +100,19 @@ class OngoingOrdersFragment : Fragment(), SalesAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        TODO("")
+        val temp =orderToProduct(itemList.get(position))
+        sharedViewModel.saveDetailsProduct(temp)
+        findNavController().navigate(R.id.productDetailsForCustomers)
     }
 
+    override fun onPause() {
+        super.onPause()
+        saveItemData()
+    }
     override fun onItemLongClick(position: Int) {
-        Log.d("xxx", "Long Clicked")
+        val temp =orderToProduct(itemList.get(position))
+        sharedViewModel.saveDetailsProduct(temp)
+        findNavController().navigate(R.id.productDetailsForCustomers)
     }
     private fun saveItemData(){
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
@@ -114,6 +135,14 @@ class OngoingOrdersFragment : Fragment(), SalesAdapter.OnItemClickListener,
     }
     private fun orderToProduct(order: Order):Product{
         return Product(0.0, "unit", "Ron", order.order_id.toString(), order.owner_username, true, order.price_per_unit, order.units, order.description, order.title,order.images,order.creation_time)
+    }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.marketPlaceFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }

@@ -6,9 +6,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.model.*
 import com.example.market_place.repository.Repository
+import kotlinx.coroutines.launch
+import java.security.cert.TrustAnchor
 
 
 class AddOrderViewModel(val context: Context, val repository: Repository) : ViewModel() {
@@ -47,4 +50,5 @@ class AddOrderViewModel(val context: Context, val repository: Repository) : View
             Log.d("xxx", "AddOrderViewModel - remove order exception: ${e.toString()}")
         }
     }
+
 }

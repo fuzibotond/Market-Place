@@ -1,16 +1,21 @@
 package com.example.market_place.fragments.market
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -38,6 +43,7 @@ class MyFaresFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentMyFaresBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         val adapter = TabAdapter(requireActivity().supportFragmentManager, lifecycle)
         binding.myFaresViewpager.adapter = adapter
         TabLayoutMediator(binding.ongoingSalesAndOrders,  binding.myFaresViewpager){ tab, position->
@@ -51,6 +57,14 @@ class MyFaresFragment : Fragment() {
             }
         }.attach()
         return binding.root
+    }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.marketPlaceFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 

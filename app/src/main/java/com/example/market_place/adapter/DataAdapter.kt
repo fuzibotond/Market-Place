@@ -22,8 +22,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.viewmodels.SharedViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DataAdapter(
@@ -124,8 +129,16 @@ class DataAdapter(
             sharedViewModel.saveOrderToAdd(temp)
             val manager = (context as AppCompatActivity).supportFragmentManager
 
-            CustomDialog().show(manager, "CustomManager")
+            CustomDialog(currentItem.username, currentItem.title, currentItem.price_per_unit+" "+currentItem.price_type+"/"+currentItem.amount_type,currentItem.is_active, currentItem.creation_time, currentItem.units).show(manager, "CustomManager")
 
+        }
+        holder.textView_seller.setOnClickListener {
+            sharedViewModel.saveDetailedUser(currentItem.username)
+            holder.itemView.findNavController().navigate(R.id.profileDetailsFragment)
+        }
+        holder.profileImageView.setOnClickListener {
+            sharedViewModel.saveDetailedUser(currentItem.username)
+            holder.itemView.findNavController().navigate(R.id.profileDetailsFragment)
         }
     }
 

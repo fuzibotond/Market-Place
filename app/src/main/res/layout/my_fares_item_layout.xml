@@ -157,23 +157,40 @@
                         android:gravity="center"
                         android:textColor="#000000"
                         android:textStyle="bold"/>
-                    <ImageButton
-                        android:layout_marginStart="10dp"
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_sale_cancel"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_cancel_24"
-                        style="@style/MyCancelButtonTheme"/>
-
-                    <ImageButton
-                        android:layout_gravity="center"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                        app:icon="@drawable/ic_shape"
+                        app:iconSize="14dp"
+                        app:iconGravity="textStart"
+                        android:padding="15dp"
+                        app:iconPadding="0dp"
+                        android:insetLeft="5dp"
+                        android:insetTop="5dp"
+                        android:insetRight="5dp"
+                        android:insetBottom="5dp"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+                        android:backgroundTint="@color/black"
+                        android:layout_gravity="center"/>
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_sale_accept"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_check_24"
-                        android:backgroundTint="@color/white"
-                        style="@style/MyAcceptButtonTheme"/>
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                        app:icon="@drawable/ic_baseline_check_24"
+                        app:iconSize="24dp"
+                        app:iconGravity="textStart"
+                        android:padding="15dp"
+                        app:iconPadding="0dp"
+                        android:insetLeft="5dp"
+                        android:insetTop="5dp"
+                        android:insetRight="5dp"
+                        android:insetBottom="5dp"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
+                        android:backgroundTint="@color/teal_primary"
+                        android:layout_gravity="center"/>
                     </LinearLayout>
                 </LinearLayout>
 

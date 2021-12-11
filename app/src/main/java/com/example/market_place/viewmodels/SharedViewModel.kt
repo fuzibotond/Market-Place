@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
+import com.example.market_place.model.User
 
 class SharedViewModel : ViewModel() {
     val detailsProduct = MutableLiveData<Product>()
@@ -14,7 +15,9 @@ class SharedViewModel : ViewModel() {
     val order_item_count = MutableLiveData<Int>()
     val savedProductToAdd = MutableLiveData<Product>()
     val orderToAdd = MutableLiveData<Order>()
-
+    val detailedUser = MutableLiveData<String>()
+    val UPDATE_PRODUCT_FLAG = MutableLiveData<Boolean>()
+    val orderIsAcceptedIndicitaor = MutableLiveData<Boolean>()
     fun saveDetailsProduct(product:Product){
         detailsProduct.value = product
     }
@@ -35,5 +38,14 @@ class SharedViewModel : ViewModel() {
     }
     fun saveOrderToAdd(order:Order){
         orderToAdd.value = order
+    }
+    fun saveDetailedUser(user:String){
+        detailedUser.value = user
+    }
+    fun setStateIfUpdateable(is_product_for_update:Boolean){
+        UPDATE_PRODUCT_FLAG.value = is_product_for_update
+    }
+    fun saveOrderState(state:Boolean){
+        orderIsAcceptedIndicitaor.value = state
     }
 }

@@ -1,5 +1,6 @@
 package com.example.market_place.fragments.market
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -48,6 +50,7 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMarketPlaceBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         fillList()
         settingListeners()
         return binding.root
@@ -80,6 +83,7 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
         recycler_view = binding.recyclerView
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this.context)
+
     }
 
     private fun fillList() {
@@ -158,12 +162,42 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(position: Int) {
-        sharedViewModel.saveDetailsProduct(itemList.get(position))
-        findNavController().navigate(R.id.action_marketPlaceFragment_to_productDetailsFragment)
+        if (itemList.get(position).username == MarketPlaceApplication.username){
+            sharedViewModel.setStateIfUpdateable(true)
+            sharedViewModel.saveDetailsProduct(itemList.get(position))
+            findNavController().navigate(R.id.action_marketPlaceFragment_to_productDetailsFragment)
+        }else{
+            sharedViewModel.setStateIfUpdateable(false)
+            sharedViewModel.saveDetailsProduct(itemList.get(position))
+            findNavController().navigate(R.id.productDetailsForCustomers)
+        }
+
     }
 
     override fun onItemLongClick(position: Int) {
-        findNavController().navigate(R.id.action_marketPlaceFragment_to_productDetailsFragment)
+        findNavController().navigate(R.id.productDetailsForCustomers)
+    }
+
+    private fun clearDate() {
+        val sharedPreferences:SharedPreferences = requireContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().clear().commit()
+
+    }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle("Exit!")
+                    .setMessage("Are you sure about that?")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK"){ _,_ ->
+                        clearDate()
+                        requireActivity().finish()
+                    }
+                    .show()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }

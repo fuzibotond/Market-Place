@@ -1,29 +1,40 @@
 package com.example.market_place.adapter
 
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
 import com.example.market_place.model.Order
-import com.example.market_place.model.Product
+import com.example.market_place.viewmodels.SharedViewModel
+import com.example.market_place.viewmodels.UpdateAssetViewModel
+import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class OrdersAdapter(
     private var list: ArrayList<Order>,
     private val context: Context,
     private val listener: OnItemClickListener,
-    private val listener2: OnItemLongClickListener
+    private val listener2: OnItemLongClickListener,
+    private val sharedViewModel: SharedViewModel,
+    private val updateAssetViewModel: UpdateAssetViewModel
 ) :
     RecyclerView.Adapter<OrdersAdapter.DataViewHolder>() {
+    val itemCategoryNameList: ArrayList<String> = arrayListOf("Incoming order", "Accepted order","Declined order", "Delivering order", "Delivered order")
+
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
@@ -36,12 +47,24 @@ class OrdersAdapter(
     // 1. user defined ViewHolder type - Embedded class!
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener, View.OnLongClickListener {
-        val btnOrderNow:Button = itemView.findViewById(R.id.btn_order_now)
-        val textView_name: TextView = itemView.findViewById(R.id.item_name)
-        val textView_price: TextView = itemView.findViewById(R.id.price_and_currency)
-        val textView_seller: TextView = itemView.findViewById(R.id.profile_name)
-        val imageView: ImageView = itemView.findViewById(R.id.profile_image)
-        val profileImageView:ImageView = itemView.findViewById(R.id.profile_image)
+        //        buttons
+        val btnAccept:MaterialButton  = itemView.findViewById(R.id.btn_sale_accept)
+        val btnExtend:AppCompatImageButton = itemView.findViewById(R.id.btn_sale_extend)
+        val btnCancel: MaterialButton = itemView.findViewById(R.id.btn_sale_cancel)
+        //        textviews
+        val textViewName: TextView = itemView.findViewById(R.id.sale_item_name)
+
+        val textViewSeller: TextView = itemView.findViewById(R.id.sale_profile_name)
+        val textViewDateTime: TextView = itemView.findViewById(R.id.sale_date_time)
+        val textViewItemDescription: TextView = itemView.findViewById(R.id.sale_item_description)
+        val textViewAmount: TextView = itemView.findViewById(R.id.sale_amount)
+        val textViewPrice: TextView = itemView.findViewById(R.id.sale_price)
+        //        imageviews
+        val imageViewProfile: ImageView = itemView.findViewById(R.id.sale_profile_image)
+        val imageView: ImageView = itemView.findViewById(R.id.sale_profile_image)
+        val spinnerIncomingOrder: Spinner = itemView.findViewById(R.id.sale_incoming_orders)
+
+
 
         init{
 
@@ -66,7 +89,7 @@ class OrdersAdapter(
     // 2. Called only a few times = number of items on screen + a few more ones
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.my_fares_item_layout, parent, false)
         return DataViewHolder(itemView)
     }
 
@@ -74,9 +97,14 @@ class OrdersAdapter(
     // 3. Called many times, when we scroll the list
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val currentItem = list[position]
-        holder.textView_name.text = currentItem.title
-        holder.textView_price.text = currentItem.price_per_unit
-        holder.textView_seller.text = currentItem.username
+        holder.textViewName.text = currentItem.title
+        holder.textViewSeller.text = currentItem.username
+        holder.textViewItemDescription.text = currentItem.description
+        holder.textViewAmount.text = currentItem.units + " Ron"
+        holder.textViewPrice.text = currentItem.price_per_unit
+        val date = Date(currentItem.creation_time)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        holder.textViewDateTime.text = format.format(date)
         val images = currentItem.images
         if( images != null && images.size > 0) {
             Log.d("xxx", "#num_images: ${images.size}")
@@ -89,6 +117,59 @@ class OrdersAdapter(
             .load(R.drawable.ic_bazaar)
             .override(200, 200)
             .into(holder.imageView);
+        holder.spinnerIncomingOrder?.adapter = this.context?.let { ArrayAdapter(it.applicationContext, R.layout.sales_dropdown,itemCategoryNameList ) } as SpinnerAdapter
+        holder.spinnerIncomingOrder?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO()
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                val type = parent?.getItemAtPosition(position).toString()
+
+
+            }
+        }
+        holder.textViewSeller.setOnClickListener {
+            sharedViewModel.saveDetailedUser(currentItem.username)
+            holder.itemView.findNavController().navigate(R.id.profileDetailsFragment)
+        }
+        holder.imageViewProfile.setOnClickListener {
+            sharedViewModel.saveDetailedUser(currentItem.username)
+            holder.itemView.findNavController().navigate(R.id.profileDetailsFragment)
+        }
+        holder.btnAccept.setOnClickListener {
+            holder.btnCancel.visibility = View.GONE
+            showDefaultDialog(holder.itemView, currentItem.order_id,holder.spinnerIncomingOrder.selectedItem.toString())
+            Toast.makeText(context,"Orederd ${list.get(position).title} has been accepted",Toast.LENGTH_SHORT).show()
+
+        }
+        holder.btnCancel.setOnClickListener {
+            holder.btnAccept.visibility = View.GONE
+            showDefaultDialog(holder.itemView, currentItem.order_id,holder.spinnerIncomingOrder.selectedItem.toString())
+            Toast.makeText(context,"Orederd ${list.get(position).title} has been canceled",Toast.LENGTH_SHORT).show()
+        }
+        holder.btnExtend.setOnClickListener {
+
+            Toast.makeText(context,"Orederd ${list.get(position).description} has been extended",Toast.LENGTH_SHORT).show()
+        }
+        if (sharedViewModel.orderIsAcceptedIndicitaor.value!=null){
+            if (currentItem.status == "OPEN"){
+                holder.btnAccept.visibility = View.GONE
+            }else{
+                holder.btnCancel.visibility = View.GONE
+            }
+        }
+        holder.btnAccept.isClickable = false
+        holder.btnCancel.isClickable = false
+        holder.btnExtend.setOnClickListener {
+            Toast.makeText(context,"Orederd ${list.get(position).description} has been extended",Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getItemCount() = list.size
@@ -97,4 +178,25 @@ class OrdersAdapter(
     fun setData(newlist: ArrayList<Order>){
         list = newlist
     }
+    private fun showDefaultDialog(itemView: View, product_id: String , state:String) {
+        val alertDialog = AlertDialog.Builder(this.context)
+
+        alertDialog.apply {
+            setIcon(R.drawable.b_icon)
+            setTitle("You will modify state to ${state}")
+            setMessage("Are you shure about that")
+            setPositiveButton("Yes") { _, _ ->
+                GlobalScope.launch {
+                    updateAssetViewModel.updateOrder(product_id, state)
+                }
+            }
+            setNegativeButton("No") { _, _ ->
+
+            }
+            setNeutralButton("Cancel") { _, _ ->
+
+            }
+        }.create().show()
+    }
 }
+

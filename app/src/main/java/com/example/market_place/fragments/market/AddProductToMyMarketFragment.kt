@@ -3,6 +3,8 @@ package com.example.market_place.fragments.market
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -20,21 +23,16 @@ import androidx.navigation.fragment.findNavController
 import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.R
 import com.example.market_place.databinding.FragmentAddProductToMyMarketBinding
-import com.example.market_place.model.AddProductRequest
-import com.example.market_place.model.Image
-import com.example.market_place.model.Product
-import com.example.market_place.model.ProductHelper
+import com.example.market_place.model.*
 import com.example.market_place.repository.Repository
-import com.example.market_place.viewmodels.AddProductViewModel
-import com.example.market_place.viewmodels.AddProductViewModelFactory
-import com.example.market_place.viewmodels.LoginViewModel
-import com.example.market_place.viewmodels.SharedViewModel
+import com.example.market_place.viewmodels.*
 import kotlinx.coroutines.launch
 class AddProductToMyMarketFragment : Fragment(){
 
     private var _binding: FragmentAddProductToMyMarketBinding? = null
     private val binding get() = _binding!!
     lateinit var addProductViewModel:AddProductViewModel
+    lateinit var updateAssetViewModel:UpdateAssetViewModel
     private val sharedViewModel:SharedViewModel by activityViewModels()
     var currentProduct = MutableLiveData<Product>()
     override fun onCreateView(
@@ -45,7 +43,7 @@ class AddProductToMyMarketFragment : Fragment(){
         _binding = FragmentAddProductToMyMarketBinding.inflate(
             inflater, container, false)
         restoreKeptData()
-
+        handleThatBackPress()
         settingListener()
 
         return binding.root
@@ -71,16 +69,26 @@ class AddProductToMyMarketFragment : Fragment(){
         super.onCreate(savedInstanceState)
         val factory = AddProductViewModelFactory(requireContext(), Repository())
         addProductViewModel = ViewModelProvider(this, factory).get(AddProductViewModel::class.java)
+        if (sharedViewModel.UPDATE_PRODUCT_FLAG.value == true){
+            val factory = UpdateAssetViewModelFactory(requireContext(), Repository())
+            updateAssetViewModel = ViewModelProvider(this, factory).get(UpdateAssetViewModel::class.java)
+        }
     }
 
     private fun settingListener() {
         binding.btnLaunchMyFair.setOnClickListener {
             initialize()
-            lifecycleScope.launch {
-                addProductViewModel.addProduct()
+            if (sharedViewModel.UPDATE_PRODUCT_FLAG.value == true){
+                lifecycleScope.launch {
+                    updateAssetViewModel.updateProduct(sharedViewModel.detailsProduct.value!!.product_id)
+                }
+                showDefaultDialog()
+            }else{
+                lifecycleScope.launch {
+                    addProductViewModel.addProduct()
+                }
+                showDefaultDialog()
             }
-            showDefaultDialog()
-
         }
         binding.btnPreviewMyFair.setOnClickListener {
             sharedViewModel.saveDetailsProduct(
@@ -99,6 +107,7 @@ class AddProductToMyMarketFragment : Fragment(){
                     System.currentTimeMillis()
                 )
             )
+            findNavController().navigate(R.id.productDetailsFragment)
         }
 
         binding.isActivatedIndicator.setOnCheckedChangeListener { compoundButton, b ->
@@ -167,5 +176,36 @@ class AddProductToMyMarketFragment : Fragment(){
             System.currentTimeMillis()
         )
         sharedViewModel.keepProductToEdit(temp)
+    }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle("Exit!")
+                    .setMessage("Are you sure about that? We will keep your data...")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK"){ _,_ ->
+                        sharedViewModel.saveDetailsProduct(
+                            Product(
+                                0.0,
+                                binding.amountTypeInput.text.toString(),
+                                binding.currencyInput.text.toString(),
+                                "",
+                                MarketPlaceApplication.username,
+                                binding.isActivatedIndicator.isChecked,
+                                binding.pricePerAmountInput.text.toString(),
+                                binding.availableAmountInput.text.toString(),
+                                binding.shortDescriptionInput.text.toString(),
+                                binding.titleInput.text.toString(),
+                                listOf<Image>(),
+                                System.currentTimeMillis()
+                            )
+                        )
+                        findNavController().navigate(R.id.marketPlaceFragment)
+                    }
+                    .show()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

@@ -60,4 +60,9 @@ interface MarketApi {
         @Part("owner_username" ) owner_username: String?,
     ): OrderResponseCode
 
+    @POST(Constants.UPDATE_PRODUCT)
+    suspend fun updateProduct(@Header("token") token:String, @Body request: UpdateProductRequest,@Query("product_id") product_id: String): UpdateProductResponse
+
+    @POST(Constants.UPDATE_ORDER)
+    suspend fun updateOrder(@Header("token") token:String,  @Body request: UpdateOrderRequest, @Query("order_id") order_id: String): UpdateOrderResponse
 }

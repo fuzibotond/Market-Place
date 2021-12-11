@@ -23,6 +23,21 @@ data class OrderHelper(
                          var uploadImages: List<Image>?=null,
                             var owner_username: String?=""
 )
+data class UpdatedProduct(
+    val rating: Double,
+    val amount_type: String,
+    val price_type: String,
+    val product_id: String,
+    val username: String,
+    val is_active: Boolean,
+    val price_per_unit: String,
+    val units: String,
+    val description: String,
+    val title: String,
+    val images: List<Image>,
+    val creation_time: Long,
+    val message: List<String>
+)
 @JsonClass(generateAdapter = true)
 data class Image(val _id: String, val image_id: String, val image_name: String, val image_path: String)
 
@@ -104,3 +119,25 @@ data class AddOrderRequest(
 )
 @JsonClass(generateAdapter = true)
 data class OrderResponseCode(val code: Int)
+
+@JsonClass(generateAdapter = true)
+data class UpdateProductRequest(
+    val price_per_unit: Int?,
+    val is_active: Boolean?,
+    val title: String?,
+    val rating: String?,
+    val amount_type: String?,
+    val price_type: String?,
+)
+@JsonClass(generateAdapter = true)
+data class UpdateProductResponse(val updated_item: UpdatedProduct )
+
+@JsonClass(generateAdapter = true)
+data class UpdateOrderRequest(
+    val price_per_unit: Int?,
+    val status: String?,
+    val title: String?,
+)
+
+@JsonClass(generateAdapter = true)
+data class UpdateOrderResponse(val timestamp: Long )
