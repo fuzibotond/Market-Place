@@ -23,6 +23,7 @@ import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
 import com.example.market_place.databinding.FragmentMarketPlaceBinding
 import com.example.market_place.viewmodels.*
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
@@ -107,17 +108,13 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
             }
             adapter.setData(itemList)
             binding.countItem.text = itemList.size.toString() + " Fairs"
-            binding.dateOfList.text = Calendar.getInstance().time.toString()
+            val date = Date(System.currentTimeMillis())
+            val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            binding.dateOfList.text = format.format(date)
             sharedViewModel.addProducttoMyMarket(tempList as List<Product>)
             adapter.notifyDataSetChanged()
 
         }
-
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            spinner?.tooltipText = itemCategoryNameList.get(0)
-//
-//        }
 
 
         binding.sellerSpinner?.adapter = activity?.let { ArrayAdapter(it.applicationContext, R.layout.dropdown_filter,itemCategoryNameList ) } as SpinnerAdapter

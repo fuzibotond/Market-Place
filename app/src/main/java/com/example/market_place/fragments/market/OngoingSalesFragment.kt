@@ -65,7 +65,9 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
             Log.d("xxx", "Orders: "+ listOrderViewModel.orders.value)
             saveItemData()
             listOrderViewModel.orders.value!!.forEach {
-                itemList.add(it)
+                if(it.owner_username==MarketPlaceApplication.username){
+                    itemList.add(it)
+                }
             }
             sharedViewModel.saveOrders(itemList)
             sharedViewModel.saveOrderItemCount(sharedViewModel.orders.value!!.size)

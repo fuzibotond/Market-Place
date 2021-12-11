@@ -68,7 +68,12 @@ class OngoingOrdersFragment : Fragment(), SalesAdapter.OnItemClickListener,
 
        sharedViewModel.orders.observe(viewLifecycleOwner){
             Log.d("xxx", "Orders: "+ sharedViewModel.orders.value)
-            sharedViewModel.orders.value!!.forEach { itemList.add(it) }
+
+            sharedViewModel.orders.value!!.forEach {
+                if(it.username==MarketPlaceApplication.username){
+                    itemList.add(it)
+                }
+            }
             adapter.setData(itemList)
             adapter.notifyDataSetChanged()
             saveItemData()

@@ -134,7 +134,7 @@ class SalesAdapter(
             ) {
 
                 val type = parent?.getItemAtPosition(position).toString()
-                Toast.makeText(context, "You choose ${type}", Toast.LENGTH_SHORT).show()
+
 
             }
         }

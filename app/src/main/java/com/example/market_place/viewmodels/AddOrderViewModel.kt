@@ -14,8 +14,6 @@ import com.example.market_place.repository.Repository
 class AddOrderViewModel(val context: Context, val repository: Repository) : ViewModel() {
     var token: MutableLiveData<String> = MutableLiveData()
     var order = MutableLiveData<OrderHelper>()
-    var savedProduct = MutableLiveData<Order>()
-    var productToRemove = MutableLiveData<String>()
     init {
         order.value = OrderHelper()
     }
