@@ -1,5 +1,6 @@
 package com.example.market_place.api
 
+import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.utils.Constants
 import com.example.market_place.model.*
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable
@@ -17,7 +18,7 @@ interface MarketApi {
     suspend fun resetPassword(@Body request: ResetPasswordRequest): ResetPasswordResponse
 
     @GET(Constants.GET_PRODUCT_URL)
-    suspend fun getProducts(@Header("token") token: String): ProductResponse
+    suspend fun getProducts(@Header("token") token: String, @Header("limit") limit:Int, @Header("skip") skip:Int): ProductResponse
 
     @GET(Constants.GET_USER_INFO)
     suspend fun getUserInfo(@Header("username") username: String): UserInfoResponse
@@ -28,12 +29,35 @@ interface MarketApi {
     @GET(Constants.GET_REFRESH_TOKEN)
     suspend fun getRefreshToken(@Header("token") token: String): RefreshTokenResponse
 
+    @Multipart
     @POST(Constants.ADD_PRODUCT)
-    suspend fun addProduct(@Header("token") token: String, @Body request: AddProductRequest ): AddProductResponse
+    suspend fun addProduct(
+        @Header("token") token: String?,
+        @Part("title" ) title: String?,
+        @Part("description" ) description: String?,
+        @Part("price_per_unit" ) price_per_unit: String?,
+        @Part("units" ) units: String?,
+        @Part("is_active" ) is_active: Boolean?,
+        @Part("rating" ) rating: Double?,
+        @Part("amount_type" ) amount_type: String?,
+        @Part("price_type" ) price_type: String?,
+    ): AddProductResponse
 
     @POST(Constants.REMOVE_PRODUCT)
-    suspend fun removeProduct( @Field("product_id") product_id:String ): RemoveProductResponse
+    suspend fun removeProduct(@Header("token") token: String, @Header("product_id") product_id: String): RemoveProductResponse
 
     @GET(Constants.GET_ORDERS)
     suspend fun getOrders(@Header("token") token: String): OrderResponse
+
+    @Multipart
+    @POST(Constants.ADD_ORDER)
+    suspend fun addOrder(
+        @Header("token") token: String?,
+        @Part("title" ) title: String?,
+        @Part("description" ) description: String?,
+        @Part("price_per_unit" ) price_per_unit: String?,
+        @Part("units" ) units: String?,
+        @Part("owner_username" ) owner_username: String?,
+    ): OrderResponseCode
+
 }

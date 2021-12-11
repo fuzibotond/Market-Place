@@ -27,4 +27,5 @@
     <style name="Theme.Market_place.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Market_place.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

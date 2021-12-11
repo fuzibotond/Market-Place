@@ -1,5 +1,7 @@
 package com.example.market_place.fragments.market
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -19,10 +21,8 @@ import com.example.market_place.R
 import com.example.market_place.adapter.DataAdapter
 import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
-import com.example.market_place.viewmodels.ListViewModel
-import com.example.market_place.viewmodels.ListViewModelFactory
 import com.example.market_place.databinding.FragmentMarketPlaceBinding
-import com.example.market_place.viewmodels.SharedViewModel
+import com.example.market_place.viewmodels.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
@@ -34,6 +34,7 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
     lateinit var viewLayout: View
     lateinit var adapter:DataAdapter
     lateinit var listViewModel:ListViewModel
+    lateinit var addOrderViewModel:AddOrderViewModel
     lateinit var recycler_view:RecyclerView
     lateinit var spinner:Spinner
     private var _binding: FragmentMarketPlaceBinding? = null
@@ -73,7 +74,7 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
             adapter.setData(searchResultList)
             adapter.notifyDataSetChanged()
         }
-        adapter = DataAdapter(itemList,this.requireContext(),this, this)
+        adapter = DataAdapter(itemList,this.requireContext(),this, this,addOrderViewModel, sharedViewModel)
 
         recycler_view = binding.recyclerView
         recycler_view.adapter = adapter
@@ -82,16 +83,32 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
 
     private fun fillList() {
         listViewModel.products.observe(viewLifecycleOwner){
-            sharedViewModel.myMarketProducts.clear()
+            val tempList = mutableListOf<Product>()
+
             listViewModel.products.value?.forEach{
-                itemList.add(it)
-                if (it.username == MarketPlaceApplication.username){
-                    sharedViewModel.addProducttoMyMarket(it)
+                val temp = Product(
+                    it.rating,
+                    it.amount_type.replace("\"", ""),
+                    it.price_type.replace("\"", ""),
+                    it.product_id.replace("\"", ""),
+                    it.username.replace("\"", ""),
+                    it.is_active,
+                    it.price_per_unit.replace("\"", ""),
+                    it.units.replace("\"", ""),
+                    it.description.replace("\"", ""),
+                    it.title.replace("\"", ""),
+                    it.images,
+                    it.creation_time
+                )
+                itemList.add(temp)
+                if (it.username.replace("\"", "") == MarketPlaceApplication.username){
+                    tempList.add(temp)
                 }
             }
             adapter.setData(itemList)
             binding.countItem.text = itemList.size.toString() + " Fairs"
             binding.dateOfList.text = Calendar.getInstance().time.toString()
+            sharedViewModel.addProducttoMyMarket(tempList as List<Product>)
             adapter.notifyDataSetChanged()
 
         }
@@ -121,24 +138,26 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
                     itemList.sortBy { it.creation_time }
                 }
                 if (type == "Seller"){
-                    itemList.sortBy { it.username }
+                    val temp = itemList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.username }))
+                    itemList.clear()
+                    itemList.addAll(temp)
                 }
                 if (type == "Price"){
-
                     itemList.sortBy { it.price_per_unit.toInt() }
                 }
                 adapter.notifyDataSetChanged()
 
             }
         }
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = ListViewModelFactory( Repository())
         listViewModel = ViewModelProvider(this, factory).get(ListViewModel::class.java)
+        val factoryOrder = AddOrderViewModelFactory(this.requireContext(), Repository())
+        addOrderViewModel = ViewModelProvider(this, factoryOrder).get(AddOrderViewModel::class.java)
+
     }
 
     override fun onItemClick(position: Int) {
@@ -149,4 +168,5 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
     override fun onItemLongClick(position: Int) {
         findNavController().navigate(R.id.action_marketPlaceFragment_to_productDetailsFragment)
     }
+
 }

@@ -13,19 +13,19 @@ import kotlinx.coroutines.launch
 class ListViewModel(private val repository: Repository) : ViewModel() {
     var products = MutableLiveData<List<Product>>()
 
-    init{
+    init {
         Log.d("xxx", "ListViewModel constructor - Token: ${MarketPlaceApplication.token}")
-        getProducts()
+        getProducts(100, 0)
     }
 
-    fun getProducts() {
+    fun getProducts(limit: Int, skip: Int) {
         viewModelScope.launch {
             try {
                 val result =
-                    repository.getProducts(MarketPlaceApplication.token)
+                    repository.getProducts(MarketPlaceApplication.token, limit, skip)
                 products.value = result.products
                 Log.d("xxx", "ListViewModel - #products:  ${result.item_count}")
-            }catch(e: Exception){
+            } catch (e: Exception) {
                 Log.d("xxx", "ListViewMofdel exception: ${e.toString()}")
             }
         }

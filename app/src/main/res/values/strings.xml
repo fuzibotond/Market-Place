@@ -48,4 +48,6 @@
     <string name="review">Review</string>
     <string name="ongoing_sales">Ongoing Sales</string>
     <string name="sold_items">Sold items</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</string>
+    <string name="place_your_order_and_track_it_s_availability_before_you_send_revolut_payment">Place your order and track it’s availability before you send Revolut payment!</string>
 </resources>

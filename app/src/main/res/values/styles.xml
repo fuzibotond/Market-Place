@@ -70,4 +70,10 @@
         <item name="android:textColor">@color/wrapedWhite</item>
         <item name="titleTextColor">@color/wrapedWhite</item>
     </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="backgroundColor">@color/black</item>
+    </style>
 </resources>

@@ -8,13 +8,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
 import com.example.market_place.fragments.market.MyMarketFragment
 import com.example.market_place.model.Product
+import com.example.market_place.viewmodels.AddProductViewModel
+import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class DataAdapterForMarketSale(
@@ -22,6 +28,8 @@ class DataAdapterForMarketSale(
     private val context: Context,
     private val listener: OnItemClickListener,
     private val listener2: MyMarketFragment,
+    private val addProductViewModel: AddProductViewModel,
+
 ) :
     RecyclerView.Adapter<DataAdapterForMarketSale.DataViewHolder>() {
 
@@ -42,6 +50,7 @@ class DataAdapterForMarketSale(
         val textView_seller: TextView = itemView.findViewById(R.id.my_market_profile_name)
         val imageView: ImageView = itemView.findViewById(R.id.my_market_profile_image)
         val profileImageView:ImageView = itemView.findViewById(R.id.my_market_profile_image)
+        val btnRemoveProduct: MaterialButton = itemView.findViewById(R.id.btn_remove_product)
 
         init{
 
@@ -95,6 +104,11 @@ class DataAdapterForMarketSale(
             .load(R.drawable.ic_bazaar)
             .override(200, 200)
             .into(holder.imageView);
+        holder.btnRemoveProduct.setOnClickListener{
+            GlobalScope.launch {
+                addProductViewModel.removeProduct(currentItem.product_id)
+            }
+        }
     }
 
     override fun getItemCount() = list.size

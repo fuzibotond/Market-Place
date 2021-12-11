@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_marketPlaceFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_marketPlaceFragment_to_productDetailsForCustomers"
+            app:destination="@id/productDetailsForCustomers" />
     </fragment>
     <fragment
         android:id="@+id/myMarketFragment"
@@ -34,6 +37,9 @@
         <action
             android:id="@+id/action_myMarketFragment_to_addProductToMyMarketFragment"
             app:destination="@id/addProductToMyMarketFragment" />
+        <action
+            android:id="@+id/action_myMarketFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myFaresFragment"
@@ -71,8 +77,11 @@
         android:label="fragment_add_product_to_my_market"
         tools:layout="@layout/fragment_add_product_to_my_market" >
         <action
-            android:id="@+id/action_addProductToMyMarketFragment_to_productDetailsFragment"
-            app:destination="@id/productDetailsFragment" />
+            android:id="@+id/action_addProductToMyMarketFragment_to_myMarketFragment"
+            app:destination="@id/myMarketFragment" />
+        <action
+            android:id="@+id/action_addProductToMyMarketFragment_to_marketPlaceFragment"
+            app:destination="@id/marketPlaceFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -82,5 +91,33 @@
         <action
             android:id="@+id/action_productDetailsFragment_to_marketPlaceFragment"
             app:destination="@id/marketPlaceFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_ongoingOrdersFragment"
+            app:destination="@id/ongoingOrdersFragment" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_addProductToMyMarketFragment2"
+            app:destination="@id/addProductToMyMarketFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ongoingOrdersFragment"
+        android:name="com.example.market_place.fragments.market.OngoingOrdersFragment"
+        android:label="fragment_ongoing_orders"
+        tools:layout="@layout/fragment_ongoing_orders" >
+        <action
+            android:id="@+id/action_ongoingOrdersFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ongoingSalesFragment"
+        android:name="com.example.market_place.fragments.market.OngoingSalesFragment"
+        android:label="fragment_ongoing_sales"
+        tools:layout="@layout/fragment_ongoing_sales" >
+        <action
+            android:id="@+id/action_ongoingSalesFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsForCustomers"
+        android:name="com.example.market_place.fragments.market.ProductDetailsForCustomers"
+        android:label="ProductDetailsForCustomers" />
 </navigation>

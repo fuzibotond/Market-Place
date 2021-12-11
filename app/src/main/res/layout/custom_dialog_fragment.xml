@@ -1,0 +1,196 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/wrapedWhite">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/dialog_my_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="My Order"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:drawableEnd="@drawable/ic_shape"
+            android:pointerIcon="hand"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/dialog_profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:src="@drawable/profile_icon"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"
+                tools:ignore="MissingClass"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/dialog_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:text="@string/username"
+                />
+
+        </LinearLayout>
+        <TextView
+
+            android:id="@+id/dialog_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="22dp"
+            android:textColor="@color/darkGrey"
+            android:text="Item name">
+
+        </TextView>
+        <TextView
+            android:id="@+id/dialog_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="16dp"
+            android:textColor="@color/darkGrey"
+            android:text="45 Ron/L"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:padding="10dp"
+                android:id="@+id/dialog_is_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_circle_check"
+                android:drawableTint="@color/teal_primary"
+                android:text="@string/active"
+                android:textColor="@color/teal_primary" />
+            <TextView
+                android:id="@+id/dialog_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginStart="100dp"
+                android:text="Date" />
+        </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingRight="5dp"
+            android:layout_weight="1"
+            android:id="@+id/dialog_amount_input_layout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/available_amount"
+            app:helperTextTextColor="@color/red"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:counterTextColor="@color/wrapedWhite"
+            android:padding="10dp"
+            >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dialog_amount_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="40"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                app:boxStrokeColor="@color/teal_primary"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingRight="5dp"
+            android:layout_weight="1"
+            android:id="@+id/dialog_comments_layout"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/available_amount"
+            app:helperTextTextColor="@color/red"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:counterTextColor="@color/wrapedWhite"
+            android:padding="10dp"
+            >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dialog_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="40"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                app:boxStrokeColor="@color/teal_primary"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_bazaar"
+
+            android:text="@string/place_your_order_and_track_it_s_availability_before_you_send_revolut_payment"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cornerRadius="26dp"
+                android:textColor="@color/white"
+                android:text="Cancel"
+                android:backgroundTint="@color/black"
+                >
+            </Button>
+
+            <Button
+                android:id="@+id/btn_send_my_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:backgroundTint="@color/black"
+                android:text="Send my order"
+                android:textColor="@color/white"
+                app:cornerRadius="26dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

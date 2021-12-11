@@ -10,20 +10,32 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
+import com.example.market_place.fragments.market.CustomDialog
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
+import com.example.market_place.viewmodels.AddOrderViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import com.example.market_place.MarketPlaceApplication
+import com.example.market_place.viewmodels.SharedViewModel
 
 
 class DataAdapter(
     private var list: ArrayList<Product>,
     private val context: Context,
     private val listener: OnItemClickListener,
-    private val listener2: OnItemLongClickListener
+    private val listener2: OnItemLongClickListener,
+    private val addOrderViewModel: AddOrderViewModel,
+    private val sharedViewModel: SharedViewModel
 ) :
     RecyclerView.Adapter<DataAdapter.DataViewHolder>() {
+
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
@@ -91,6 +103,30 @@ class DataAdapter(
             .load(R.drawable.ic_bazaar)
             .override(200, 200)
             .into(holder.imageView);
+        holder.btnOrderNow.setOnClickListener {
+            var status =""
+            if (currentItem.is_active){
+                status = "OPEN"
+            }
+            val temp = Order(
+                MarketPlaceApplication.username,
+                "",
+                currentItem.username,
+                arrayListOf(),
+                currentItem.price_per_unit,
+                currentItem.units,
+                currentItem.description,
+                currentItem.title,
+                currentItem.images,
+                currentItem.creation_time,
+                status
+            )
+            sharedViewModel.saveOrderToAdd(temp)
+            val manager = (context as AppCompatActivity).supportFragmentManager
+
+            CustomDialog().show(manager, "CustomManager")
+
+        }
     }
 
     override fun getItemCount() = list.size

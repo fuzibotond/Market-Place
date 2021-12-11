@@ -13,12 +13,16 @@ import androidx.navigation.fragment.findNavController
 import com.example.market_place.R
 import com.example.market_place.databinding.FragmentMarketPlaceBinding
 import com.example.market_place.databinding.FragmentProductDetailsBinding
+import com.example.market_place.databinding.FragmentProductDetailsForCustomersBinding
 import com.example.market_place.viewmodels.SharedViewModel
 import com.site_valley.imagesliderexampleinkotlin.MySliderImageAdapter
 import com.smarteist.autoimageslider.SliderView
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ProductDetailsFragment : Fragment() {
-    private var _binding: FragmentProductDetailsBinding? = null
+class ProductDetailsForCustomers : Fragment() {
+    private var _binding: FragmentProductDetailsForCustomersBinding? = null
     private val binding get() = _binding!!
     val sharedViewModel: SharedViewModel by activityViewModels()
     override fun onCreateView(
@@ -26,16 +30,14 @@ class ProductDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentProductDetailsBinding.inflate(inflater, container, false)
+        _binding = FragmentProductDetailsForCustomersBinding.inflate(inflater, container, false)
         initialize()
         settingListener()
         return binding.root
     }
 
     private fun settingListener() {
-        binding.productDetailsEdit.setOnClickListener {
-            findNavController().navigate(R.id.action_productDetailsFragment_to_addProductToMyMarketFragment2)
-        }
+       TODO()
     }
 
     private fun initialize() {
@@ -53,25 +55,25 @@ class ProductDetailsFragment : Fragment() {
 //        TODO binding.productDetailsProfileImage
         if (currentProduct?.is_active == true){
             binding.productDetailsActive.text = "active"
-            binding.productDetailsActive.setTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            binding.productDetailsActive.setTextColor(resources.getColorStateList(R.color.bottom_menu_bar_color))
         }else{
             binding.productDetailsActive.text = "inactive"
             binding.productDetailsActive.setTextColor(resources.getColorStateList(R.color.wrapedWhite))
         }
         binding.productDetailsDescription.text = currentProduct?.description
-        binding.productDetailsDate.text = currentProduct?.creation_time.toString()
+        val date = Date(currentProduct!!.creation_time)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        binding.productDetailsDate.text = format.format(date)
         binding.productDetailsPriceAndUnit.text = currentProduct?.price_per_unit + " " + currentProduct?.price_type+"/"+ currentProduct?.amount_type
-        binding.productDetailsReview.text = "0"
-        binding.productDetailsSoldItems.text = "0"
-        binding.productDetailsTotalItems.text = currentProduct?.units+" "+ currentProduct?.amount_type
-        binding.productDetailsPricePerItem.text = currentProduct?.price_per_unit +" "+currentProduct?.price_type
+
+
     }
 
     private fun setImageInSlider(images: ArrayList<String>, imageSlider: SliderView) {
         val adapter = MySliderImageAdapter()
         adapter.renewItems(images)
         imageSlider.setSliderAdapter(adapter)
-        imageSlider.isAutoCycle = true
+        imageSlider.isAutoCycle = false
         imageSlider.startAutoCycle()
     }
 

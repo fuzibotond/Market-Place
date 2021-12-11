@@ -7,22 +7,19 @@ import com.example.market_place.model.Order
 import com.example.market_place.model.Product
 
 class SharedViewModel : ViewModel() {
-    private var detailsProduct: Product? = null
-    val myMarketProducts = mutableListOf<Product>()
+    val detailsProduct = MutableLiveData<Product>()
+    val myMarketProducts = MutableLiveData<List<Product>>()
     val searchingKeyword = MutableLiveData<String>()
     val orders = MutableLiveData<List<Order>>()
     val order_item_count = MutableLiveData<Int>()
+    val savedProductToAdd = MutableLiveData<Product>()
+    val orderToAdd = MutableLiveData<Order>()
+
     fun saveDetailsProduct(product:Product){
-        detailsProduct = product
+        detailsProduct.value = product
     }
-    fun getProduct():Product?{
-        return detailsProduct
-    }
-    fun addProducttoMyMarket(product:Product){
-        myMarketProducts.add(product)
-    }
-    fun getAllMyproducts():MutableList<Product>?{
-        return myMarketProducts!!
+    fun addProducttoMyMarket(product:List<Product>){
+        myMarketProducts.value=product
     }
     fun searchWithKeyword(text: String) {
         searchingKeyword.value = text
@@ -33,6 +30,10 @@ class SharedViewModel : ViewModel() {
     fun saveOrderItemCount(order_count: Int ){
         order_item_count.value = order_count
     }
-
-
+    fun keepProductToEdit(product:Product){
+        savedProductToAdd.value = product
+    }
+    fun saveOrderToAdd(order:Order){
+        orderToAdd.value = order
+    }
 }

@@ -15,8 +15,8 @@ class Repository {
         return RetrofitInstance.api.resetPassword(request)
     }
 
-    suspend fun getProducts(token: String): ProductResponse {
-        return RetrofitInstance.api.getProducts(token)
+    suspend fun getProducts(token: String, limit:Int, skip:Int): ProductResponse {
+        return RetrofitInstance.api.getProducts(token, limit, skip)
     }
 
     suspend fun getUserInfo(username: String): UserInfoResponse {
@@ -32,13 +32,34 @@ class Repository {
     }
 
     suspend fun addProduct(token:String, request: AddProductRequest): AddProductResponse {
-        return RetrofitInstance.api.addProduct(token, request)
+        return RetrofitInstance.api.addProduct(
+            token,
+            request.title,
+            request.description,
+            request.price_per_unit,
+            request.units,
+            request.is_active,
+            request.rating,
+            request.amount_type,
+            request.price_type
+        )
     }
 
-    suspend fun removeProduct(product_id:String): RemoveProductResponse {
-        return RetrofitInstance.api.removeProduct(product_id)
+    suspend fun removeProduct(token: String, product_id: String ): RemoveProductResponse {
+        return RetrofitInstance.api.removeProduct(token,product_id)
     }
     suspend fun getOrders(token: String): OrderResponse {
         return RetrofitInstance.api.getOrders(token)
     }
+    suspend fun addOrder(token:String, request: AddOrderRequest): OrderResponseCode {
+        return RetrofitInstance.api.addOrder(
+            token,
+            request.title,
+            request.description,
+            request.price_per_unit,
+            request.units,
+            request.owner_username
+        )
+    }
+
 }

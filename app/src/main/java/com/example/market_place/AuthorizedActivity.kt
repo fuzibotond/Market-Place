@@ -69,25 +69,7 @@ class AuthorizedActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId){
-//            R.id.search_action ->{
-//                Log.d("xxx", "search")
-//                return true
-//            }
-//            R.id.filter -> {
-//                Log.d("xxx", "filter")
 //
-//                return true
-//            }
-//            R.id.profile -> {
-//                Log.d("xxx", "search")
-//
-//                return true
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     private fun initMenu() {
         navigationView.setOnNavigationItemSelectedListener { item ->

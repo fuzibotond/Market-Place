@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.market_place.MarketPlaceApplication
@@ -83,7 +84,7 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     override fun onItemClick(position: Int) {
-      Log.d("xxx", "Clicked")
+        TODO("")
     }
 
     override fun onItemLongClick(position: Int) {
@@ -107,5 +108,8 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
         }
 
 
+    }
+    private fun orderToProduct(order: Order):Product{
+        return Product(0.0, "unit", "Ron", order.order_id.toString(), order.owner_username, true, order.price_per_unit, order.units, order.description, order.title,order.images,order.creation_time)
     }
 }
