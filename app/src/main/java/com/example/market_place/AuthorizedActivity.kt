@@ -26,13 +26,22 @@ class AuthorizedActivity : AppCompatActivity() {
     lateinit var  sharedPreferences: SharedPreferences
     val sharedViewModel:SharedViewModel by viewModels()
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("AUTH_ACTIV","OnDestroy"  )
+    }
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.authorized_activity)
+        Log.d("AUTH_ACTIV","onCreate"  )
 
         initializeView()
         initMenu()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("AUTH_ACTIV","onStart"  )
     }
     private fun initializeView() {
         navigationView = findViewById(R.id.bottomNavigationView)

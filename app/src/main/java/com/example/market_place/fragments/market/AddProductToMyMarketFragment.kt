@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -46,6 +47,7 @@ class AddProductToMyMarketFragment : Fragment(){
         handleThatBackPress()
         settingListener()
 
+
         return binding.root
     }
 
@@ -76,19 +78,134 @@ class AddProductToMyMarketFragment : Fragment(){
     }
 
     private fun settingListener() {
-        binding.btnLaunchMyFair.setOnClickListener {
-            initialize()
-            if (sharedViewModel.UPDATE_PRODUCT_FLAG.value == true){
-                lifecycleScope.launch {
-                    updateAssetViewModel.updateProduct(sharedViewModel.detailsProduct.value!!.product_id)
-                }
-                showDefaultDialog()
-            }else{
-                lifecycleScope.launch {
-                    addProductViewModel.addProduct()
-                }
-                showDefaultDialog()
+        var everythingFine = true
+        binding.titleInput.doOnTextChanged { text, start, before, count ->
+            if (text.toString().isEmpty()){
+                binding.titleInputLayout.helperText = "This field is required"
+                binding.titleInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+            binding.titleInputLayout.helperText = ""
+            binding.titleInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+            binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
             }
+        }
+        binding.pricePerAmountInput.doOnTextChanged { text, start, before, count ->
+            if (text.toString().isEmpty()){
+                binding.pricePerAmountInputLayout.helperText = "This field is required"
+                binding.pricePerAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.pricePerAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+                binding.pricePerAmountInputLayout.helperText = ""
+                binding.pricePerAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.pricePerAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+        }
+        binding.availableAmountInput.doOnTextChanged { text, start, before, count ->
+            if (text.toString().isEmpty()){
+                binding.availableAmountInputLayout.helperText = "This field is required"
+                binding.availableAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.availableAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+                binding.availableAmountInputLayout.helperText = ""
+                binding.availableAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.availableAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+        }
+        binding.contactEmailInput.doOnTextChanged { text, start, before, count ->
+            if (text.toString().isEmpty()){
+                binding.contactEmailLayout.helperText = "This field is required"
+                binding.contactEmailLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.contactEmailLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                binding.contactEmailLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+                binding.contactEmailLayout.setEndIconDrawable(R.drawable.ic_error_mark)
+            }else {
+                binding.contactEmailLayout.helperText = ""
+                binding.contactEmailLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.contactEmailLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.contactEmailLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.contactEmailLayout.setEndIconDrawable(R.drawable.ic_circle_check)
+            }
+        }
+        binding.phoneNumberInput.doOnTextChanged { text, start, before, count ->
+            if (text.toString().isEmpty()){
+                binding.phoneNumberInputLayout.helperText = "This field is required"
+                binding.phoneNumberInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.phoneNumberInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                binding.phoneNumberInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+                binding.phoneNumberInputLayout.setEndIconDrawable(R.drawable.ic_error_mark)
+
+            }else {
+                binding.phoneNumberInputLayout.helperText = ""
+                binding.phoneNumberInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.phoneNumberInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.phoneNumberInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.phoneNumberInputLayout.setEndIconDrawable(R.drawable.ic_circle_check)
+            }
+        }
+        binding.btnLaunchMyFair.setOnClickListener {
+            if (binding.titleInput.text.toString().isEmpty()){
+                binding.titleInputLayout.helperText = "This field is required"
+                binding.titleInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+                binding.titleInputLayout.helperText = ""
+                binding.titleInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+            if (binding.pricePerAmountInput.text.toString().isEmpty()){
+                binding.pricePerAmountInputLayout.helperText = "This field is required"
+                binding.pricePerAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.pricePerAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+                binding.pricePerAmountInputLayout.helperText = ""
+                binding.pricePerAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.pricePerAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+            if (binding.availableAmountInput.text.toString().isEmpty()){
+                binding.availableAmountInputLayout.helperText = "This field is required"
+                binding.availableAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.availableAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+                binding.availableAmountInputLayout.helperText = ""
+                binding.availableAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.availableAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+            if (binding.contactEmailInput.text.toString().isEmpty()){
+                binding.contactEmailLayout.helperText = "This field is required"
+                binding.contactEmailLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.contactEmailLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+                binding.contactEmailLayout.helperText = ""
+                binding.contactEmailLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.contactEmailLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+            if (binding.phoneNumberInput.text.toString().isEmpty()){
+                binding.phoneNumberInputLayout.helperText = "This field is required"
+                binding.phoneNumberInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.phoneNumberInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                everythingFine = false
+            }else {
+                binding.phoneNumberInputLayout.helperText = ""
+                binding.phoneNumberInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.phoneNumberInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+
+            }
+            if (everythingFine){
+                initialize()
+                showDefaultDialog()
+                everythingFine = true
+            }
+
         }
         binding.btnPreviewMyFair.setOnClickListener {
             sharedViewModel.saveDetailsProduct(
@@ -121,6 +238,10 @@ class AddProductToMyMarketFragment : Fragment(){
 
         }
         binding.isActivatedIndicator.isChecked = true
+        binding.btnPreviewMyFair.alpha = 0f
+        binding.btnPreviewMyFair.animate().alpha(1f).setDuration(1500)
+        binding.btnLaunchMyFair.alpha = 0f
+        binding.btnLaunchMyFair.animate().alpha(1f).setDuration(1500)
     }
 
 
@@ -146,8 +267,18 @@ class AddProductToMyMarketFragment : Fragment(){
         alertDialog.apply {
             setIcon(R.drawable.b_icon)
             setTitle("Hello")
-            setMessage("I just wanted to greet you. I hope you are doing great!")
+            setMessage("You will add a product to your market.Are you sure?")
             setPositiveButton("Yes") { _, _ ->
+                if (sharedViewModel.UPDATE_PRODUCT_FLAG.value == true){
+                    lifecycleScope.launch {
+                        updateAssetViewModel.updateProduct(sharedViewModel.detailsProduct.value!!.product_id)
+                    }
+
+                }else{
+                    lifecycleScope.launch {
+                        addProductViewModel.addProduct()
+                    }
+                }
                 findNavController().navigate(R.id.action_addProductToMyMarketFragment_to_marketPlaceFragment)
             }
             setNegativeButton("No") { _, _ ->

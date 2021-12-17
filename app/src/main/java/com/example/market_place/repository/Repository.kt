@@ -49,8 +49,8 @@ class Repository {
     suspend fun removeProduct(token: String, product_id: String ): RemoveProductResponse {
         return RetrofitInstance.api.removeProduct(token,product_id)
     }
-    suspend fun getOrders(token: String): OrderResponse {
-        return RetrofitInstance.api.getOrders(token)
+    suspend fun getOrders(token: String, limit:Int): OrderResponse {
+        return RetrofitInstance.api.getOrders(token, limit)
     }
     suspend fun addOrder(token:String, request: AddOrderRequest): OrderResponseCode {
         return RetrofitInstance.api.addOrder(
@@ -66,6 +66,6 @@ class Repository {
         return RetrofitInstance.api.updateProduct(token, request, product_id)
     }
     suspend fun updateOrder(token:String, request: UpdateOrderRequest, order_id:String): UpdateOrderResponse {
-        return RetrofitInstance.api.updateOrder(token, request, order_id)
+        return RetrofitInstance.api.updateOrder(token,request, order_id)
     }
 }

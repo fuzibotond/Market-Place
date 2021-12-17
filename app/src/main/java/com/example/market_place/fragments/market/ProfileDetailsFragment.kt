@@ -63,6 +63,7 @@ class ProfileDetailsFragment : Fragment() {
             binding.profilePhoneNumberTextview.setText( userInfoViewModel.user.value?.phone_number)
             binding.profileUsernameTextview.setText( userInfoViewModel.user.value?.username)
         }
+        binding.btnSendAChatMessage.visibility = View.GONE
 
     }
     private fun handleThatBackPress(){

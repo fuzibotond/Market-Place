@@ -48,4 +48,5 @@ class SharedViewModel : ViewModel() {
     fun saveOrderState(state:Boolean){
         orderIsAcceptedIndicitaor.value = state
     }
+
 }

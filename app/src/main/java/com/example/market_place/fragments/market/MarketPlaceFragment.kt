@@ -62,9 +62,7 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
         binding.switcher.setOnCheckedChangeListener { button, b ->
             if (b){
                 itemList.sortBy { it.creation_time }
-                itemList.forEach { Log.d("price", it.creation_time.toString()) }
-            }else{
-                itemList.shuffle()
+                itemList.reverse()
             }
             adapter.notifyDataSetChanged()
         }

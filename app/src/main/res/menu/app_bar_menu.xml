@@ -12,13 +12,6 @@
         android:iconTint="@color/wrapedWhite"
         />
 
-    <!-- action button for refresh -->
-    <item android:title="filter"
-        android:id="@+id/filter"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/filter_icon"
-        android:iconTint="@color/wrapedWhite"/>
 
     <!-- action button for copy -->
     <item android:title="profile"

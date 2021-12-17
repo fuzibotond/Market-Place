@@ -58,8 +58,14 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     private fun initialize() {
         sharedViewModel.myMarketProducts.value?.forEach { itemList.add(it) }
+
         adapter = DataAdapterForMarketSale(itemList,this.requireContext(),this, this, addProductViewModel,sharedViewModel)
 
         recycler_view = binding.myMarketRecyclerView
@@ -88,7 +94,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     override fun onItemClick(position: Int) {
         sharedViewModel.saveDetailsProduct(itemList.get(position))
         Log.d("xxx", "Marketplace:${sharedViewModel.myMarketProducts.value}")
-
+        adapter.notifyDataSetChanged()
         findNavController().navigate(R.id.action_myMarketFragment_to_productDetailsFragment)
     }
 

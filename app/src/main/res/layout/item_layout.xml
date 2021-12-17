@@ -82,20 +82,20 @@
                 android:textColor="@color/darkGrey">
 
             </TextView>
+
             <Button
                 android:id="@+id/btn_order_now"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                app:cornerRadius="26dp"
                 android:backgroundTint="@color/darkGrey"
-                android:textColor="@color/wrapedWhite"
-                android:text="@string/order_now"
-                style="@style/TextInputLayoutStyle"
-                app:icon="@drawable/ic_my_market"
                 android:padding="10dp"
-                >
-            </Button>
+                android:text="@string/order_now"
+                android:textColor="@color/wrapedWhite"
+                app:cornerRadius="26dp"
+                app:icon="@drawable/ic_my_market"
+                app:iconTint="#FFFFFF"></Button>
         </LinearLayout>
         
     </LinearLayout>

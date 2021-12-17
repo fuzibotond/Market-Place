@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -34,6 +35,7 @@ class ForgotPasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentForgotPasswordBinding.inflate(inflater, container, false)
+        handleThatBackPress()
         initialize()
         settingListeners()
         return binding.root
@@ -71,6 +73,14 @@ class ForgotPasswordFragment : Fragment() {
             }
             Log.d("xxx", "Status: ${resetPasswordViewModel.result.value?.code} - ${resetPasswordViewModel.result.value?.message}")
         }
+    }
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.loginFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }

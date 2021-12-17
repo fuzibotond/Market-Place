@@ -118,6 +118,7 @@ class DataAdapterForMarketSale(
                 .setPositiveButton("Yes"){ _,_ ->
                     GlobalScope.launch {
                         addProductViewModel.removeProduct(currentItem.product_id)
+
                     }
                 }
                 .show()
@@ -139,4 +140,5 @@ class DataAdapterForMarketSale(
     fun setData(newlist: ArrayList<Product>){
         list = newlist
     }
+
 }

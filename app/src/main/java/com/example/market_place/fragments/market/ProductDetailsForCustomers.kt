@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.market_place.MarketPlaceApplication
 import com.example.market_place.R
@@ -19,18 +21,31 @@ import com.example.market_place.databinding.FragmentProductDetailsBinding
 import com.example.market_place.databinding.FragmentProductDetailsForCustomersBinding
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
-import com.example.market_place.viewmodels.SharedViewModel
+import com.example.market_place.repository.Repository
+import com.example.market_place.viewmodels.*
 import com.site_valley.imagesliderexampleinkotlin.MySliderImageAdapter
 import com.smarteist.autoimageslider.SliderView
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.handleCoroutineException
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import androidx.core.app.ActivityCompat.startActivityForResult
+
+import android.content.Intent
+import android.net.Uri
+import com.squareup.picasso.RequestCreator
+
 
 class ProductDetailsForCustomers : Fragment() {
     private var _binding: FragmentProductDetailsForCustomersBinding? = null
     private val binding get() = _binding!!
     val sharedViewModel: SharedViewModel by activityViewModels()
+    lateinit var addOrderViewModel:AddOrderViewModel
+    private lateinit var userInfoViewModel: UserInfoViewModel
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,9 +54,52 @@ class ProductDetailsForCustomers : Fragment() {
         _binding = FragmentProductDetailsForCustomersBinding.inflate(inflater, container, false)
         handleThatBackPress()
         initialize()
+        settingListeners()
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val factoryOrder = AddOrderViewModelFactory(this.requireContext(), Repository())
+        addOrderViewModel = ViewModelProvider(this, factoryOrder).get(AddOrderViewModel::class.java)
+        val factoryProfile = UserInfoViewModelFactory( Repository())
+        userInfoViewModel = ViewModelProvider(this, factoryProfile).get(UserInfoViewModel::class.java)
+    }
+
+    private fun settingListeners() {
+        binding.btnOrderThis.setOnClickListener {
+            addOrderViewModel.order.value?.title  = sharedViewModel.orderToAdd.value?.title
+            addOrderViewModel.order.value?.description = sharedViewModel.orderToAdd.value?.description
+            addOrderViewModel.order.value?.owner_username  = sharedViewModel.orderToAdd.value?.owner_username
+            addOrderViewModel.order.value?.units  = sharedViewModel.orderToAdd.value?.units
+            addOrderViewModel.order.value?.price_per_unit  = sharedViewModel.orderToAdd.value?.price_per_unit
+            addOrderViewModel.order.value?.uploadImages  = listOf()
+
+            GlobalScope.launch {
+                addOrderViewModel.addOrder()
+            }
+        }
+        binding.btnOrderThis.alpha = 0f
+        binding.btnOrderThis.animate().alpha(1f).setDuration(1500)
+        binding.btnCallNow.setOnClickListener {
+            GlobalScope.launch {
+
+                sharedViewModel.detailsProduct.value?.username?.let { it1 ->
+                    userInfoViewModel.getUserInfo(
+                        it1
+                    )
+                }
+            }
+            userInfoViewModel.user.observe(viewLifecycleOwner){
+                Toast.makeText(this.requireContext(), "Catch that product Tiger! I am calling  ${userInfoViewModel.user.value?.phone_number}", Toast.LENGTH_SHORT).show()
+                val dialintnt = Intent(Intent.ACTION_DIAL)
+                dialintnt.setData(Uri.parse("tel:"+userInfoViewModel.user.value?.phone_number))
+                startActivity(dialintnt)
+            }
+
+        }
+        binding.btnSendMessage.visibility = View.GONE
+    }
 
 
     private fun initialize() {

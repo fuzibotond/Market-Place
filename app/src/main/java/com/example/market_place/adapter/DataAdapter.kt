@@ -140,6 +140,8 @@ class DataAdapter(
             sharedViewModel.saveDetailedUser(currentItem.username)
             holder.itemView.findNavController().navigate(R.id.profileDetailsFragment)
         }
+
+
     }
 
     override fun getItemCount() = list.size

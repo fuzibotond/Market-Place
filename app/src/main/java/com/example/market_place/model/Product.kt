@@ -75,7 +75,7 @@ data class AddProductRequest(
 data class RemoveProductResponse(
     val message: String,
     val product_id: String,
-    val Deletion_time: Long,
+    val deletion_time: Long,
 )
 @JsonClass(generateAdapter = true)
 data class AddProductResponse(val creation:String,

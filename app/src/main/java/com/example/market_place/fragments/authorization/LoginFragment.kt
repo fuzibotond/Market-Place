@@ -1,5 +1,6 @@
 package com.example.market_place.fragments.authorization
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -47,7 +49,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
+        handleThatBackPress()
         initialize()
         loadData()
         settingListeners()
@@ -81,46 +83,87 @@ class LoginFragment : Fragment() {
     }
 
     private fun settingListeners() {
-        binding.emailInput.doOnTextChanged { text, start, before, count ->
-            if (text!!.toString().isEmpty()){
-                binding.emailInputLayout.helperText = "This field is required!"
-                binding.emailInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
-                binding.emailInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
-                binding.emailInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_error))
-                binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_error_mark)
-            }
-            else{
-                binding.emailInputLayout.helperText = ""
-                binding.emailInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
-                binding.emailInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
-                binding.emailInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_color))
-                binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_circle_check)
-            }
-        }
+
        val PASSWORD_PATTERN:String = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"
        val pattern = Pattern.compile(PASSWORD_PATTERN)
+        binding.passwordInputLayout.setEndIconTintList(resources.getColorStateList(R.color.wrapedWhite))
+        binding.passwordInput.doOnTextChanged { text, start, before, count ->
+            if (!text.toString().isEmpty()){
+                binding.passwordInputLayout.helperText = ""
+                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+        }
+         binding.emailInput.doOnTextChanged { text, start, before, count ->
+            if (!text.toString().isEmpty()){
+                binding.passwordInputLayout.helperText = ""
+                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
+        }
+        binding.emailInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                if (binding.passwordInput.text.toString().isEmpty()){
+                    binding.passwordInputLayout.helperText = "This field is required"
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                }else {
+                    binding.passwordInputLayout.helperText = ""
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                }
+            } else {
+                if (binding.passwordInput.text.toString().isEmpty()){
+                    binding.passwordInputLayout.helperText = "This field is required"
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                }else {
+                    binding.passwordInputLayout.helperText = ""
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                }
+                if (binding.emailInput.text!!.toString().isEmpty()){
+                    binding.emailInputLayout.helperText = "This field is required!"
+                    binding.emailInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                    binding.emailInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                    binding.emailInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                    binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_error_mark)
+                }else {
+                    binding.passwordInputLayout.helperText = ""
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                    binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_circle_check)
+                }
+            }
+        }
+        binding.emailInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                if (binding.passwordInput.text.toString().isEmpty()){
+                    binding.passwordInputLayout.helperText = "This field is required"
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                }else {
+                    binding.passwordInputLayout.helperText = ""
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                }
+            } else {
+                if (binding.passwordInput.text.toString().isEmpty()){
+                    binding.passwordInputLayout.helperText = "This field is required"
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+                }else {
+                    binding.passwordInputLayout.helperText = ""
+                    binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                    binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                }
 
-       binding.passwordInput.doOnTextChanged { text, start, before, count ->
-           if (!text!!.toString().isEmpty()){
-               binding.passwordInputLayout.helperText = "This field is required"
-               binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
-               binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
-           }
-           if ( !pattern.matcher(text).matches()){
-               binding.passwordInputLayout.helperText = "Too weak password!"
-               binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
-               binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
-           }
-           else{
-               binding.passwordInputLayout.setHelperTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
-               binding.passwordInputLayout.helperText = "Strong password!"
-               binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
-               binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
-           }
-       }
-
+            }
+        }
+        var buttonClickCounter = 0
         binding.btnLogIn.setOnClickListener {
 
+            buttonClickCounter++
             loginViewModel.user.value.let {
                 if (it != null) {
                     it.username = binding.emailInput.text.toString()
@@ -130,8 +173,9 @@ class LoginFragment : Fragment() {
                 }
             }
                     lifecycleScope.launch {
-                loginViewModel.login()
+                binding.btnLogIn.isEnabled = !loginViewModel.login()
             }
+
 
         }
        binding.btnSignUp.setOnClickListener {
@@ -173,4 +217,25 @@ class LoginFragment : Fragment() {
         Toast.makeText(this.requireContext(), "Saved ${ MarketPlaceApplication.username}s data!", Toast.LENGTH_SHORT).show()
     }
     internal fun String.toIntColor() = Integer.parseInt(this.replaceFirst("#", ""), 16)
+    private fun handleThatBackPress(){
+        val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle("Exit!")
+                    .setMessage("Are you sure about that? We will clear your saved data.")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK"){ _,_ ->
+                        clearDate()
+                        requireActivity().finish()
+                    }
+                    .show()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+    private fun clearDate() {
+        val sharedPreferences:SharedPreferences = requireContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().clear().commit()
+
+    }
 }

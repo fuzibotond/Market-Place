@@ -13,20 +13,7 @@
         android:weightSum="20"
         android:orientation="vertical"
         android:background="@color/darkGrey">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:layout_weight="0.1"
-            android:id="@+id/profile_app_bar"
-            style="@style/FragmentAppBarTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/darkGrey"
-            android:backgroundTint="@color/darkGrey"
-            app:menu="@menu/cancel_menu"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
-            app:title="Create your fare"
-            >
 
-        </com.google.android.material.appbar.MaterialToolbar>
         <LinearLayout
             android:layout_weight="6"
             android:layout_width="match_parent"
@@ -276,7 +263,7 @@
                 android:hint="Contact name"
                 app:helperTextTextColor="@color/red"
                 app:counterEnabled="true"
-                app:counterMaxLength="9"
+                app:counterMaxLength="40"
                 app:counterTextColor="@color/wrapedWhite"
                 app:endIconDrawable="@drawable/ic_circle_check"
                 app:endIconTint="@color/teal_primary"
@@ -309,7 +296,7 @@
                 android:hint="Contact email"
                 app:helperTextTextColor="@color/red"
                 app:counterEnabled="true"
-                app:counterMaxLength="9"
+                app:counterMaxLength="40"
                 app:counterTextColor="@color/wrapedWhite"
                 >
 
@@ -344,7 +331,7 @@
                 app:prefixText="@string/Ro"
                 app:prefixTextColor="@color/wrapedWhite"
                 app:counterEnabled="true"
-                app:counterMaxLength="9"
+                app:counterMaxLength="40"
                 app:counterTextColor="@color/wrapedWhite"
                 >
 
