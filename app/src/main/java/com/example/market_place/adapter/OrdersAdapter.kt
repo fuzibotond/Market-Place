@@ -100,7 +100,7 @@ class OrdersAdapter(
         holder.textViewName.text = currentItem.title
         holder.textViewSeller.text = currentItem.username
         holder.textViewItemDescription.text = currentItem.description
-        holder.textViewAmount.text = currentItem.units + " Ron"
+        holder.textViewAmount.text = currentItem.units
         holder.textViewPrice.text = currentItem.price_per_unit
         val date = Date(currentItem.creation_time)
         val format = SimpleDateFormat("yyyy.MM.dd HH:mm")

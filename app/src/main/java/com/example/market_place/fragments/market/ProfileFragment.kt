@@ -1,6 +1,7 @@
 package com.example.market_place.fragments.market
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +21,9 @@ import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.*
 import com.smarteist.autoimageslider.Transformations.TossTransformation
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
+import android.content.SharedPreferences
+import android.util.Log
 
 
 class ProfileFragment : Fragment() {
@@ -32,7 +37,7 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
         val factory = UserInfoViewModelFactory( Repository())
         userInfoViewModel = ViewModelProvider(this, factory).get(UserInfoViewModel::class.java)
-        val factoryUpdate = UpdateUserInfoViewModelFactory(this.requireContext(),Repository())
+        val factoryUpdate = UpdateUserInfoViewModelFactory(this.requireActivity(),Repository())
         updateUserInfoViewModel = ViewModelProvider(this,factoryUpdate).get(UpdateUserInfoViewModel::class.java)
 
     }
@@ -43,31 +48,53 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        handleThatBackPress()
         initialize()
+        handleThatBackPress()
         settingListener()
         return binding.root
     }
 
     private fun settingListener() {
         binding.btnPublish.setOnClickListener {
-            if (!binding.emailInput.text.toString().isEmpty()){
-                updateUserInfoViewModel.user.value?.phone_number = binding.phoneNumberInput.text.toString()
-                updateUserInfoViewModel.user.value?.email = binding.emailInput.text.toString()
-                updateUserInfoViewModel.user.value?.username = binding.usernameInput.text.toString()
-                Toast.makeText(this.requireActivity(), "Profile data published succesfully! Dear ${MarketPlaceApplication.username}",Toast.LENGTH_SHORT).show()
+            if (!binding.detailsEmailInput.text.toString().isEmpty()){
+                updateUserInfoViewModel.user.value?.phone_number = binding.detailsPhoneNumberInput.text.toString()
+                updateUserInfoViewModel.user.value?.email = binding.detailsEmailInput.text.toString()
+                updateUserInfoViewModel.user.value?.username = binding.detailsUsernameInput.text.toString()
             }
             lifecycleScope.launch {
                 updateUserInfoViewModel.updateUserData()
             }
+            saveUserData()
 
+        }
+        val pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!\\-_?&])(?=\\S+$).{8,}")
+
+        binding.detailsPhoneNumberInput.doOnTextChanged { text, start, before, count ->
+            if (!text!!.toString().isEmpty()){
+                binding.passwordInputLayout.helperText = "This field is required"
+                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+            }
+            if ( !pattern.matcher(text).matches()){
+                binding.passwordInputLayout.helperText = "Too weak password!"
+                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
+                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
+            }
+            else{
+                binding.passwordInputLayout.setHelperTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.passwordInputLayout.helperText = "Strong password!"
+                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.passwordInputLayout.setHelperTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
+            }
         }
     }
 
     private fun initialize() {
-        binding.emailInput.hint = userInfoViewModel.user.value?.email
-        binding.phoneNumberInput.hint = userInfoViewModel.user.value?.phone_number
-        binding.usernameInput.hint = userInfoViewModel.user.value?.username
+        binding.detailsEmailInput.setText( MarketPlaceApplication.user_email)
+        binding.detailsPhoneNumberInput.setText( MarketPlaceApplication.user_phone_number)
+        binding.detailsUsernameInput.setText(userInfoViewModel.user.value?.username)
+
     }
     private fun handleThatBackPress(){
         val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){
@@ -84,5 +111,15 @@ class ProfileFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+    private fun saveUserData(){
+        val sharedPreferences:SharedPreferences = requireContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.apply{
+            putString("TOKEN_KEY", MarketPlaceApplication.token)
+            putString("USERNAME_KEY", MarketPlaceApplication.username)
+            updateUserInfoViewModel.user.value?.let { putLong("CREATION_TIME_KEY", it.creation_time) }
 
+        }.apply()
+        Toast.makeText(this.requireContext(), "Saved ${ MarketPlaceApplication.username}s data!", Toast.LENGTH_SHORT).show()
+    }
 }

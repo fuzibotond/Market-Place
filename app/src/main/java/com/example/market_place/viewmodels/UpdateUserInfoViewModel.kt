@@ -2,6 +2,7 @@ package com.example.market_place.viewmodels
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.market_place.MarketPlaceApplication
@@ -25,6 +26,7 @@ class UpdateUserInfoViewModel(val context: Context, val repository: Repository) 
         try {
             val result = repository.updateUserData(MarketPlaceApplication.token, request)
             MarketPlaceApplication.token = result.updatedData.token
+            MarketPlaceApplication.username = result.updatedData.username
             user.value?.username = result.updatedData.username
             user.value?.email = result.updatedData.email
             user.value?.phone_number = result.updatedData.phone_number.toString()
@@ -33,6 +35,9 @@ class UpdateUserInfoViewModel(val context: Context, val repository: Repository) 
             Log.d("xxx", "Update user data - code: ${result.updatedData}")
             MarketPlaceApplication.username = user.value!!.username
             Log.d("xxx", "MyApplication update user data - code: ${result.code} token:  ${MarketPlaceApplication.username}")
+            Toast.makeText(context, "Profile data published successfully!",
+                Toast.LENGTH_SHORT).show()
+
         } catch (e: Exception) {
             Log.d("xxx", "LoginViewModel - exception: ${e.toString()}")
         }

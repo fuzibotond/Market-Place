@@ -70,7 +70,6 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
 
 
        sharedViewModel.orders.observe(viewLifecycleOwner){
-            Log.d("xxx", "Orders: "+ sharedViewModel.orders.value)
 
             sharedViewModel.orders.value!!.forEach {
                 if(it.username==MarketPlaceApplication.username){

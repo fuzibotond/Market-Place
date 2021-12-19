@@ -35,10 +35,10 @@ class AddOrderViewModel(val context: Context, val repository: Repository) : View
         try {
             val result = repository.addOrder(MarketPlaceApplication.token, request)
             Log.d("xxx", "MyApplication - add order response: ${result.code} ")
-            Toast.makeText(context, result.code, Toast.LENGTH_SHORT).show()
 
         } catch (e: Exception) {
             Log.d("xxx", "AddOrderViewModel - add order exception: ${e.toString()}")
+
         }
 
     }

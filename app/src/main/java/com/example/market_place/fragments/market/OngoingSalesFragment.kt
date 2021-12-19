@@ -68,7 +68,8 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
         listOrderViewModel.orders.observe(viewLifecycleOwner){
             Log.d("xxx", "Orders: "+ listOrderViewModel.orders.value)
 
-
+            itemList.clear()
+            sharedViewModel.orders.value = listOf()
             listOrderViewModel.orders.value!!.forEach {
 //
                 val temp = Order(
@@ -85,9 +86,11 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
                     it.status.replace("\"", "").replace("\\", "")
                 )
                 if(temp.owner_username==MarketPlaceApplication.username){
+
                     itemList.add(temp)
                 }
             }
+
             sharedViewModel.saveOrders(itemList)
             sharedViewModel.saveOrderItemCount(sharedViewModel.orders.value!!.size)
             adapter.setData(itemList)
@@ -116,12 +119,12 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
 
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         saveItemData()
     }
     override fun onItemClick(position: Int) {
-        val temp =orderToProduct(itemList.get(position))
+        val temp = orderToProduct(itemList.get(position))
         sharedViewModel.saveDetailsProduct(temp)
         findNavController().navigate(R.id.productDetailsForCustomers)
     }

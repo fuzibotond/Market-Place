@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -50,6 +51,7 @@ class CustomDialog(
 
     @SuppressLint("ResourceAsColor")
     private fun initialize() {
+
         binding.dialogProfileName.setText(username)
         binding.dialogPrice.setText(price)
         binding.dialogAmountInput.setText(available_amount)
@@ -66,15 +68,23 @@ class CustomDialog(
 
         binding.btnSendMyOrder.setOnClickListener {
             addOrderViewModel.order.value?.title  = sharedViewModel.orderToAdd.value?.title
-            addOrderViewModel.order.value?.description = sharedViewModel.orderToAdd.value?.description
+            addOrderViewModel.order.value?.description = binding.dialogComments.text.toString()
             addOrderViewModel.order.value?.owner_username  = sharedViewModel.orderToAdd.value?.owner_username
-            addOrderViewModel.order.value?.units  = sharedViewModel.orderToAdd.value?.units
+            val available_amount = sharedViewModel.orderToAdd.value?.units?.toInt()
+            val asked_for = binding.dialogAmountInput.text.toString().toInt()
+            if(available_amount!! -asked_for>=0){
+                addOrderViewModel.order.value?.units  = binding.dialogAmountInput.text.toString()
+            }else{
+                Toast.makeText(this.requireContext(), "Too much! You have to order less than ${binding.dialogAmountInput.text.toString()}", Toast.LENGTH_SHORT).show()
+            }
             addOrderViewModel.order.value?.price_per_unit  = sharedViewModel.orderToAdd.value?.price_per_unit
             addOrderViewModel.order.value?.uploadImages  = listOf()
 
             GlobalScope.launch {
                 addOrderViewModel.addOrder()
             }
+            Toast.makeText(context,"You order is successfully processed" , Toast.LENGTH_SHORT).show()
+            dialog?.dismiss()
         }
         binding.btnCancel.setOnClickListener {
             dialog?.dismiss()
@@ -82,6 +92,10 @@ class CustomDialog(
         binding.dialogMyOrder.setOnClickListener {
             dialog?.dismiss()
         }
+        binding.btnSendMyOrder.alpha = 0f
+        binding.btnSendMyOrder.animate().alpha(1f).setDuration(1500)
+        binding.btnCancel.alpha = 0f
+        binding.btnCancel.animate().alpha(1f).setDuration(1500)
     }
 
     override fun onStart() {

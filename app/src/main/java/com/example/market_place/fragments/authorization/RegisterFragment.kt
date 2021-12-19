@@ -68,8 +68,7 @@ class RegisterFragment : Fragment() {
                 binding.emailInputLayout.setEndIconDrawable(R.drawable.ic_circle_check)
             }
         }
-        val PASSWORD_PATTERN:String = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"
-        val pattern = Pattern.compile(PASSWORD_PATTERN)
+        val pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!\\-_?&])(?=\\S+$).{8,}")
 
         binding.passwordInput.doOnTextChanged { text, start, before, count ->
             if (!text!!.toString().isEmpty()){
@@ -87,6 +86,7 @@ class RegisterFragment : Fragment() {
                 binding.passwordInputLayout.helperText = "Strong password!"
                 binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.passwordInputLayout.setHelperTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
             }
         }
         binding.phoneNumberInput.doOnTextChanged { text, start, before, count ->

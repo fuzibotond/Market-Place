@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="@string/available_amount"
+            android:hint="@string/comment"
             app:helperTextTextColor="@color/red"
             app:counterEnabled="true"
             app:counterMaxLength="10"
