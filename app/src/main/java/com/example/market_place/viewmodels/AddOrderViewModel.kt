@@ -34,7 +34,7 @@ class AddOrderViewModel(val context: Context, val repository: Repository) : View
         Log.d("xxx", "MyApplication - add order request: ${order.value} ")
         try {
             val result = repository.addOrder(MarketPlaceApplication.token, request)
-            Log.d("xxx", "MyApplication - add order response: ${result.code} ")
+            Log.d("xxx", "MyApplication - add order response: ${result} ")
 
         } catch (e: Exception) {
             Log.d("xxx", "AddOrderViewModel - add order exception: ${e.toString()}")
@@ -42,9 +42,9 @@ class AddOrderViewModel(val context: Context, val repository: Repository) : View
         }
 
     }
-    suspend fun removeOrder(product_id: String) {
+    suspend fun removeOrder(order_id: String) {
         try {
-            val result = repository.removeProduct(MarketPlaceApplication.token,product_id)
+            val result = repository.removeOrder(MarketPlaceApplication.token,order_id)
             Log.d("xxx", "MyApplication - add order response:  ${result.message}")
         } catch (e: Exception) {
             Log.d("xxx", "AddOrderViewModel - remove order exception: ${e.toString()}")

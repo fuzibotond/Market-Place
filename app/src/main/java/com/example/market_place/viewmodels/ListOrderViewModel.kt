@@ -21,7 +21,7 @@ class ListOrderViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val result =
-                    repository.getOrders(MarketPlaceApplication.token, 100)
+                    repository.getOrders(MarketPlaceApplication.token, 1000)
                 orders.value = result.orders
                 item_count.value = result.item_count
                 Log.d("xxx", "ListOrdersViewModel - #products:  ${result.item_count}")

@@ -98,6 +98,17 @@
                     android:popupBackground="@drawable/teal_outline">
                 </Spinner>
                 <TextView
+                    android:visibility="gone"
+                    android:id="@+id/sale_item_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="12dp"
+                    android:textColor="@color/teal_primary"
+                    android:text="Item state">
+
+                </TextView>
+                <TextView
 
                     android:id="@+id/sale_item_name"
                     android:layout_width="match_parent"

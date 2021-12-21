@@ -110,7 +110,7 @@ class RegisterFragment : Fragment() {
                 lifecycleScope.launch {
                     registerViewModel.register()
                 }
-                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                //findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
             }else{
                 Toast.makeText(context,"Please fill the required fields!", Toast.LENGTH_LONG).show()
             }
@@ -125,7 +125,7 @@ class RegisterFragment : Fragment() {
         registerViewModel.code.observe(viewLifecycleOwner){
             Log.d("xxx", "navigate to list")
             if (registerViewModel.code.value!! == 200)
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
     private fun handleThatBackPress(){

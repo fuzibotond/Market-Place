@@ -59,6 +59,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_navigation"
             style="@style/bottomMenuBar"
+            app:itemTextColor="@color/bottom_menu_item_color"
             />
     </LinearLayout>
 

@@ -43,6 +43,7 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
     val itemList: ArrayList<Order> = arrayListOf()
     val sharedViewModel: SharedViewModel by activityViewModels()
     var new_item:Int = 0
+    lateinit var addOrderViewModel:AddOrderViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +60,8 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
         super.onCreate(savedInstanceState)
         val factoryUpdate = UpdateAssetViewModelFactory( this.requireActivity(),Repository())
         updateAssetViewModel = ViewModelProvider(this, factoryUpdate).get(UpdateAssetViewModel::class.java)
-
+        val factoryRemove = AddOrderViewModelFactory( this.requireActivity(),Repository())
+        addOrderViewModel = ViewModelProvider(this, factoryRemove).get(AddOrderViewModel::class.java)
     }
 
     override fun onResume() {
@@ -70,12 +72,15 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
 
 
        sharedViewModel.orders.observe(viewLifecycleOwner){
-
+            Log.d("xxx", "username: "+MarketPlaceApplication.username)
             sharedViewModel.orders.value!!.forEach {
+                Log.d("xxx", "My : ${it}")
+
                 if(it.username==MarketPlaceApplication.username){
                     itemList.add(it)
                 }
             }
+           binding.progressBar.visibility = View.GONE
             adapter.setData(itemList)
             adapter.notifyDataSetChanged()
         }
@@ -90,7 +95,7 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
             adapter.setData(searchResultList)
             adapter.notifyDataSetChanged()
         }
-        adapter = OrdersAdapter(itemList ,this.requireContext(),this, this,sharedViewModel,updateAssetViewModel )
+        adapter = OrdersAdapter(itemList ,this.requireContext(),this, this,sharedViewModel,addOrderViewModel )
 
         recycler_view = binding.myFaresOrdersRecyclerView
         recycler_view.adapter = adapter

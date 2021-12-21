@@ -86,9 +86,11 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
                 everythingFine = false
             }else {
-            binding.titleInputLayout.helperText = ""
-            binding.titleInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
-            binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                binding.titleInputLayout.helperText = ""
+                binding.titleInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
+                binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
+
             }
         }
         binding.pricePerAmountInput.doOnTextChanged { text, start, before, count ->
@@ -101,6 +103,8 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.pricePerAmountInputLayout.helperText = ""
                 binding.pricePerAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.pricePerAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
+
             }
         }
         binding.availableAmountInput.doOnTextChanged { text, start, before, count ->
@@ -113,7 +117,10 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.availableAmountInputLayout.helperText = ""
                 binding.availableAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.availableAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
+
             }
+
         }
         binding.contactEmailInput.doOnTextChanged { text, start, before, count ->
             if (text.toString().isEmpty()){
@@ -129,6 +136,8 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.contactEmailLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
                 binding.contactEmailLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_color))
                 binding.contactEmailLayout.setEndIconDrawable(R.drawable.ic_circle_check)
+                everythingFine = true
+
             }
         }
         binding.phoneNumberInput.doOnTextChanged { text, start, before, count ->
@@ -146,6 +155,8 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.phoneNumberInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
                 binding.phoneNumberInputLayout.setEndIconTintList(resources.getColorStateList(R.color.text_input_box_stroke_color))
                 binding.phoneNumberInputLayout.setEndIconDrawable(R.drawable.ic_circle_check)
+                everythingFine = true
+
             }
         }
         binding.btnLaunchMyFair.setOnClickListener {
@@ -158,6 +169,8 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.titleInputLayout.helperText = ""
                 binding.titleInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.titleInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
+
             }
             if (binding.pricePerAmountInput.text.toString().isEmpty()){
                 binding.pricePerAmountInputLayout.helperText = "This field is required"
@@ -168,6 +181,8 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.pricePerAmountInputLayout.helperText = ""
                 binding.pricePerAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.pricePerAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
+
             }
             if (binding.availableAmountInput.text.toString().isEmpty()){
                 binding.availableAmountInputLayout.helperText = "This field is required"
@@ -178,6 +193,8 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.availableAmountInputLayout.helperText = ""
                 binding.availableAmountInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.availableAmountInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
+
             }
             if (binding.contactEmailInput.text.toString().isEmpty()){
                 binding.contactEmailLayout.helperText = "This field is required"
@@ -188,6 +205,8 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.contactEmailLayout.helperText = ""
                 binding.contactEmailLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.contactEmailLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
+
             }
             if (binding.phoneNumberInput.text.toString().isEmpty()){
                 binding.phoneNumberInputLayout.helperText = "This field is required"
@@ -198,6 +217,7 @@ class AddProductToMyMarketFragment : Fragment(){
                 binding.phoneNumberInputLayout.helperText = ""
                 binding.phoneNumberInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
                 binding.phoneNumberInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
+                everythingFine = true
 
             }
             if (everythingFine){
@@ -271,9 +291,9 @@ class AddProductToMyMarketFragment : Fragment(){
             setPositiveButton("Yes") { _, _ ->
                 if (sharedViewModel.UPDATE_PRODUCT_FLAG.value == true){
                     lifecycleScope.launch {
+                        Log.d("product_id", "${sharedViewModel.detailsProduct.value!!.product_id}")
                         updateAssetViewModel.updateProduct(sharedViewModel.detailsProduct.value!!.product_id)
                     }
-
                 }else{
                     lifecycleScope.launch {
                         addProductViewModel.addProduct()

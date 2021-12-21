@@ -68,4 +68,7 @@ class Repository {
     suspend fun updateOrder(token:String, request: UpdateOrderRequest, order_id:String): UpdateOrderResponse {
         return RetrofitInstance.api.updateOrder(token,request, order_id)
     }
+    suspend fun removeOrder(token: String, order_id: String ): RemoveOrderResponse {
+        return RetrofitInstance.api.removeOrder(token,order_id)
+    }
 }

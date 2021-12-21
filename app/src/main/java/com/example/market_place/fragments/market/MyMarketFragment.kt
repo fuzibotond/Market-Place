@@ -64,6 +64,9 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     private fun initialize() {
+        sharedViewModel.myMarketProducts.observe(viewLifecycleOwner){
+            binding.progressBar.visibility = View.GONE
+        }
         sharedViewModel.myMarketProducts.value?.forEach { itemList.add(it) }
 
         adapter = DataAdapterForMarketSale(itemList,this.requireContext(),this, this, addProductViewModel,sharedViewModel)

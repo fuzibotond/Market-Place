@@ -15,7 +15,7 @@ class ListViewModel(private val repository: Repository) : ViewModel() {
 
     init {
         Log.d("xxx", "ListViewModel constructor - Token: ${MarketPlaceApplication.token}")
-        getProducts(100, 0)
+        getProducts(200, 50)
     }
 
     fun getProducts(limit: Int, skip: Int) {

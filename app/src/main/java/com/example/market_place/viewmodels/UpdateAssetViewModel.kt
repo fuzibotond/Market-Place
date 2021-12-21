@@ -31,7 +31,7 @@ class UpdateAssetViewModel(val context: Context, val repository: Repository) : V
             UpdateOrderRequest(order_price.value, status, order_title.value )
         try {
 
-            val result = repository.updateOrder(MarketPlaceApplication.token, request  , order_id)
+            val result = repository.updateOrder(MarketPlaceApplication.token, request, order_id)
 
             Log.d("xxx", "MyApplication update order - code: ${result.timestamp} token:  ${MarketPlaceApplication.username}")
         } catch (e: Exception) {

@@ -33,7 +33,7 @@ class SalesAdapter(
     private val updateAssetViewModel: UpdateAssetViewModel
 ) :
     RecyclerView.Adapter<SalesAdapter.DataViewHolder>() {
-    val itemCategoryNameList: ArrayList<String> = arrayListOf("Incoming order", "Accepted order","Declined order", "Delivering order", "Delivered order")
+    val itemCategoryNameList: ArrayList<String> = arrayListOf("Incoming", "Accepted","Declined", "Delivering", "Delivered")
 
 
     interface OnItemClickListener{
@@ -98,7 +98,7 @@ class SalesAdapter(
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val currentItem = list[position]
         holder.textViewName.text = currentItem.title
-        holder.textViewSeller.text = currentItem.username
+        holder.textViewSeller.text = currentItem.owner_username
         holder.textViewItemDescription.text = currentItem.description
         holder.textViewAmount.text = currentItem.units
         holder.textViewPrice.text = currentItem.price_per_unit
@@ -175,6 +175,7 @@ class SalesAdapter(
             setMessage("Are you shure about that")
             setPositiveButton("Yes") { _, _ ->
                 GlobalScope.launch {
+                   Log.d("xxx", state)
                     updateAssetViewModel.updateOrder(product_id, state)
                 }
             }

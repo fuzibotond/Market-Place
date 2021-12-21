@@ -68,8 +68,8 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
         listOrderViewModel.orders.observe(viewLifecycleOwner){
             Log.d("xxx", "Orders: "+ listOrderViewModel.orders.value)
 
-            itemList.clear()
-            sharedViewModel.orders.value = listOf()
+
+            val tempList = mutableListOf<Order>()
             listOrderViewModel.orders.value!!.forEach {
 //
                 val temp = Order(
@@ -88,10 +88,13 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
                 if(temp.owner_username==MarketPlaceApplication.username){
 
                     itemList.add(temp)
+                    Log.d("xxx", temp.toString())
                 }
+//                itemList.add(it)
+                tempList.add(temp)
             }
-
-            sharedViewModel.saveOrders(itemList)
+            binding.progressBar.visibility = View.GONE
+            sharedViewModel.saveOrders(tempList)
             sharedViewModel.saveOrderItemCount(sharedViewModel.orders.value!!.size)
             adapter.setData(itemList)
 

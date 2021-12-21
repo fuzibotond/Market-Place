@@ -51,7 +51,8 @@ class CustomDialog(
 
     @SuppressLint("ResourceAsColor")
     private fun initialize() {
-
+        binding.dialogAmountInput.setTextColor(resources?.getColorStateList(R.color.darkGrey))
+        binding.dialogComments.setTextColor(resources?.getColorStateList(R.color.darkGrey))
         binding.dialogProfileName.setText(username)
         binding.dialogPrice.setText(price)
         binding.dialogAmountInput.setText(available_amount)

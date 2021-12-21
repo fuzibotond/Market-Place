@@ -21,6 +21,7 @@
     <style name="Theme.Market_place.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">false</item>
+        <item name="iconTint"> @android:color/white</item>
     </style>
 
 

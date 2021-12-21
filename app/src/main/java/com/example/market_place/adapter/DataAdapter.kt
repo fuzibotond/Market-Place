@@ -114,9 +114,9 @@ class DataAdapter(
                 status = "OPEN"
             }
             val temp = Order(
-                MarketPlaceApplication.username,
-                "",
                 currentItem.username,
+                "",
+                MarketPlaceApplication.username,
                 arrayListOf(),
                 currentItem.price_per_unit,
                 currentItem.units,

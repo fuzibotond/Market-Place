@@ -67,7 +67,10 @@ interface MarketApi {
         @Query("product_id") product_id: String): UpdateProductResponse
 
     @POST(Constants.UPDATE_ORDER)
-    suspend fun updateOrder(@Header("token") token:String,
-                            @Body request: UpdateOrderRequest,
-                            @Query("order_id") order_id: String): UpdateOrderResponse
+    suspend fun updateOrder(
+        @Header("token") token:String,
+        @Body request: UpdateOrderRequest,
+        @Query("order_id") order_id: String): UpdateOrderResponse
+    @POST(Constants.REMOVE_ORDER)
+    suspend fun removeOrder(@Header("token") token: String, @Query("order_id") order_id: String): RemoveOrderResponse
 }

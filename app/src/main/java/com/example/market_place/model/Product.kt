@@ -118,7 +118,14 @@ data class AddOrderRequest(
     val owner_username: String?,
 )
 @JsonClass(generateAdapter = true)
-data class OrderResponseCode(val code: Int)
+data class OrderResponseCode(
+    val creation: String,
+    val order_id: String,
+    val username: String,
+    val status: String,
+    val owner_username: String,
+    val price_per_unit: String
+    )
 
 @JsonClass(generateAdapter = true)
 data class UpdateProductRequest(
@@ -141,3 +148,10 @@ data class UpdateOrderRequest(
 
 @JsonClass(generateAdapter = true)
 data class UpdateOrderResponse(val timestamp: Long )
+
+@JsonClass(generateAdapter = true)
+data class RemoveOrderResponse(
+    val message: String,
+    val order_id: String,
+    val deletion_time: Long,
+)

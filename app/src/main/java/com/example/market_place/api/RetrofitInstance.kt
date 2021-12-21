@@ -26,6 +26,7 @@ object RetrofitInstance {
 //            .build()
 //    }
 
+
     val api: MarketApi by lazy{
         retrofit.create(MarketApi :: class.java)
     }

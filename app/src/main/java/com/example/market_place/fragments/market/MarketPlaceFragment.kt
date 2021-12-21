@@ -108,6 +108,7 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
                     tempList.add(temp)
                 }
             }
+            binding.progressBar.visibility = View.GONE
             adapter.setData(itemList)
             binding.countItem.text = itemList.size.toString() + " Fairs"
             val date = Date(System.currentTimeMillis())

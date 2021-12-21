@@ -24,6 +24,8 @@ import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.LoginViewModel
 import com.example.market_place.viewmodels.LoginViewModelFactory
 import com.example.market_place.databinding.FragmentLoginBinding
+import com.example.market_place.utils.NetworkHelper
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.sql.Time
 import java.sql.Timestamp
@@ -38,6 +40,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val factory = LoginViewModelFactory(this.requireContext(), Repository())
         loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
 
@@ -49,10 +52,12 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        handleThatBackPress()
+
+
         initialize()
         loadData()
         settingListeners()
+        handleThatBackPress()
         return binding.root
     }
 
@@ -71,10 +76,10 @@ class LoginFragment : Fragment() {
             if (savedToken != null) {
                 MarketPlaceApplication.token = savedToken
             }
-                loginViewModel.token.value = savedToken
+            loginViewModel.token.value = savedToken
         }else{
-                sharedPreferences.edit().clear().commit()
-                Toast.makeText(requireContext(), "Your session has been expired! You need to log in again...", Toast.LENGTH_SHORT).show()
+            sharedPreferences.edit().clear().commit()
+            Toast.makeText(requireContext(), "Your session has been expired! You need to log in again...", Toast.LENGTH_SHORT).show()
         }
         if (savedUsername != null) {
             MarketPlaceApplication.username = savedUsername
@@ -84,8 +89,8 @@ class LoginFragment : Fragment() {
 
     private fun settingListeners() {
 
-       val PASSWORD_PATTERN:String = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"
-       val pattern = Pattern.compile(PASSWORD_PATTERN)
+        val PASSWORD_PATTERN:String = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"
+        val pattern = Pattern.compile(PASSWORD_PATTERN)
         binding.passwordInputLayout.setEndIconTintList(resources.getColorStateList(R.color.wrapedWhite))
         binding.passwordInput.doOnTextChanged { text, start, before, count ->
             if (!text.toString().isEmpty()){
@@ -94,7 +99,7 @@ class LoginFragment : Fragment() {
                 binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
             }
         }
-         binding.emailInput.doOnTextChanged { text, start, before, count ->
+        binding.emailInput.doOnTextChanged { text, start, before, count ->
             if (!text.toString().isEmpty()){
                 binding.passwordInputLayout.helperText = ""
                 binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
@@ -162,7 +167,7 @@ class LoginFragment : Fragment() {
         }
         var buttonClickCounter = 0
         binding.btnLogIn.setOnClickListener {
-
+            binding.progressBar.visibility = View.VISIBLE
             buttonClickCounter++
             loginViewModel.user.value.let {
                 if (it != null) {
@@ -172,21 +177,32 @@ class LoginFragment : Fragment() {
                     it.password = binding.passwordInput.text.toString()
                 }
             }
-                    lifecycleScope.launch {
-                binding.btnLogIn.isEnabled = !loginViewModel.login()
+            if (NetworkHelper.isNetworkConnected(this.requireActivity())){
+                lifecycleScope.launch {
+                    binding.btnLogIn.isEnabled = !loginViewModel.login()
+                }
+            }else{
+                lifecycleScope.launch {
+                    delay(1000)
+                    Toast.makeText(requireActivity(), "There is no internet", Toast.LENGTH_SHORT).show()
+                }
+                binding.progressBar.visibility = View.GONE
+
             }
 
 
+
         }
-       binding.btnSignUp.setOnClickListener {
-           findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-       }
-       binding.forgotPasswordClick.setOnClickListener {
-           findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
-       }
+        binding.btnSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+        binding.forgotPasswordClick.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
     }
 
     private fun initialize() {
+        binding.progressBar.visibility = View.GONE
         loginViewModel.refresh_time.observe(viewLifecycleOwner){
             saveUserData()
 //            Log.d("xxx", "save")

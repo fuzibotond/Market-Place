@@ -35,6 +35,7 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.RequestCreator
 
 
@@ -68,16 +69,28 @@ class ProductDetailsForCustomers : Fragment() {
 
     private fun settingListeners() {
         binding.btnOrderThis.setOnClickListener {
-            addOrderViewModel.order.value?.title  = sharedViewModel.orderToAdd.value?.title
-            addOrderViewModel.order.value?.description = sharedViewModel.orderToAdd.value?.description
-            addOrderViewModel.order.value?.owner_username  = sharedViewModel.orderToAdd.value?.owner_username
-            addOrderViewModel.order.value?.units  = sharedViewModel.orderToAdd.value?.units
-            addOrderViewModel.order.value?.price_per_unit  = sharedViewModel.orderToAdd.value?.price_per_unit
-            addOrderViewModel.order.value?.uploadImages  = listOf()
+            val currentItem = sharedViewModel.detailsProduct.value
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            if (currentItem!=null){
+                val temp = Order(
+                    currentItem.username,
+                    "",
+                    MarketPlaceApplication.username,
+                    arrayListOf(),
+                    currentItem.price_per_unit,
+                    currentItem.units,
+                    currentItem.description,
+                    currentItem.title,
+                    currentItem.images,
+                    currentItem.creation_time,
+                    ""
+                )
+                sharedViewModel.saveOrderToAdd(temp)
+                CustomDialog(currentItem.username, currentItem.title, currentItem.price_per_unit+" "+currentItem.price_type+"/"+currentItem.amount_type,currentItem.is_active, currentItem.creation_time, currentItem.units).show(manager, "CustomManager")
 
-            GlobalScope.launch {
-                addOrderViewModel.addOrder()
             }
+
+
         }
         binding.btnOrderThis.alpha = 0f
         binding.btnOrderThis.animate().alpha(1f).setDuration(1500)

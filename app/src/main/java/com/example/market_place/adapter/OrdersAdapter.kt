@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.market_place.R
 import com.example.market_place.model.Order
+import com.example.market_place.viewmodels.AddOrderViewModel
 import com.example.market_place.viewmodels.SharedViewModel
 import com.example.market_place.viewmodels.UpdateAssetViewModel
 import com.google.android.material.button.MaterialButton
@@ -30,10 +31,10 @@ class OrdersAdapter(
     private val listener: OnItemClickListener,
     private val listener2: OnItemLongClickListener,
     private val sharedViewModel: SharedViewModel,
-    private val updateAssetViewModel: UpdateAssetViewModel
+    private val addOrderViewModel: AddOrderViewModel
 ) :
     RecyclerView.Adapter<OrdersAdapter.DataViewHolder>() {
-    val itemCategoryNameList: ArrayList<String> = arrayListOf("Incoming order", "Accepted order","Declined order", "Delivering order", "Delivered order")
+    val itemCategoryNameList: ArrayList<String> = arrayListOf("Incoming", "Accepted","Declined", "Delivering", "Delivered")
 
 
     interface OnItemClickListener{
@@ -63,6 +64,7 @@ class OrdersAdapter(
         val imageViewProfile: ImageView = itemView.findViewById(R.id.sale_profile_image)
         val imageView: ImageView = itemView.findViewById(R.id.sale_profile_image)
         val spinnerIncomingOrder: Spinner = itemView.findViewById(R.id.sale_incoming_orders)
+        val textViewItemState: TextView = itemView.findViewById(R.id.sale_item_state)
 
 
 
@@ -97,8 +99,11 @@ class OrdersAdapter(
     // 3. Called many times, when we scroll the list
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val currentItem = list[position]
+        holder.spinnerIncomingOrder.visibility = View.GONE
+        holder.textViewItemState.visibility = View.VISIBLE
+        holder.textViewItemState.text = currentItem.status
         holder.textViewName.text = currentItem.title
-        holder.textViewSeller.text = currentItem.username
+        holder.textViewSeller.text = currentItem.owner_username
         holder.textViewItemDescription.text = currentItem.description
         holder.textViewAmount.text = currentItem.units
         holder.textViewPrice.text = currentItem.price_per_unit
@@ -150,12 +155,11 @@ class OrdersAdapter(
 
         }
         holder.btnCancel.setOnClickListener {
-            holder.btnAccept.visibility = View.GONE
+            holder.btnCancel.isClickable = false
             showDefaultDialog(holder.itemView, currentItem.order_id,holder.spinnerIncomingOrder.selectedItem.toString())
             Toast.makeText(context,"Orederd ${list.get(position).title} has been canceled",Toast.LENGTH_SHORT).show()
         }
         holder.btnExtend.setOnClickListener {
-
             Toast.makeText(context,"Orederd ${list.get(position).description} has been extended",Toast.LENGTH_SHORT).show()
         }
         if (sharedViewModel.orderIsAcceptedIndicitaor.value!=null){
@@ -165,8 +169,8 @@ class OrdersAdapter(
                 holder.btnCancel.visibility = View.GONE
             }
         }
+        holder.btnAccept.visibility = View.GONE
         holder.btnAccept.isClickable = false
-        holder.btnCancel.isClickable = false
         holder.btnExtend.setOnClickListener {
             Toast.makeText(context,"Orederd ${list.get(position).description} has been extended",Toast.LENGTH_SHORT).show()
         }
@@ -187,7 +191,7 @@ class OrdersAdapter(
             setMessage("Are you shure about that")
             setPositiveButton("Yes") { _, _ ->
                 GlobalScope.launch {
-                    updateAssetViewModel.updateOrder(product_id, state)
+                    addOrderViewModel.removeOrder(product_id)
                 }
             }
             setNegativeButton("No") { _, _ ->

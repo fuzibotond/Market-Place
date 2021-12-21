@@ -35,7 +35,7 @@ class RegisterViewModel(val context: Context, val repository: Repository) : View
 
     suspend fun register() {
         val request =
-            RegisterRequest(phone_number = user.value!!.phone_number, first_name = user.value!!.first_name, last_name = user.value!!.last_name, email = user.value!!.email,  password = user.value!!.password, username = user.value!!.email)
+            RegisterRequest(phone_number = user.value!!.phone_number, first_name = user.value!!.first_name, last_name = user.value!!.last_name, email = user.value!!.email,  password = user.value!!.password, username = user.value!!.email.split('@')[0])
         try {
             val result = repository.register(request)
             code.value = result.code

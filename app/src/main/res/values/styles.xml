@@ -56,7 +56,6 @@
     </style>
     <style name="bottomMenuBar">
         <item name="itemBackground">@color/darkGrey</item>
-        <item name="itemFillColor">@color/bottom_menu_item_color</item>
     </style>
     <style name="FragmentAppBarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="titleTextColor">@color/wrapedWhite</item>
