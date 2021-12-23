@@ -50,7 +50,6 @@ class ProductDetailsFragment : Fragment() {
 
     private fun initialize() {
         val currentProduct = sharedViewModel.detailsProduct.value
-        Log.d("xxx", "Details:${currentProduct}")
 //        val sliderArrayList = sharedViewModel.getDetailsProduct()?.images
         val imageList: ArrayList<String> = ArrayList()
 //        sliderArrayList?.forEach { imageList.add(it.image_path) }

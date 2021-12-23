@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">market_place</string>
+    <string name="app_name">Bazaar</string>
     <string name="log_in">Log in</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

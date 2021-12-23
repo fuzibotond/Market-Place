@@ -26,7 +26,7 @@
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/teal_outline.xml" value="0.25677083333333334" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/drawable/teal_outline_with_white_background.xml" value="0.25677083333333334" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/activity_authorized_market.xml" value="0.209375" />
-        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/authorized_activity.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/content_authorized_market.xml" value="0.27395833333333336" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/custom_dialog.xml" value="0.240625" />
@@ -37,6 +37,7 @@
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_list.xml" value="0.1" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_login.xml" value="0.19961977186311788" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_market_place.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_message.xml" value="0.1953125" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_my_fares.xml" value="0.2609375" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_my_market.xml" value="0.2609375" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_ongoing_orders.xml" value="0.2" />
@@ -46,9 +47,11 @@
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_profile.xml" value="0.2609375" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_profile_details.xml" value="0.2609375" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_register.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/fragment_show_messages.xml" value="0.1953125" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/image_viewer_for_slider.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/item_filter.xml" value="0.240625" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/item_layout.xml" value="0.2404255319148936" />
+        <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/message_item.xml" value="0.1953125" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/my_fares_item_layout.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/my_market_item_layout.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/fuzib/OneDrive/Dokumentumok/GitHub/Market-Place-oroginal/app/src/main/res/layout/order_item_layout.xml" value="0.2703125" />

@@ -18,4 +18,8 @@ object Constants {
     const val UPDATE_ORDER="orders/update"
     const val UPDATE_PRODUCT="products/update"
     const val REMOVE_ORDER="orders/remove"
+    const val ADD_MESSAGE_TO_PRODUCT="products/messages"
+    const val ADD_MESSAGE_TO_ORDER="orders/messages"
+    const val GET_MESSAGE_FOR_ORDERS="orders/messages"
+    const val GET_MESSAGE_FOR_PRODUCTS="products/messages"
 }

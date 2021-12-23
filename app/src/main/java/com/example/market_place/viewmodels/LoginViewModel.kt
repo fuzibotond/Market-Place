@@ -22,20 +22,6 @@ class LoginViewModel(val context: Context, val repository: Repository) : ViewMod
         user.value = User()
     }
 
-//    fun login() {
-//        viewModelScope.launch {
-//            val request =
-//                LoginRequest(username = user.value!!.username, password = user.value!!.password)
-//            try {
-//                val result = repository.login(request)
-//                MyApplication.token = result.token
-//                token.value = result.token
-//                Log.d("xxx", "MyApplication - token:  ${MyApplication.token}")
-//            }catch(e: Exception){
-//                Log.d("xxx", "MainViewModel - exception: ${e.toString()}")
-//            }
-//        }
-//    }
 
     suspend fun login():Boolean {
         val request =
@@ -52,7 +38,7 @@ class LoginViewModel(val context: Context, val repository: Repository) : ViewMod
             MarketPlaceApplication.refresh_time = result.refresh_time
             MarketPlaceApplication.creation_time = result.creation_time
 
-            Log.d("xxx", "MyApplication - token:  ${MarketPlaceApplication.token}")
+            Log.d("xxx", "LoginViewModel - token:  ${MarketPlaceApplication.token}")
             return true
         } catch (e: Exception) {
             if (e.message?.split(' ')!![1]?.toInt() == 302 ){

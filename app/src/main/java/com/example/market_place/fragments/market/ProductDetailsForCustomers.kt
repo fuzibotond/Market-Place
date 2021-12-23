@@ -36,6 +36,7 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import com.example.market_place.fragments.message.MessageFragment
 import com.squareup.picasso.RequestCreator
 
 
@@ -111,7 +112,30 @@ class ProductDetailsForCustomers : Fragment() {
             }
 
         }
-        binding.btnSendMessage.visibility = View.GONE
+        binding.btnSendMessage.setOnClickListener {
+            val currentItem = sharedViewModel.detailsProduct.value
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            if (currentItem!=null){
+                val temp = Order(
+                    currentItem.username,
+                    "",
+                    MarketPlaceApplication.username,
+                    arrayListOf(),
+                    currentItem.price_per_unit,
+                    currentItem.units,
+                    currentItem.description,
+                    currentItem.title,
+                    currentItem.images,
+                    currentItem.creation_time,
+                    ""
+                )
+                sharedViewModel.saveOrderToAdd(temp)
+                MessageFragment(currentItem.username, currentItem.title, currentItem.price_per_unit+" "+currentItem.price_type+"/"+currentItem.amount_type,currentItem.is_active, currentItem.creation_time, currentItem.product_id, true).show(manager, "CustomManager")
+
+            }
+
+
+        }
     }
 
 

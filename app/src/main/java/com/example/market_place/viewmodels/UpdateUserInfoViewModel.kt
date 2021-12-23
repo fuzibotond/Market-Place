@@ -32,14 +32,12 @@ class UpdateUserInfoViewModel(val context: Context, val repository: Repository) 
             user.value?.phone_number = result.updatedData.phone_number.toString()
             user.value?.is_activated = result.updatedData.is_activated
             user.value?.creation_time = result.updatedData.creation_time
-            Log.d("xxx", "Update user data - code: ${result.updatedData}")
+            Log.d("xxx", "updateUserData user data - code: ${result.updatedData}")
             MarketPlaceApplication.username = user.value!!.username
-            Log.d("xxx", "MyApplication update user data - code: ${result.code} token:  ${MarketPlaceApplication.username}")
-            Toast.makeText(context, "Profile data published successfully!",
-                Toast.LENGTH_SHORT).show()
+            Log.d("xxx", "updateUserData update user data - code: ${result.code} token:  ${MarketPlaceApplication.username}")
 
         } catch (e: Exception) {
-            Log.d("xxx", "LoginViewModel - exception: ${e.toString()}")
+            Log.d("xxx", "updateUserData - exception: ${e.toString()}")
         }
     }
 }

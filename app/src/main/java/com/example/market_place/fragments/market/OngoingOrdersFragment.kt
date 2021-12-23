@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -23,6 +24,7 @@ import com.example.market_place.adapter.DataAdapter
 import com.example.market_place.adapter.OrdersAdapter
 import com.example.market_place.adapter.SalesAdapter
 import com.example.market_place.databinding.FragmentOngoingOrdersBinding
+import com.example.market_place.fragments.message.MessageFragment
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
@@ -72,10 +74,10 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
 
 
        sharedViewModel.orders.observe(viewLifecycleOwner){
-            Log.d("xxx", "username: "+MarketPlaceApplication.username)
-            sharedViewModel.orders.value!!.forEach {
-                Log.d("xxx", "My : ${it}")
+            itemList.clear()
 
+            sharedViewModel.orders.value!!.forEach {
+            Log.d("xxx", "${it.username} ----- ${MarketPlaceApplication.username}")
                 if(it.username==MarketPlaceApplication.username){
                     itemList.add(it)
                 }
@@ -83,6 +85,7 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
            binding.progressBar.visibility = View.GONE
             adapter.setData(itemList)
             adapter.notifyDataSetChanged()
+
         }
 
         sharedViewModel.searchingKeyword.observe(viewLifecycleOwner){
@@ -114,9 +117,12 @@ class OngoingOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener,
         saveItemData()
     }
     override fun onItemLongClick(position: Int) {
-        val temp =orderToProduct(itemList.get(position))
-        sharedViewModel.saveDetailsProduct(temp)
-        findNavController().navigate(R.id.productDetailsForCustomers)
+        val currentItem = itemList.get(position)
+        val manager = (context as AppCompatActivity).supportFragmentManager
+        if (currentItem != null) {
+            MessageFragment(currentItem.username, currentItem.title, currentItem.price_per_unit,true, currentItem.creation_time, currentItem.order_id, false).show(manager, "CustomManager")
+        }
+
     }
     private fun saveItemData(){
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)

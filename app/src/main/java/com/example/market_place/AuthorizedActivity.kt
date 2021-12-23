@@ -98,6 +98,7 @@ class AuthorizedActivity : AppCompatActivity() {
             true
         }
         profileMennu.setOnClickListener {
+            sharedViewModel.saveDetailedUser(MarketPlaceApplication.username)
             findNavController(R.id.authorized_nav_host_fragment).navigate(R.id.profileFragment)
         }
 

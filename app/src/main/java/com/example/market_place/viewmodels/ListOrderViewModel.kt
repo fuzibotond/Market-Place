@@ -21,10 +21,10 @@ class ListOrderViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val result =
-                    repository.getOrders(MarketPlaceApplication.token, 1000)
+                    repository.getOrders(MarketPlaceApplication.token, 400)
                 orders.value = result.orders
                 item_count.value = result.item_count
-                Log.d("xxx", "ListOrdersViewModel - #products:  ${result.item_count}")
+                Log.d("xxx", "ListOrdersViewModel - #orders:  ${result.item_count}")
             }catch(e: Exception){
                 Log.d("xxx", "ListOrderViewModel exception: ${e.toString()}")
             }

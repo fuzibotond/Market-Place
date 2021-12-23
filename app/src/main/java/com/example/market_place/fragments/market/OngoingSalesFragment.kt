@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,10 +23,13 @@ import com.example.market_place.adapter.OrdersAdapter
 import com.example.market_place.adapter.SalesAdapter
 import com.example.market_place.databinding.FragmentMyMarketBinding
 import com.example.market_place.databinding.FragmentOngoingSalesBinding
+import com.example.market_place.fragments.message.MessageFragment
+import com.example.market_place.fragments.message.ShowMessagesFragment
 import com.example.market_place.model.Order
 import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
 import com.example.market_place.viewmodels.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
@@ -41,6 +45,7 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
     lateinit var listOrderViewModel:ListOrderViewModel
     lateinit var updateAssetViewModel:UpdateAssetViewModel
     var new_item:Int = 0
+    lateinit var listMessageViewModel:ListMessagesViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -133,9 +138,23 @@ class OngoingSalesFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     override fun onItemLongClick(position: Int) {
-        val temp =orderToProduct(itemList.get(position))
-        sharedViewModel.saveDetailsProduct(temp)
-        findNavController().navigate(R.id.productDetailsForCustomers)
+        binding.progressBar.visibility = View.VISIBLE
+        val currentItem = itemList.get(position)
+        val factoryOrder = ListMessagesViewModelFactory( Repository())
+        listMessageViewModel = ViewModelProvider(this, factoryOrder).get(ListMessagesViewModel::class.java)
+        GlobalScope.launch {
+            listMessageViewModel.getMessageToOrders(currentItem.order_id)
+        }
+        listMessageViewModel.orderMessageList.observe(viewLifecycleOwner){
+            binding.progressBar.visibility = View.GONE
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            listMessageViewModel.orderMessageList.value?.let { it1 ->
+                ShowMessagesFragment(currentItem.username, currentItem.title,
+                    it1
+                ).show(manager, "CustomManager")
+            }
+
+        }
     }
     private fun saveItemData(){
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)

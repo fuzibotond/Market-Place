@@ -18,20 +18,6 @@ class RegisterViewModel(val context: Context, val repository: Repository) : View
         user.value = User()
     }
 
-//    fun login() {
-//        viewModelScope.launch {
-//            val request =
-//                LoginRequest(username = user.value!!.username, password = user.value!!.password)
-//            try {
-//                val result = repository.login(request)
-//                MyApplication.token = result.token
-//                token.value = result.token
-//                Log.d("xxx", "MyApplication - token:  ${MyApplication.token}")
-//            }catch(e: Exception){
-//                Log.d("xxx", "MainViewModel - exception: ${e.toString()}")
-//            }
-//        }
-//    }
 
     suspend fun register() {
         val request =
@@ -40,9 +26,9 @@ class RegisterViewModel(val context: Context, val repository: Repository) : View
             val result = repository.register(request)
             code.value = result.code
             Toast.makeText(context,"${result.message} Please activate your User!",Toast.LENGTH_SHORT).show()
-            Log.d("xxx", "MyApplication - response code:${result.code} - message: ${result.message} ")
+            Log.d("xxx", "RegisterViewModel - response code:${result.code} - message: ${result.message} ")
         } catch (e: Exception) {
-            Log.d("xxx", "LoginViewModel - exception: ${e.toString()}")
+            Log.d("xxx", "RegisterViewModel - exception: ${e.toString()}")
         }
     }
 }

@@ -9,6 +9,7 @@ import com.example.market_place.model.User
 
 class SharedViewModel : ViewModel() {
     val detailsProduct = MutableLiveData<Product>()
+    val detailsOrder = MutableLiveData<Order>()
     val myMarketProducts = MutableLiveData<List<Product>>()
     val searchingKeyword = MutableLiveData<String>()
     val orders = MutableLiveData<List<Order>>()
@@ -16,10 +17,13 @@ class SharedViewModel : ViewModel() {
     val savedProductToAdd = MutableLiveData<Product>()
     val orderToAdd = MutableLiveData<Order>()
     val detailedUser = MutableLiveData<String>()
-    val UPDATE_PRODUCT_FLAG = MutableLiveData<Boolean>()
+    val UPDATE_PRODUCT_FLAG = MutableLiveData<Boolean>(false)
     val orderIsAcceptedIndicitaor = MutableLiveData<Boolean>()
     fun saveDetailsProduct(product:Product){
         detailsProduct.value = product
+    }
+    fun saveDetailsOrder(order:Order){
+        detailsOrder.value = order
     }
     fun addProducttoMyMarket(product:List<Product>){
         myMarketProducts.value=product

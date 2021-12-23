@@ -193,6 +193,8 @@ class OrdersAdapter(
                 GlobalScope.launch {
                     addOrderViewModel.removeOrder(product_id)
                 }
+                itemView.findNavController().navigate(R.id.myFaresFragment)
+
             }
             setNegativeButton("No") { _, _ ->
 

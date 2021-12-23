@@ -283,15 +283,14 @@ class AddProductToMyMarketFragment : Fragment(){
 
     private fun showDefaultDialog() {
         val alertDialog = AlertDialog.Builder(this.context)
-
         alertDialog.apply {
             setIcon(R.drawable.b_icon)
             setTitle("Hello")
-            setMessage("You will add a product to your market.Are you sure?")
+            setMessage("You will add a product to your market. Are you sure?")
             setPositiveButton("Yes") { _, _ ->
                 if (sharedViewModel.UPDATE_PRODUCT_FLAG.value == true){
                     lifecycleScope.launch {
-                        Log.d("product_id", "${sharedViewModel.detailsProduct.value!!.product_id}")
+
                         updateAssetViewModel.updateProduct(sharedViewModel.detailsProduct.value!!.product_id)
                     }
                 }else{

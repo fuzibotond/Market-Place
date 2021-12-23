@@ -21,9 +21,9 @@ class UpdateAssetViewModel(val context: Context, val repository: Repository) : V
         try {
             val result = repository.updateProduct(MarketPlaceApplication.token, request, product_id = product_id)
 
-            Log.d("xxx", "MyApplication update product - code: ${result.updated_item} token:  ${MarketPlaceApplication.username}")
+            Log.d("xxx", "UpdateAssetViewModel update product - code: ${result.updated_item} token:  ${MarketPlaceApplication.username}")
         } catch (e: Exception) {
-            Log.d("xxx", "Update Product - exception: ${e.toString()}")
+            Log.d("xxx", "UpdateAssetViewModel Product - exception: ${e.toString()}")
         }
     }
     suspend fun updateOrder(order_id:String, status:String) {
@@ -33,9 +33,9 @@ class UpdateAssetViewModel(val context: Context, val repository: Repository) : V
 
             val result = repository.updateOrder(MarketPlaceApplication.token, request, order_id)
 
-            Log.d("xxx", "MyApplication update order - code: ${result.timestamp} token:  ${MarketPlaceApplication.username}")
+            Log.d("xxx", "UpdateAssetViewModel update order - code: ${result.timestamp} token:  ${MarketPlaceApplication.username}")
         } catch (e: Exception) {
-            Log.d("xxx", "Update Order - exception: ${e.toString()}")
+            Log.d("xxx", "UpdateAssetViewModel Order - exception: ${e.toString()}")
         }
     }
 }

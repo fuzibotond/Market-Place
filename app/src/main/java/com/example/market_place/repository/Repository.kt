@@ -71,4 +71,16 @@ class Repository {
     suspend fun removeOrder(token: String, order_id: String ): RemoveOrderResponse {
         return RetrofitInstance.api.removeOrder(token,order_id)
     }
+    suspend fun addMessageToProduct(token:String, product_id: String, request: AddMessageRequest?): AddMessageToProductResponse {
+        return RetrofitInstance.api.addMessageToProduct(token,product_id,request)
+    }
+    suspend fun addMessageToOrder(token:String, order_id: String, request: AddMessageRequest?): AddMessageToOrderResponse {
+        return RetrofitInstance.api.addMessageToOrder(token,order_id,request)
+    }
+    suspend fun getMessagesForOrder(token: String, order_id: String): GetMessagesResponse {
+        return RetrofitInstance.api.getALlMessagesForOrder(token, order_id)
+    }
+    suspend fun getMessagesForProduct(token: String, product_id: String): GetMessagesResponse {
+        return RetrofitInstance.api.getALlMessagesForProduct(token, product_id)
+    }
 }

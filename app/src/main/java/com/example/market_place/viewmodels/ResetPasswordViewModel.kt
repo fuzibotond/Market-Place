@@ -20,20 +20,6 @@ class ResetPasswordViewModel(val context: Context, val repository: Repository) :
         user.value = User()
     }
 
-//    fun login() {
-//        viewModelScope.launch {
-//            val request =
-//                LoginRequest(username = user.value!!.username, password = user.value!!.password)
-//            try {
-//                val result = repository.login(request)
-//                MyApplication.token = result.token
-//                token.value = result.token
-//                Log.d("xxx", "MyApplication - token:  ${MyApplication.token}")
-//            }catch(e: Exception){
-//                Log.d("xxx", "MainViewModel - exception: ${e.toString()}")
-//            }
-//        }
-//    }
 
     suspend fun resetPassword() {
         val request =
@@ -41,9 +27,9 @@ class ResetPasswordViewModel(val context: Context, val repository: Repository) :
         try {
             val result = repository.resetPassword(request)
             this.result.value = result
-            Log.d("xxx", "MyApplication ${result.message} - token:  ${MarketPlaceApplication.token}")
+            Log.d("xxx", "ResetPasswordViewModel ${result.message} - token:  ${MarketPlaceApplication.token}")
         } catch (e: Exception) {
-            Log.d("xxx", "LoginViewModel - exception: ${e.toString()}")
+            Log.d("xxx", "ResetPasswordViewModel - exception: ${e.toString()}")
         }
     }
 }

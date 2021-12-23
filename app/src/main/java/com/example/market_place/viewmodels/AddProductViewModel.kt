@@ -21,7 +21,6 @@ class AddProductViewModel(val context: Context, val repository: Repository) : Vi
         product.value = ProductHelper()
     }
     suspend fun addProduct() {
-            Log.d("xxx", "Good to see you ")
 
         val request = AddProductRequest(
             product.value?.uploadImages,
@@ -34,10 +33,9 @@ class AddProductViewModel(val context: Context, val repository: Repository) : Vi
             product.value?.amount_type,
             product.value?.price_type
         )
-        Log.d("xxx", "MyApplication - add product request: ${product.value} ")
         try {
             val result = repository.addProduct(MarketPlaceApplication.token, request)
-            Log.d("xxx", "MyApplication - add product response: ${result.creation} ")
+            Log.d("xxx", "AddProductViewModel - add product response: ${result.creation} ")
             Toast.makeText(context, result.creation, Toast.LENGTH_SHORT).show()
             savedProduct.value = Product(
                 result.rating,
@@ -61,7 +59,7 @@ class AddProductViewModel(val context: Context, val repository: Repository) : Vi
     suspend fun removeProduct(product_id: String) {
         try {
             val result = repository.removeProduct(MarketPlaceApplication.token,product_id)
-            Log.d("xxx", "MyApplication - add product response:  ${result.message}")
+            Log.d("xxx", "AddProductViewModel - remove product response:  ${result.message}")
         } catch (e: Exception) {
             Log.d("xxx", "AddProductViewModel - remove product exception: ${e.toString()}")
         }

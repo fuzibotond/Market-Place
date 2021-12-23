@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,12 +20,12 @@ import com.example.market_place.R
 import com.example.market_place.adapter.DataAdapter
 import com.example.market_place.adapter.DataAdapterForMarketSale
 import com.example.market_place.databinding.FragmentMyMarketBinding
+import com.example.market_place.fragments.message.ShowMessagesFragment
 import com.example.market_place.model.Product
 import com.example.market_place.repository.Repository
-import com.example.market_place.viewmodels.AddProductViewModel
-import com.example.market_place.viewmodels.AddProductViewModelFactory
-import com.example.market_place.viewmodels.ListViewModel
-import com.example.market_place.viewmodels.SharedViewModel
+import com.example.market_place.viewmodels.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
 
@@ -38,6 +39,7 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
     lateinit var recycler_view: RecyclerView
     lateinit var addProductViewModel: AddProductViewModel
     private val sharedViewModel:SharedViewModel by activityViewModels()
+    lateinit var listMessageViewModel:ListMessagesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,13 +98,29 @@ class MyMarketFragment : Fragment(), DataAdapter.OnItemClickListener,
 
     override fun onItemClick(position: Int) {
         sharedViewModel.saveDetailsProduct(itemList.get(position))
-        Log.d("xxx", "Marketplace:${sharedViewModel.myMarketProducts.value}")
-        adapter.notifyDataSetChanged()
         findNavController().navigate(R.id.action_myMarketFragment_to_productDetailsFragment)
     }
 
     override fun onItemLongClick(position: Int) {
-        TODO("Not yet implemented")
+        binding.progressBar.visibility = View.VISIBLE
+        val currentItem = itemList.get(position)
+        val factoryOrder = ListMessagesViewModelFactory( Repository())
+        listMessageViewModel = ViewModelProvider(this, factoryOrder).get(ListMessagesViewModel::class.java)
+        GlobalScope.launch {
+            listMessageViewModel.getMessageToProduct(currentItem.product_id)
+        }
+        listMessageViewModel.productMessageList.observe(viewLifecycleOwner){
+            binding.progressBar.visibility = View.GONE
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            listMessageViewModel.productMessageList.value?.let { it1 ->
+                ShowMessagesFragment(
+                    currentItem.username,
+                    currentItem.title,
+                    it1
+                ).show(manager, "CustomManager")
+            }
+
+        }
     }
     private fun handleThatBackPress(){
         val callback: OnBackPressedCallback = object: OnBackPressedCallback(true){

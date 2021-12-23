@@ -13,7 +13,6 @@ class RefreshTokenViewModel(private val repository: Repository) : ViewModel() {
     var token = MutableLiveData<String>()
     var creation_time = MutableLiveData<Long>()
     init{
-        Log.d("xxx", "Refresh Token constructor - Token: ${MarketPlaceApplication.token}")
         getRefreshToken()
     }
 
@@ -24,9 +23,9 @@ class RefreshTokenViewModel(private val repository: Repository) : ViewModel() {
                     repository.getRefreshToken(MarketPlaceApplication.token)
                 token.value = result.token
                 creation_time.value = result.creation_time
-                Log.d("xxx", " - #token:  ${result.token}")
+                Log.d("xxx", "RefreshTokenViewModel - #token:  ${result.token}")
             }catch(e: Exception){
-                Log.d("xxx", "ListViewMofdel exception: ${e.toString()}")
+                Log.d("xxx", "RefreshTokenViewModel exception: ${e.toString()}")
             }
         }
     }

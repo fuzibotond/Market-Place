@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -103,8 +104,10 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
                     it.images,
                     it.creation_time
                 )
-                itemList.add(temp)
-                if (it.username.replace("\"", "") == MarketPlaceApplication.username){
+                if(it.price_per_unit.replace("\"", "").isDigitsOnly()){
+                    itemList.add(temp)
+                }
+                if (it.username.replace("\"", "") == MarketPlaceApplication.username  ){
                     tempList.add(temp)
                 }
             }
@@ -174,7 +177,7 @@ class MarketPlaceFragment : Fragment(), DataAdapter.OnItemClickListener,
     }
 
     override fun onItemLongClick(position: Int) {
-        findNavController().navigate(R.id.productDetailsForCustomers)
+        Toast.makeText(requireContext(),    "${itemList.get(position).title}", Toast.LENGTH_SHORT).show()
     }
 
     private fun clearDate() {

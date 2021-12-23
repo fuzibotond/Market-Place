@@ -23,7 +23,13 @@ import com.smarteist.autoimageslider.Transformations.TossTransformation
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.text.Editable
 import android.util.Log
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 
 
 class ProfileFragment : Fragment() {
@@ -32,6 +38,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userInfoViewModel:UserInfoViewModel
     private lateinit var updateUserInfoViewModel:UpdateUserInfoViewModel
+    val sharedViewModel:SharedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,33 +74,21 @@ class ProfileFragment : Fragment() {
             saveUserData()
 
         }
-        val pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!\\-_?&])(?=\\S+$).{8,}")
 
-        binding.detailsPhoneNumberInput.doOnTextChanged { text, start, before, count ->
-            if (!text!!.toString().isEmpty()){
-                binding.passwordInputLayout.helperText = "This field is required"
-                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
-                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
-            }
-            if ( !pattern.matcher(text).matches()){
-                binding.passwordInputLayout.helperText = "Too weak password!"
-                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_error)
-                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_error))
-            }
-            else{
-                binding.passwordInputLayout.setHelperTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
-                binding.passwordInputLayout.helperText = "Strong password!"
-                binding.passwordInputLayout.hintTextColor = context?.resources?.getColorStateList(R.color.text_input_box_stroke_color)
-                binding.passwordInputLayout.setBoxStrokeColorStateList(resources.getColorStateList(R.color.text_input_box_stroke_color))
-                binding.passwordInputLayout.setHelperTextColor(resources.getColorStateList(R.color.text_input_box_stroke_color))
-            }
-        }
     }
 
     private fun initialize() {
-        binding.detailsEmailInput.setText( MarketPlaceApplication.user_email)
-        binding.detailsPhoneNumberInput.setText( MarketPlaceApplication.user_phone_number)
-        binding.detailsUsernameInput.setText(userInfoViewModel.user.value?.username)
+        if (sharedViewModel.detailedUser.value!=null){
+            lifecycleScope.launch {
+                userInfoViewModel.getUserInfo(sharedViewModel.detailedUser.value!!)
+            }
+        }
+        userInfoViewModel.user.observe(viewLifecycleOwner){
+            binding.detailsEmailInput.setText(userInfoViewModel.user.value?.email)
+            binding.detailsPhoneNumberInput.setText(userInfoViewModel.user.value?.phone_number)
+            binding.detailsUsernameInput.setText(userInfoViewModel.user.value?.username)
+        }
+
 
     }
     private fun handleThatBackPress(){
@@ -122,4 +117,5 @@ class ProfileFragment : Fragment() {
         }.apply()
         Toast.makeText(this.requireContext(), "Saved ${ MarketPlaceApplication.username}s data!", Toast.LENGTH_SHORT).show()
     }
+    fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 }
